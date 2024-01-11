@@ -8,8 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "TAILWIND_MODE=watch postcss -i tailwind.css -o build.css --watch"
+    "build-css": "tailwindcss -i ./src/css/input.css -o ./public/css/output.css --poll"
   },
   "repository": {
     "type": "git",
