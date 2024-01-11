@@ -1,0 +1,24 @@
+{
+  "name": "oc_07_lespetitsplats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "TAILWIND_MODE=watch postcss -i tailwind.css -o build.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nburd01/OC_07_lespetitsplats.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nburd01/OC_07_lespetitsplats/issues"
+  },
+  "homepage": "https://github.com/nburd01/OC_07_lespetitsplats#readme"
+}

@@ -2,16 +2,78 @@
 <html lang="fr">
   <head>
     <!-- <link href="css/style.css" rel="stylesheet" type="text/css" /> -->
-    <link href="./css/output.css" rel="stylesheet" />
+    <link href="./src/css/output.css" rel="stylesheet" />
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <!-- <link
+    <link
       href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
       rel="stylesheet"
-    /> -->
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Les petits plats</title>
   </head>
-  <body>
-    <h1 class="text-3xl font-bold underline red">Hello world!</h1>
+  <body class="text-blue-400">
+    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+    <!-- header wrapper -->
+    <div class="header">
+      <img src="logo" alt="" />
+      <h1>
+        Cherchez parmi plus de 1500 recettes du quotidien,simples et délicieuses
+      </h1>
+      <span class="fa-solid fa-user"></span>
+      <div class="inputDiv">
+        <input type="text" />
+        <button type="button"></button>
+      </div>
+    </div>
+    <!-- sort wrapper -->
+    <div class="sort">
+      sort
+      <div>
+        <label for="ingredients">ingredients</label>
+
+        <select name="cars" id="ingredients">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </select>
+      </div>
+      <div class="numberRecipes"></div>
+    </div>
+    <!-- main wrapper -->
+    <div class="cards">
+      cards
+      <div class="card">
+        <div class="card-top">
+          <img src="" alt="" />
+          <div class="bubble">60min</div>
+        </div>
+        <div class="card-bottom">
+          <div class="card-title"></div>
+          <div class="card-subtitle">Recette</div>
+          <div class="card-description"></div>
+          <div class="card-subtitle">Ingrédients</div>
+          <div class="ingredients">
+            <ul>
+              <li>
+                <div class="name">Thon Rouge (ou blanc)</div>
+                <div class="quantity">200g</div>
+              </li>
+              <li>
+                <div class="name">Tomate</div>
+                <div class="quantity">2</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
