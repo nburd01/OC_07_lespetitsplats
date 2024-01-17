@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "tailwind.config.js",
-  "dependencies": {
+  "devDependencies": {
     "tailwindcss": "^3.4.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "build-css": "tailwindcss -i ./src/css/input.css -o ./public/css/output.css --poll"
+    "build-css": "tailwindcss -i ./src/css/input.css -o ./public/css/output.css --poll --watch"
   },
   "repository": {
     "type": "git",

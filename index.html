@@ -18,39 +18,87 @@
     />
     <title>Les petits plats</title>
   </head>
-  <body class="text-blue-200">
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <body class="text-blue-300">
     <!-- header wrapper -->
-    <div class="header">
-      <img src="logo" alt="" />
-      <h1>
-        Cherchez parmi plus de 1500 recettes du quotidien,simples et délicieuses
-      </h1>
-      <span class="fa-solid fa-user"></span>
-      <div class="inputDiv">
-        <input type="text" />
-        <button type="button"></button>
+    <div class="header flex flex-col items-center bg-red-200 h-[70vh]">
+      <div class="mx-auto px-16 flex h-24 w-full items-center bg-green-100">
+        <span class="fa-solid fa-user"></span>
+      </div>
+
+      <div class="container mx-auto px-16 h-48 w-auto bg-white">
+        <h1 class="text-3xl font-bold mt-6">
+          Cherchez parmi plus de 1500 recettes du quotidien,simples et
+          délicieuses
+        </h1>
+      </div>
+
+      <div
+        class="container flex mx-auto px-16 h-48 items-center justify-center bg-pink-200"
+      >
+        <form class="w-full">
+          <label class="relative block">
+            <input
+              class="w-full bg-white placeholder:font-italitc border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
+              placeholder="Rechercher une recette, un ingrédient, ..."
+              type="text"
+            />
+
+            <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <svg
+                class="h-5 w-5 fill-black"
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                width="30"
+                height="30"
+                viewBox="0 0 30 30"
+              >
+                <path
+                  d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
+                ></path>
+              </svg>
+            </span>
+          </label>
+        </form>
       </div>
     </div>
     <!-- sort wrapper -->
-    <div class="sort">
-      sort
-      <div>
-        <label for="ingredients">ingredients</label>
-
-        <select name="cars" id="ingredients">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
-        </select>
+    <div
+      class="sort container flex space-x-12 mx-auto bg-blue-200 items-center w-full h-[10vh]"
+    >
+      <div class="flex">
+        <div>
+          <select name="cars" id="ingredients">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
+        <div>
+          <select name="cars" id="ingredients">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
+        <div>
+          <select name="cars" id="ingredients">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
       </div>
+      <div class="bg-green-100 w-3/6 text-right">1500 recettes</div>
       <div class="numberRecipes"></div>
     </div>
     <!-- main wrapper -->
-    <div class="cards">
+    <div class="cards container flex mx-auto px-16 bg-yellow-200 h-[100vh]">
       cards
-      <div class="card">
+      <div class="card bg-yellow-600">
         <div class="card-top">
           <img src="" alt="" />
           <div class="bubble">60min</div>
