@@ -16,41 +16,61 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <title>Les petits plats</title>
   </head>
-  <body class="text-blue-300">
+  <body>
     <!-- header wrapper -->
-    <div class="header flex flex-col items-center bg-red-200 h-[70vh]">
-      <div class="mx-auto px-16 flex h-24 w-full items-center bg-green-100">
-        <span class="fa-solid fa-user"></span>
+    <div
+      class="header flex flex-col items-center bg-hero object-contain h-[70vh]"
+    >
+      <div class="mx-auto px-16 flex h-24 w-full items-center">
+        <!-- <span class="fa-solid fa-user"></span> -->
+        <img src="./src/assets/images/logo-lpp.svg" alt="" />
+        <img src="./src/assets/images/logoCircle.svg" alt="" />
       </div>
 
-      <div class="container mx-auto px-16 h-48 w-auto bg-white">
-        <h1 class="text-3xl font-bold mt-6">
+      <div
+        class="container flex items-center justify-center mx-auto px-16 h-48 w-auto"
+      >
+        <h1 class="titleHome mt-6 w-4/6">
           Cherchez parmi plus de 1500 recettes du quotidien,simples et
           délicieuses
         </h1>
       </div>
 
       <div
-        class="container flex mx-auto px-16 h-48 items-center justify-center bg-pink-200"
+        class="container flex mx-auto px-16 h-48 items-center justify-center"
       >
         <form class="w-full">
           <label class="relative block">
             <input
-              class="w-full bg-white placeholder:font-italitc border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
+              class="w-full h-20 bg-white placeholder:font-italitc border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
               placeholder="Rechercher une recette, un ingrédient, ..."
               type="text"
             />
 
-            <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+            <span
+              class="absolute m-2 rounded-lg inset-y-0 right-0 flex items-center p-3 bg-black"
+            >
               <svg
-                class="h-5 w-5 fill-black"
+                class="h-5 w-5 fill-white"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
                 y="0px"
-                width="30"
-                height="30"
+                width="50"
+                height="50"
                 viewBox="0 0 30 30"
               >
                 <path
@@ -68,7 +88,12 @@
     >
       <div class="flex">
         <div>
-          <select name="cars" id="ingredients">
+          <select
+            class="boxSort m-5 p-4 rounded-lg textSort"
+            name="cars"
+            id="ingredients"
+          >
+            <option value="" disabled selected>Ingredients</option>
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
             <option value="mercedes">Mercedes</option>
@@ -76,7 +101,12 @@
           </select>
         </div>
         <div>
-          <select name="cars" id="ingredients">
+          <select
+            class="boxSort m-5 p-4 rounded-lg textSort"
+            name="cars"
+            id="ingredients"
+          >
+            <option value="" disabled selected>Appareils</option>
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
             <option value="mercedes">Mercedes</option>
@@ -84,7 +114,12 @@
           </select>
         </div>
         <div>
-          <select name="cars" id="ingredients">
+          <select
+            class="boxSort m-5 p-4 rounded-lg textSort"
+            name="cars"
+            id="ingredients"
+          >
+            <option value="" disabled selected>Ustensiles</option>
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
             <option value="mercedes">Mercedes</option>
@@ -92,36 +127,60 @@
           </select>
         </div>
       </div>
-      <div class="bg-green-100 w-3/6 text-right">1500 recettes</div>
+      <div class="titleSort w-3/6 text-right">1500 recettes</div>
       <div class="numberRecipes"></div>
     </div>
     <!-- main wrapper -->
     <div class="cards container flex mx-auto px-16 bg-yellow-200 h-[100vh]">
-      cards
       <div class="card bg-yellow-600">
         <div class="card-top">
-          <img src="" alt="" />
-          <div class="bubble">60min</div>
+          <img
+            class="card-image"
+            src="src/assets/images/Recette01.jpg"
+            alt=""
+          />
+          <div class="bubble">
+            <p class="bubble-text">60min</p>
+          </div>
         </div>
         <div class="card-bottom">
-          <div class="card-title"></div>
+          <div class="card-title">Limonade de Coco</div>
           <div class="card-subtitle">Recette</div>
           <div class="card-description"></div>
-          <div class="card-subtitle">Ingrédients</div>
+          <div class="card-text">
+            Mettre les glaçons à votre goût dans le blender, Ajouter le lait la
+            crème de coco, le jus de 2 citrons et le sucre ensemble. Mixer
+            jusqu'à obtenir la consistance désirée.
+          </div>
           <div class="ingredients">
-            <ul>
+            <div class="card-subtitle">Ingrédients</div>
+
+            <ul class="flex flex-wrap">
               <li>
-                <div class="name">Thon Rouge (ou blanc)</div>
-                <div class="quantity">200g</div>
+                <div class="ingredients-name">Lait de coco</div>
+                <div class="ingredients-quantity">400ml</div>
               </li>
               <li>
-                <div class="name">Tomate</div>
-                <div class="quantity">2</div>
+                <div class="ingredients-name">Jus de citron</div>
+                <div class="ingredients-quantity">2</div>
+              </li>
+              <li>
+                <div class="ingredients-name">Créme de coco</div>
+                <div class="ingredients-quantity">4 cuillères</div>
+              </li>
+              <li>
+                <div class="ingredients-name">Sucre</div>
+                <div class="ingredients-quantity">20g</div>
+              </li>
+              <li>
+                <div class="ingredients-name">Glaçons</div>
+                <div class="ingredients-quantity">2</div>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
+    <script type="module" src="/scripts/index.js"></script>
   </body>
 </html>
