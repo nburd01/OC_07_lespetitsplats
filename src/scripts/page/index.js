@@ -30,6 +30,7 @@ class App {
       this.handleClearInput();
     });
   }
+
   handleSearchInputChange() {
     if (this.searchInput.value !== "") {
       this.faMark.style.display = "block";
@@ -42,8 +43,10 @@ class App {
     this.searchInput.value = "";
   }
 }
+
 const initApp = async () => {
   const app = new App();
   app.main();
 };
+
 initApp();
