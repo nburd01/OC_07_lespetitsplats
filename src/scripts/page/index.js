@@ -25,6 +25,10 @@ class App {
     this.searchInput.addEventListener("input", () => {
       this.handleSearchInputChange();
     });
+
+    this.faMark.addEventListener("click", () => {
+      this.handleClearInput();
+    });
   }
   handleSearchInputChange() {
     if (this.searchInput.value !== "") {
@@ -32,6 +36,10 @@ class App {
     } else {
       this.faMark.style.display = "none";
     }
+  }
+
+  handleClearInput() {
+    this.searchInput.value = "";
   }
 }
 const initApp = async () => {
