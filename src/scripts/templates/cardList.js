@@ -46,7 +46,7 @@ class CardTemplate {
 
       //innerHTML
 
-      ingredientItemUnitDiv.innerHTML = `${ingredient.quantity} ${
+      ingredientItemUnitDiv.innerHTML = `${ingredient.quantity || ""} ${
         ingredient.unit || ""
       }`;
       ingredientItemUnitDiv.classList.add("ingredients-quantity");
