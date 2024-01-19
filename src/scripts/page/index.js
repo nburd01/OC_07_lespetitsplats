@@ -36,11 +36,15 @@ class App {
       this.faMark.style.display = "block";
     } else {
       this.faMark.style.display = "none";
+      this.searchInput.placeholder =
+        "Rechercher une recette, un ingrédient, ...";
     }
   }
 
   handleClearInput() {
     this.searchInput.value = "";
+    this.faMark.style.display = "none";
+    this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 }
 
