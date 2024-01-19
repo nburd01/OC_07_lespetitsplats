@@ -37,8 +37,14 @@ class App {
       .forEach((card) => {
         const ingredients = card._ingredients || [];
         ingredients.forEach((ingredient) => {
-          const ingredientName = ingredient.ingredient;
-          if (!arrayOfIngredients.includes(ingredientName)) {
+          const ingredientNameFirst = ingredient.ingredient.charAt(0);
+          const ingredientNameRest = ingredient.ingredient.slice(1);
+          const ingredientName = ingredientNameFirst + ingredientNameRest;
+          let pluralIngredientName = ingredientName + "s";
+          if (
+            !arrayOfIngredients.includes(ingredientName) ||
+            !arrayOfIngredients.includes(pluralIngredientName)
+          ) {
             arrayOfIngredients.push(ingredientName);
           }
         });
