@@ -8,16 +8,18 @@ class App {
     this.cardsApi = new CardsApi("/src/data/recipes.json");
 
     // Get element
-    this.cardsSection = document.querySelector(".cards-section");
+    this.cardsSection = document.querySelector(".cards");
   }
 
   async main() {
     const cardsApiData = await this.cardsApi.getCards();
+    const cardsSection = document.querySelector(".cards");
+
     cardsApiData
       .map((card) => new Card(card))
       .forEach((card) => {
         const template = new CardTemplate(card);
-        this.cardsSection.appendChild(template.createCard(card));
+        cardsSection.appendChild(template.createCard());
       });
   }
 }
