@@ -25,6 +25,13 @@ class CardTemplate {
     cardSubTitleRecette.innerHTML = "Recette";
     cardSubTitleRecette.classList.add("card-subtitle");
 
+    const cardBubbleDiv = document.createElement("div");
+    cardBubbleDiv.classList.add("bubble");
+
+    const cardBubble = document.createElement("p");
+    cardBubble.innerHTML = `${this._card._time} min`;
+    cardBubble.classList.add("bubble-text");
+
     const cardSubTitleIngredients = document.createElement("p");
     cardSubTitleIngredients.innerHTML = "Ingrédients";
     cardSubTitleIngredients.classList.add("card-subtitle");
@@ -45,7 +52,6 @@ class CardTemplate {
       const ingredientItemQuantityDiv = document.createElement("div");
 
       //innerHTML
-
       ingredientItemUnitDiv.innerHTML = `${ingredient.quantity || ""} ${
         ingredient.unit || ""
       }`;
@@ -61,6 +67,8 @@ class CardTemplate {
       ingredientItem.appendChild(ingredientItemUnitDiv);
     });
 
+    cardBubbleDiv.appendChild(cardBubble);
+    cardDiv.appendChild(cardBubbleDiv);
     cardDiv.appendChild(imgElement);
     cardDiv.appendChild(cardTitle);
     cardDiv.appendChild(cardSubTitleRecette);
