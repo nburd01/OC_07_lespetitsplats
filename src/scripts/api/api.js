@@ -36,7 +36,6 @@ class CardsApi extends Api {
   async getCards() {
     const response = await this.get();
     const cardsData = response.recipes;
-    console.log("cardsData", cardsData);
     return cardsData;
   }
 }

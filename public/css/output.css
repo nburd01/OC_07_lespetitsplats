@@ -1166,6 +1166,7 @@ input:focus::placeholder {
   position: absolute;
   top: 2em;
   left: 87%;
+  display: none;
 }
 
 @media screen and (min-width: 1025px) {

@@ -160,6 +160,10 @@ input:focus::placeholder {
   left: 87%;
 }
 
+.fa-solid {
+  display: none;
+}
+
 @media screen and (min-width: 1025px) {
   .fa-solid {
     position: absolute;

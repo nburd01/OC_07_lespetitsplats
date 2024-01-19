@@ -4,14 +4,14 @@ import { CardTemplate } from "../templates/cardList.js";
 
 class App {
   constructor() {
-    // Get data
     this.cardsApi = new CardsApi("/src/data/recipes.json");
-
-    // Get element
     this.cardsSection = document.querySelector(".cards");
+    this.searchInput = document.querySelector(".search-input");
+    this.faMark = document.querySelector(".fa-solid");
   }
 
   async main() {
+    this.faMark.style.display = "none";
     const cardsApiData = await this.cardsApi.getCards();
     const cardsSection = document.querySelector(".cards");
 
@@ -21,12 +21,18 @@ class App {
         const template = new CardTemplate(card);
         cardsSection.appendChild(template.createCard());
       });
+
+    this.searchInput.addEventListener("input", () => {
+      this.handleSearchInputChange();
+    });
   }
-
-  // input = document.querySelector("input");
-  // if (input value != null) {
-
-  // }
+  handleSearchInputChange() {
+    if (this.searchInput.value !== "") {
+      this.faMark.style.display = "block";
+    } else {
+      this.faMark.style.display = "none";
+    }
+  }
 }
 const initApp = async () => {
   const app = new App();
