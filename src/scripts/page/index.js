@@ -20,6 +20,7 @@ class App {
     const cardsSection = document.querySelector(".cards");
     const sortSection = document.querySelector(".dropdown-content");
 
+    //cards function
     cardsApiData
       .map((card) => new Card(card))
       .forEach((card) => {
@@ -30,6 +31,7 @@ class App {
     const sortTemplate = new SortTemplate();
     const arrayOfIngredients = [];
 
+    //sort function
     cardsApiData
       .map((card) => new Card(card))
       .forEach((card) => {
