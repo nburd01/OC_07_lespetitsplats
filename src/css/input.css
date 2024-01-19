@@ -149,3 +149,7 @@ ul li {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+input:focus::placeholder {
+  color: transparent;
+}

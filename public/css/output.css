@@ -1154,6 +1154,14 @@ ul li {
   background-repeat: no-repeat;
 }
 
+input:focus::-moz-placeholder {
+  color: transparent;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
