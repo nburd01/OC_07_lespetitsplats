@@ -8,6 +8,9 @@ class App {
     this.cardsSection = document.querySelector(".cards");
     this.searchInput = document.querySelector(".search-input");
     this.faMark = document.querySelector(".fa-solid");
+    this.dropBtn = document.querySelector(".dropbtn");
+    this.dropDown = document.querySelector("myDropdown");
+    this.myInput = document.querySelector("#myInput");
   }
 
   async main() {
@@ -29,6 +32,14 @@ class App {
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
     });
+
+    this.dropBtn.addEventListener("click", () => {
+      document.getElementById("myDropdown").classList.toggle("show");
+    });
+
+    this.myInput.addEventListener("input", () => {
+      this.filterFunction();
+    });
   }
 
   handleSearchInputChange() {
@@ -45,6 +56,25 @@ class App {
     this.searchInput.value = "";
     this.faMark.style.display = "none";
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
+  }
+
+  filterFunction() {
+    let divV;
+    let aA;
+    let txtValue;
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    divV = document.getElementById("myDropdown");
+    aA = divV.getElementsByTagName("a");
+    for (i = 0; i < aA.length; i++) {
+      txtValue = aA[i].textContent || aA[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        aA[i].style.display = "";
+      } else {
+        aA[i].style.display = "none";
+      }
+    }
   }
 }
 

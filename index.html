@@ -87,24 +87,24 @@
       class="sort container flex space-x-12 mx-auto items-center w-full h-[10vh]"
     >
       <div class="flex">
-        <div>
-          <select
-            class="boxSort m-5 p-4 rounded-lg textSort"
-            name="cars"
-            id="ingredients"
-          >
-            <option value="" disabled selected>Ingredients</option>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select>
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown</button>
+          <div id="myDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myInput" />
+            <a href="#about">About</a>
+            <a href="#base">Base</a>
+            <a href="#blog">Blog</a>
+            <a href="#contact">Contact</a>
+            <a href="#custom">Custom</a>
+            <a href="#support">Support</a>
+            <a href="#tools">Tools</a>
+          </div>
         </div>
         <div>
           <select
             class="boxSort m-5 p-4 rounded-lg textSort"
             name="cars"
-            id="ingredients"
+            id="appareils"
           >
             <option value="" disabled selected>Appareils</option>
             <option value="volvo">Volvo</option>
@@ -117,7 +117,7 @@
           <select
             class="boxSort m-5 p-4 rounded-lg textSort"
             name="cars"
-            id="ingredients"
+            id="ustensiles"
           >
             <option value="" disabled selected>Ustensiles</option>
             <option value="volvo">Volvo</option>
@@ -131,56 +131,7 @@
       <div class="numberRecipes"></div>
     </div>
     <!-- main wrapper -->
-    <div class="cards container flex flex-wrap mx-auto px-16 h-[100vh]">
-      <!-- <div class="card bg-yellow-600">
-        <div class="card-top">
-          <img
-            class="card-image"
-            src="src/assets/images/Recette01.jpg"
-            alt=""
-          />
-          <div class="bubble">
-            <p class="bubble-text">60min</p>
-          </div>
-        </div>
-        <div class="card-bottom">
-          <div class="card-title">Limonade de Coco</div>
-          <div class="card-subtitle">Recette</div>
-          <div class="card-description"></div>
-          <div class="card-text">
-            Mettre les glaçons à votre goût dans le blender, Ajouter le lait la
-            crème de coco, le jus de 2 citrons et le sucre ensemble. Mixer
-            jusqu'à obtenir la consistance désirée.
-          </div>
-          <div class="ingredients">
-            <div class="card-subtitle">Ingrédients</div>
-
-            <ul class="flex flex-wrap">
-              <li>
-                <div class="ingredients-name">Lait de coco</div>
-                <div class="ingredients-quantity">400ml</div>
-              </li>
-              <li>
-                <div class="ingredients-name">Jus de citron</div>
-                <div class="ingredients-quantity">2</div>
-              </li>
-              <li>
-                <div class="ingredients-name">Créme de coco</div>
-                <div class="ingredients-quantity">4 cuillères</div>
-              </li>
-              <li>
-                <div class="ingredients-name">Sucre</div>
-                <div class="ingredients-quantity">20g</div>
-              </li>
-              <li>
-                <div class="ingredients-name">Glaçons</div>
-                <div class="ingredients-quantity">2</div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
-    </div>
+    <div class="cards container flex flex-wrap mx-auto px-16 h-[100vh]"></div>
     <!-- dynamic wrapper -->
     <div class="cards-section"></div>
     <script type="module" src="./src/scripts/page/index.js"></script>
