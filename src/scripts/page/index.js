@@ -42,7 +42,7 @@ class App {
           const ingredientName = ingredientNameFirst + ingredientNameRest;
           let pluralIngredientName = ingredientName + "s";
           if (
-            !arrayOfIngredients.includes(ingredientName) ||
+            !arrayOfIngredients.includes(ingredientName) &&
             !arrayOfIngredients.includes(pluralIngredientName)
           ) {
             arrayOfIngredients.push(ingredientName);

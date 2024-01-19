@@ -1172,20 +1172,17 @@ input:focus::placeholder {
 /* Dropdown Button */
 
 .dropbtn {
-  background-color: #04aa6d;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
+  border-radius: 11px;
+  background: #fff;
   cursor: pointer;
 }
 
 /* Dropdown button on hover & focus */
 
-.dropbtn:hover,
+/* .dropbtn:hover,
 .dropbtn:focus {
   background-color: #3e8e41;
-}
+} */
 
 /* The search field */
 
@@ -1243,6 +1240,7 @@ input:focus::placeholder {
 
 .show {
   display: block;
+  background-color: #ffd15b;
 }
 
 @media screen and (min-width: 1025px) {

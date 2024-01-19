@@ -166,19 +166,16 @@ input:focus::placeholder {
 
 /* Dropdown Button */
 .dropbtn {
-  background-color: #04aa6d;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
+  border-radius: 11px;
+  background: #fff;
   cursor: pointer;
 }
 
 /* Dropdown button on hover & focus */
-.dropbtn:hover,
+/* .dropbtn:hover,
 .dropbtn:focus {
   background-color: #3e8e41;
-}
+} */
 
 /* The search field */
 #myInput {
@@ -229,6 +226,7 @@ input:focus::placeholder {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
   display: block;
+  background-color: #ffd15b;
 }
 
 @media screen and (min-width: 1025px) {
