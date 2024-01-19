@@ -1,6 +1,7 @@
 import { CardsApi } from "../api/api.js";
 import { Card } from "../class/cards.js";
 import { CardTemplate } from "../templates/cardList.js";
+import { SortTemplate } from "../templates/filterList.js";
 
 class App {
   constructor() {
@@ -17,13 +18,33 @@ class App {
     this.faMark.style.display = "none";
     const cardsApiData = await this.cardsApi.getCards();
     const cardsSection = document.querySelector(".cards");
+    const sortSection = document.querySelector(".dropdown-content");
 
     cardsApiData
       .map((card) => new Card(card))
       .forEach((card) => {
-        const template = new CardTemplate(card);
-        cardsSection.appendChild(template.createCard());
+        const templateCards = new CardTemplate(card);
+        cardsSection.appendChild(templateCards.createCard());
       });
+
+    const sortTemplate = new SortTemplate();
+    const arrayOfIngredients = [];
+
+    cardsApiData
+      .map((card) => new Card(card))
+      .forEach((card) => {
+        const ingredients = card._ingredients || [];
+        ingredients.forEach((ingredient) => {
+          const ingredientName = ingredient.ingredient;
+          if (!arrayOfIngredients.includes(ingredientName)) {
+            arrayOfIngredients.push(ingredientName);
+          }
+        });
+      });
+    arrayOfIngredients.forEach((ingredient) => {
+      sortTemplate.appendCardName(ingredient);
+    });
+    sortTemplate.updateDropdownContent();
 
     this.searchInput.addEventListener("input", () => {
       this.handleSearchInputChange();
