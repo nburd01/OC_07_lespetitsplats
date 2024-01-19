@@ -22,6 +22,11 @@ class App {
         cardsSection.appendChild(template.createCard());
       });
   }
+
+  // input = document.querySelector("input");
+  // if (input value != null) {
+
+  // }
 }
 const initApp = async () => {
   const app = new App();

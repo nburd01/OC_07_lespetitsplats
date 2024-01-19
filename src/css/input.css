@@ -153,3 +153,24 @@ ul li {
 input:focus::placeholder {
   color: transparent;
 }
+
+.fa-solid {
+  position: absolute;
+  top: 2em;
+  left: 87%;
+}
+
+@media screen and (min-width: 1025px) {
+  .fa-solid {
+    position: absolute;
+    top: 2em;
+    left: 90%;
+  }
+}
+@media screen and (min-width: 1535px) {
+  .fa-solid {
+    position: absolute;
+    top: 2em;
+    left: 94%;
+  }
+}

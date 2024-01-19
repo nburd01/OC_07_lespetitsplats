@@ -1162,6 +1162,28 @@ input:focus::placeholder {
   color: transparent;
 }
 
+.fa-solid {
+  position: absolute;
+  top: 2em;
+  left: 87%;
+}
+
+@media screen and (min-width: 1025px) {
+  .fa-solid {
+    position: absolute;
+    top: 2em;
+    left: 90%;
+  }
+}
+
+@media screen and (min-width: 1535px) {
+  .fa-solid {
+    position: absolute;
+    top: 2em;
+    left: 94%;
+  }
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
