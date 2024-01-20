@@ -17,7 +17,7 @@ class App {
   async main() {
     this.faMark.style.display = "none";
     const cardsApiData = await this.cardsApi.getCards();
-    // Create a new array sorted by 'name'
+    // tri by 'name'
     const cardsDataByName = [...cardsApiData].sort((a, b) => {
       if (a.name < b.name) {
         return -1;
@@ -28,13 +28,10 @@ class App {
       return 0;
     });
 
-    // Create a new array sorted by 'id'
+    // tri by 'id'
     const cardsDataById = [...cardsApiData].sort((a, b) => a.id - b.id);
 
-    console.log(cardsDataByName);
-    console.log(cardsDataById);
     const cardsSection = document.querySelector(".cards");
-    const sortSection = document.querySelector(".dropdown-content");
 
     //cards function
     cardsDataById
