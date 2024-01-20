@@ -17,6 +17,7 @@ class SortTemplate {
   updateDropdownContent() {
     this.cardNames.forEach((ingredient) => {
       const link = document.createElement("a");
+      link.classList.add("sortItem");
       link.href = `#${ingredient}`;
       link.textContent = ingredient;
       this.dropdown.appendChild(link);
