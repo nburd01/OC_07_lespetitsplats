@@ -17,11 +17,27 @@ class App {
   async main() {
     this.faMark.style.display = "none";
     const cardsApiData = await this.cardsApi.getCards();
+    // Create a new array sorted by 'name'
+    const cardsDataByName = [...cardsApiData].sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+
+    // Create a new array sorted by 'id'
+    const cardsDataById = [...cardsApiData].sort((a, b) => a.id - b.id);
+
+    console.log(cardsDataByName);
+    console.log(cardsDataById);
     const cardsSection = document.querySelector(".cards");
     const sortSection = document.querySelector(".dropdown-content");
 
     //cards function
-    cardsApiData
+    cardsDataById
       .map((card) => new Card(card))
       .forEach((card) => {
         const templateCards = new CardTemplate(card);
@@ -32,7 +48,7 @@ class App {
     const arrayOfIngredients = [];
 
     //sort function
-    cardsApiData
+    cardsDataByName
       .map((card) => new Card(card))
       .forEach((card) => {
         const ingredients = card._ingredients || [];

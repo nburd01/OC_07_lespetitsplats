@@ -35,19 +35,8 @@ class CardsApi extends Api {
   // Get Medias data
   async getCards() {
     const response = await this.get();
-    const cardsData = response.recipes;
-    cardsData.sort(function (a, b) {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    });
-
-    console.log(cardsData);
-    return cardsData;
+    const cardsDatas = response.recipes;
+    return cardsDatas;
   }
 }
 
