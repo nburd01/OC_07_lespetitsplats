@@ -16,7 +16,11 @@ class App {
 
   async main() {
     this.faMark.style.display = "none";
+    const cardsSection = document.querySelector(".cards");
+    //Fetch data
     const cardsApiData = await this.cardsApi.getCards();
+
+    //DEUX TYPES DE TRIS
     // tri by 'name'
     const cardsDataByName = [...cardsApiData].sort((a, b) => {
       if (a.name < b.name) {
@@ -27,11 +31,8 @@ class App {
       }
       return 0;
     });
-
     // tri by 'id'
     const cardsDataById = [...cardsApiData].sort((a, b) => a.id - b.id);
-
-    const cardsSection = document.querySelector(".cards");
 
     //cards function
     cardsDataById
