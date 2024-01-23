@@ -13,14 +13,14 @@ class App {
     this.dropDown = document.querySelector("myDropdown");
     this.myInput = document.querySelector("#myInput");
   }
-
+  //
+  //imperative programming
+  //
   async main() {
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
     //Fetch data
     const cardsApiData = await this.cardsApi.getCards();
-
-    //DEUX TYPES DE TRIS
     // tri by 'name'
     const cardsDataByName = [...cardsApiData].sort((a, b) => {
       if (a.name < b.name) {
@@ -68,6 +68,9 @@ class App {
     });
     sortTemplate.updateDropdownContent();
 
+    //
+    //functional programming
+    //
     this.searchInput.addEventListener("input", () => {
       this.handleSearchInputChange();
     });
