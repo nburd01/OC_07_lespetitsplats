@@ -47,10 +47,10 @@ class App {
     });
     // tri by 'appliance'
     const cardsDataByUstensil = [...cardsApiData].sort((a, b) => {
-      if (a.ustensil < b.ustensil) {
+      if (a.ustensils < b.ustensils) {
         return -1;
       }
-      if (a.ustensil > b.ustensil) {
+      if (a.ustensils > b.ustensils) {
         return 1;
       }
       return 0;
@@ -157,6 +157,7 @@ class App {
       ...arrayOfAppliances,
       ...arrayOfUstensils,
     ];
+    console.log(arrayOfEverything);
 
     //
     //functional programming
@@ -174,11 +175,11 @@ class App {
     });
 
     this.myDropdownInput.addEventListener("input", () => {
-      this.filterDropdown();
+      this.filterDropdownInput();
     });
 
     this.mySearchInput.addEventListener("input", () => {
-      this.filterSearchbar();
+      this.filterSearchbarInput(arrayOfEverything);
     });
   }
 
@@ -198,30 +199,32 @@ class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterDropdown() {
-    let divV;
-    let aA;
+  filterDropdownInput() {
+    let divElement;
+    let aElement;
     let txtValue;
     var input, filter, ul, li, a, i;
     input = document.getElementById("myDropdownInput");
     filter = input.value.toUpperCase();
-    divV = document.getElementById("ingredientsDropdown");
-    aA = divV.getElementsByTagName("a");
-    for (i = 0; i < aA.length; i++) {
-      txtValue = aA[i].textContent || aA[i].innerText;
+    divElement = document.getElementById("ingredientsDropdown");
+    aElement = divElement.getElementsByTagName("a");
+    for (i = 0; i < aElement.length; i++) {
+      txtValue = aElement[i].textContent || aElement[i].innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        aA[i].style.display = "";
+        aElement[i].style.display = "";
       } else {
-        aA[i].style.display = "none";
+        aElement[i].style.display = "none";
       }
     }
   }
 
-  filterSearchbar() {
-    let input = this.searchInput.value;
-    if (input !== "") {
-      console.log(this.searchInput.value);
-    }
+  filterSearchbarInput(arrayOfEverything) {
+    this.searchInput.addEventListener("input", () => {
+      let input = this.searchInput.value;
+      if (arrayOfEverything.includes(input)) {
+        console.log(input);
+      }
+    });
   }
 }
 
