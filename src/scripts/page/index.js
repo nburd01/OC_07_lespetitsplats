@@ -99,6 +99,7 @@ class App {
           arrayOfAppliances.push(applianceName);
         }
       });
+
     arrayOfAppliances.forEach((appliance) => {
       sortTemplate.appendAppliancesName(appliance);
     });
@@ -156,7 +157,6 @@ class App {
       ...arrayOfAppliances,
       ...arrayOfUstensils,
     ];
-    console.log(arrayOfEverything);
 
     //
     //functional programming
