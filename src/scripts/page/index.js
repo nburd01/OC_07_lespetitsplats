@@ -200,17 +200,19 @@ class App {
   }
 
   filterDropdownInput() {
-    let divElement;
+    let ingredientsDropdownElement;
     let aElement;
     let txtValue;
-    var input, filter, ul, li, a, i;
+    var input, filterDropdown, i;
     input = document.getElementById("myDropdownInput");
-    filter = input.value.toUpperCase();
-    divElement = document.getElementById("ingredientsDropdown");
-    aElement = divElement.getElementsByTagName("a");
+    filterDropdown = input.value.toUpperCase();
+    //
+    ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
+    console.log(ingredientsDropdownElement);
+    aElement = ingredientsDropdownElement.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
       txtValue = aElement[i].textContent || aElement[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
         aElement[i].style.display = "";
       } else {
         aElement[i].style.display = "none";
@@ -219,11 +221,16 @@ class App {
   }
 
   filterSearchbarInput(arrayOfEverything) {
+    var input, filterSearchBar, i;
+    let txtValue;
+
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
-      if (arrayOfEverything.includes(input)) {
-        console.log(input);
-      }
+      let filterSearchBar = input.toUpperCase();
+      let matchingElements = arrayOfEverything.filter((element) => {
+        return element.toUpperCase().includes(filterSearchBar);
+      });
+      console.log(matchingElements);
     });
   }
 }
