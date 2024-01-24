@@ -69,15 +69,13 @@ class App {
     // tri by 'id'
     const cardsDataById = [...cardsApiData].sort((a, b) => a.id - b.id);
 
-    //cards function
+    //this creates cards
     cardsDataById
       .map((card) => new Card(card))
       .forEach((card) => {
         const templateCards = new CardTemplate(card);
         cardsSection.appendChild(templateCards.createCard());
       });
-
-    //sort ingredients, appliances and ustensils for searchbar
 
     const arrayOfIngredients = [];
     const arrayOfAppliances = [];
@@ -157,7 +155,7 @@ class App {
       ...arrayOfAppliances,
       ...arrayOfUstensils,
     ];
-    console.log(arrayOfEverything);
+    // console.log(arrayOfEverything);
 
     //
     //functional programming
@@ -179,7 +177,7 @@ class App {
     });
 
     this.mySearchInput.addEventListener("input", () => {
-      this.filterSearchbarInput(arrayOfEverything);
+      this.filterSearchbarInput(arrayOfEverything, cardsDataById);
     });
   }
 
@@ -220,7 +218,7 @@ class App {
     }
   }
 
-  filterSearchbarInput(arrayOfEverything) {
+  filterSearchbarInput(arrayOfEverything, cardsApiData) {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
       let filterSearchBar = input.toUpperCase();
@@ -232,12 +230,52 @@ class App {
         return element.toUpperCase().includes(filterSearchBar);
       });
 
-      this.updateCardsOnSearchBarInput(matchingElements);
+      this.updateCardsOnSearchBarInput(matchingElements, cardsApiData);
     });
   }
 
-  updateCardsOnSearchBarInput(matchingElements) {
-    console.log(matchingElements);
+  updateCardsOnSearchBarInput(matchingElements, cardsApiData) {
+    // Mapping over each element in matchingElements and converting to uppercase
+    let matchingElementsUppercase = matchingElements.map((element) =>
+      element.toUpperCase()
+    );
+
+    // Filtering cardsApiData to keep only objects that contain matching elements
+    let newMatchingElements = cardsApiData.filter((card) => {
+      // Convert all properties of the card object to uppercase
+      let cardUppercase = Object.fromEntries(
+        Object.entries(card).map(([key, value]) => [
+          key,
+          String(value).toUpperCase(),
+        ])
+      );
+
+      // Check if any property of the card object contains any matching element
+      return matchingElementsUppercase.some((matchingElement) => {
+        return Object.values(cardUppercase).some((property) =>
+          property.includes(matchingElement)
+        );
+      });
+    });
+
+    // Console.log cardsDataById that match
+    console.log(newMatchingElements);
+
+    // Update your cardsSection with the filtered data
+    this.updateCards(newMatchingElements);
+  }
+
+  // Add a method to update the cards in the UI
+  updateCards(cardsData) {
+    const cardsSection = document.querySelector(".cards");
+    cardsSection.innerHTML = ""; // Clear existing cards
+
+    cardsData
+      .map((card) => new Card(card))
+      .forEach((card) => {
+        const templateCards = new CardTemplate(card);
+        cardsSection.appendChild(templateCards.createCard());
+      });
   }
 }
 
