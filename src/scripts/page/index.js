@@ -224,11 +224,20 @@ class App {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
       let filterSearchBar = input.toUpperCase();
-      let matchingElements = arrayOfEverything.filter((element) => {
+
+      // Declare matchingElements here
+      let matchingElements;
+
+      matchingElements = arrayOfEverything.filter((element) => {
         return element.toUpperCase().includes(filterSearchBar);
       });
-      console.log(matchingElements);
+
+      this.updateCardsOnSearchBarInput(matchingElements);
     });
+  }
+
+  updateCardsOnSearchBarInput(matchingElements) {
+    console.log(matchingElements);
   }
 }
 
