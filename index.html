@@ -56,7 +56,8 @@
         <form class="w-full">
           <label class="relative block">
             <input
-              class="search-input w-full h-20 bg-white placeholder:font-italitc border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
+              class="mySearchInput w-full h-20 bg-white placeholder:font-italitc border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
+              id="mySearchInput"
               placeholder="Rechercher une recette, un ingrédient, ..."
               type="text"
             />
@@ -91,36 +92,18 @@
           <button class="dropbtn boxSort mt-5 p-4 rounded-lg">
             Ingrédients
           </button>
-          <div id="myDropdown" class="dropdown-content">
-            <input type="text" placeholder="Search.." id="myInput" />
+          <div id="ingredientsDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myDropdownInput" />
             <a id="tags" href="#tags"></a>
           </div>
         </div>
-        <div>
-          <select
-            class="boxSort m-5 p-4 rounded-lg textSort"
-            name="cars"
-            id="appareils"
-          >
-            <option value="" disabled selected>Appareils</option>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select>
-        </div>
-        <div>
-          <select
-            class="boxSort m-5 p-4 rounded-lg textSort"
-            name="cars"
-            id="ustensiles"
-          >
-            <option value="" disabled selected>Ustensiles</option>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select>
+        <!--  -->
+        <div class="dropdown">
+          <button class="dropbtn boxSort mt-5 p-4 rounded-lg">Appareils</button>
+          <div id="appliancesDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myDropdownInput" />
+            <a id="tags" href="#tags"></a>
+          </div>
         </div>
       </div>
       <div class="titleSort w-3/6 text-right">1500 recettes</div>

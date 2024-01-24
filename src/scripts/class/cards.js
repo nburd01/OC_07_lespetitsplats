@@ -9,6 +9,7 @@ class Card {
     this._name = data.name;
     this._serving = data.serving;
     this._time = data.time;
+    this._ustensils = data.ustensils;
   }
 }
 export { Card };

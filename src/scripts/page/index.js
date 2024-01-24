@@ -7,22 +7,26 @@ class App {
   constructor() {
     this.cardsApi = new CardsApi("/src/data/recipes.json");
     this.cardsSection = document.querySelector(".cards");
-    this.searchInput = document.querySelector(".search-input");
+    this.searchInput = document.querySelector(".mySearchInput");
     this.faMark = document.querySelector(".fa-solid");
     this.dropBtn = document.querySelector(".dropbtn");
-    this.dropDown = document.querySelector("myDropdown");
-    this.myInput = document.querySelector("#myInput");
+    this.ingredientsDropDown = document.querySelector("ingredientsDropdown");
+    this.appliancedDropDown = document.querySelector("appliancesDropdown");
+    this.myDropdownInput = document.querySelector("#myDropdownInput");
+    this.mySearchInput = document.querySelector("#mySearchInput");
   }
   //
   //imperative programming
   //
   async main() {
+    const sortTemplate = new SortTemplate();
+
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
     //Fetch data
     const cardsApiData = await this.cardsApi.getCards();
     // tri by 'name'
-    const cardsDataByName = [...cardsApiData].sort((a, b) => {
+    const cardsDataByIngredient = [...cardsApiData].sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -31,6 +35,37 @@ class App {
       }
       return 0;
     });
+    // tri by 'appliance'
+    const cardsDataByAppliance = [...cardsApiData].sort((a, b) => {
+      if (a.appliance < b.appliance) {
+        return -1;
+      }
+      if (a.appliance > b.appliance) {
+        return 1;
+      }
+      return 0;
+    });
+    // tri by 'appliance'
+    const cardsDataByUstensil = [...cardsApiData].sort((a, b) => {
+      if (a.ustensil < b.ustensil) {
+        return -1;
+      }
+      if (a.ustensil > b.ustensil) {
+        return 1;
+      }
+      return 0;
+    });
+    // tri by 'everything'
+    const cardsDataByEverything = [...cardsApiData].sort((a, b) => {
+      if (a.id < b.id) {
+        return -1;
+      }
+      if (a.id > b.id) {
+        return 1;
+      }
+      return 0;
+    });
+
     // tri by 'id'
     const cardsDataById = [...cardsApiData].sort((a, b) => a.id - b.id);
 
@@ -42,11 +77,35 @@ class App {
         cardsSection.appendChild(templateCards.createCard());
       });
 
-    const sortTemplate = new SortTemplate();
-    const arrayOfIngredients = [];
+    //sort ingredients, appliances and ustensils for searchbar
 
-    //sort function
-    cardsDataByName
+    const arrayOfIngredients = [];
+    const arrayOfAppliances = [];
+    const arrayOfUstensils = [];
+
+    //sort appliance function
+    cardsDataByAppliance
+      .map((card) => new Card(card))
+      .forEach((card) => {
+        const appliance = card._appliance || [];
+        const applianceNameFirst = appliance.charAt(0);
+        const applianceNameRest = appliance.slice(1);
+        const applianceName = applianceNameFirst + applianceNameRest;
+        let pluralapplianceName = applianceName + "s";
+        if (
+          !arrayOfAppliances.includes(applianceName) &&
+          !arrayOfAppliances.includes(pluralapplianceName)
+        ) {
+          arrayOfAppliances.push(applianceName);
+        }
+      });
+    arrayOfAppliances.forEach((appliance) => {
+      sortTemplate.appendAppliancesName(appliance);
+    });
+    sortTemplate.updateDropdownAppliances();
+
+    //sort ingredient function
+    cardsDataByIngredient
       .map((card) => new Card(card))
       .forEach((card) => {
         const ingredients = card._ingredients || [];
@@ -64,15 +123,46 @@ class App {
         });
       });
     arrayOfIngredients.forEach((ingredient) => {
-      sortTemplate.appendCardName(ingredient);
+      sortTemplate.appendIngredientsName(ingredient);
     });
-    sortTemplate.updateDropdownContent();
+    sortTemplate.updateDropdownIngredients();
+
+    //sort ustensil function
+    cardsDataByUstensil
+      .map((card) => new Card(card))
+      .forEach((card) => {
+        const ustensils = card._ustensils || [];
+        ustensils.forEach((ustensil) => {
+          const ustensilNameFirst = ustensil.charAt(0);
+          const ustensilNameRest = ustensil.slice(1);
+          const ustensilName = ustensilNameFirst + ustensilNameRest;
+          let pluralustensilName = ustensilName + "s";
+          if (
+            !arrayOfUstensils.includes(ustensilName) &&
+            !arrayOfUstensils.includes(pluralustensilName)
+          ) {
+            arrayOfUstensils.push(ustensilName);
+          }
+        });
+      });
+    arrayOfUstensils.forEach((ustensil) => {
+      sortTemplate.appendUstensilsName(ustensil);
+    });
+    sortTemplate.updateDropdownUstensils();
+
+    //sort everything function
+    const arrayOfEverything = [
+      ...arrayOfIngredients,
+      ...arrayOfAppliances,
+      ...arrayOfUstensils,
+    ];
+    console.log(arrayOfEverything);
 
     //
     //functional programming
     //
     this.searchInput.addEventListener("input", () => {
-      this.handleSearchInputChange();
+      this.handleSearchBarInputChange();
     });
 
     this.faMark.addEventListener("click", () => {
@@ -80,15 +170,19 @@ class App {
     });
 
     this.dropBtn.addEventListener("click", () => {
-      document.getElementById("myDropdown").classList.toggle("show");
+      document.getElementById("ingredientsDropdown").classList.toggle("show");
     });
 
-    this.myInput.addEventListener("input", () => {
-      this.filterFunction();
+    this.myDropdownInput.addEventListener("input", () => {
+      this.filterDropdown();
+    });
+
+    this.mySearchInput.addEventListener("input", () => {
+      this.filterSearchbar();
     });
   }
 
-  handleSearchInputChange() {
+  handleSearchBarInputChange() {
     if (this.searchInput.value !== "") {
       this.faMark.style.display = "block";
     } else {
@@ -104,14 +198,14 @@ class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterFunction() {
+  filterDropdown() {
     let divV;
     let aA;
     let txtValue;
     var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput");
+    input = document.getElementById("myDropdownInput");
     filter = input.value.toUpperCase();
-    divV = document.getElementById("myDropdown");
+    divV = document.getElementById("ingredientsDropdown");
     aA = divV.getElementsByTagName("a");
     for (i = 0; i < aA.length; i++) {
       txtValue = aA[i].textContent || aA[i].innerText;
@@ -120,6 +214,13 @@ class App {
       } else {
         aA[i].style.display = "none";
       }
+    }
+  }
+
+  filterSearchbar() {
+    let input = this.searchInput.value;
+    if (input !== "") {
+      console.log(this.searchInput.value);
     }
   }
 }

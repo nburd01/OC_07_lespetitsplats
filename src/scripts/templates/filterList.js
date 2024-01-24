@@ -1,25 +1,64 @@
 // sortTemplate.js
 class SortTemplate {
   constructor() {
-    this.dropdown = document.getElementById("myDropdown");
-    this.cardNames = [];
+    this.dropdown = document.getElementById("ingredientsDropdown");
+    this.ingredientNames = [];
+    this.applianceNames = [];
+    this.ustensilNames = [];
   }
-
-  clearDropdownContent() {
+  clearDropdownIngredients() {
     this.ingredients = [];
-    this.updateDropdownContent();
+    this.updateDropdownIngredients();
   }
 
-  appendCardName(ingredient) {
-    this.cardNames.push(ingredient);
+  appendIngredientsName(ingredient) {
+    this.ingredientNames.push(ingredient);
   }
 
-  updateDropdownContent() {
-    this.cardNames.forEach((ingredient) => {
+  updateDropdownIngredients() {
+    this.ingredientNames.forEach((ingredient) => {
       const link = document.createElement("a");
       link.classList.add("sortItem");
       link.href = `#${ingredient}`;
       link.textContent = ingredient;
+      this.dropdown.appendChild(link);
+    });
+  }
+  //
+  clearDropdownAppliances() {
+    this.ingredients = [];
+    this.updateDropdownAppliances();
+  }
+
+  appendAppliancesName(appliance) {
+    this.applianceNames.push(appliance);
+  }
+
+  updateDropdownAppliances() {
+    this.applianceNames.forEach((appliance) => {
+      const link = document.createElement("a");
+      link.classList.add("sortItem");
+      link.href = `#${appliance}`;
+      link.textContent = appliance;
+      this.dropdown.appendChild(link);
+    });
+  }
+  //
+  clearDropdownUstensils() {
+    this.ustensils = [];
+    this.updateDropdownUstensils();
+  }
+
+  appendUstensilsName(ustensil) {
+    this.ustensilNames.push(ustensil);
+  }
+
+  updateDropdownUstensils() {
+    this.ustensilNames.forEach((ustensil) => {
+      const link = document.createElement("a");
+      link.classList.add("sortItem");
+      link.href = `#${ustensil}`;
+      link.textContent = ustensil;
       this.dropdown.appendChild(link);
     });
   }
