@@ -221,9 +221,6 @@ class App {
   }
 
   filterSearchbarInput(arrayOfEverything) {
-    var input, filterSearchBar, i;
-    let txtValue;
-
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
       let filterSearchBar = input.toUpperCase();
