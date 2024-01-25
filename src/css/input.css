@@ -204,7 +204,8 @@ input:focus::placeholder {
 /* The search field */
 #myDropdownInputIngredient,
 #myDropdownInputAppliances,
-#myDropdownInputUstensils {
+#myDropdownInputUstensils,
+#myDropdownInput {
   box-sizing: border-box;
   background-image: url("../../src/assets/images/searchicon.png");
   background-position: 14px 12px;
@@ -224,14 +225,6 @@ input:focus::placeholder {
   margin-bottom: 0.5em;
   padding: 0.3em;
   border-radius: 2px;
-}
-
-#myDropdownInput {
-  border-radius: 2px;
-  width: 165px;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  padding: 0.3em;
 }
 
 /* The search field when it gets focus/clicked on */
