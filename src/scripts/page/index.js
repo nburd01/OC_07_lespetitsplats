@@ -139,7 +139,7 @@ class App {
       .forEach((card) => {
         const ustensils = card._ustensils || [];
         ustensils.forEach((ustensil) => {
-          const ustensilNameFirst = ustensil.charAt(0);
+          const ustensilNameFirst = ustensil.charAt(0).toUpperCase();
           const ustensilNameRest = ustensil.slice(1);
           const ustensilName = ustensilNameFirst + ustensilNameRest;
           let pluralustensilName = ustensilName + "s";
