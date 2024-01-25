@@ -151,9 +151,6 @@ class App {
       ...arrayOfUstensils,
     ];
 
-    //
-    //functional programming
-    //
     this.searchInput.addEventListener("input", () => {
       this.handleSearchBarInputChange();
     });
@@ -227,7 +224,7 @@ class App {
     });
     //Searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
-      this.filterSearchbarInput(arrayOfEverything, createCards);
+      this.filterSearchbarInputForCards(arrayOfEverything, createCards);
     });
   }
 
@@ -307,7 +304,7 @@ class App {
     }
   }
 
-  filterSearchbarInput(arrayOfEverything, fetchedDataFromApi) {
+  filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
       let filterSearchBar = input.toUpperCase();
