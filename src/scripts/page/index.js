@@ -187,7 +187,35 @@ class App {
     //
     document.addEventListener("click", function (event) {
       const appliancesDropdown = document.getElementById("appliancesDropdown");
-      const elem = document.getElementById("test-test");
+      const elem = document.getElementById("dropDownAppliances");
+
+      if (appliancesDropdown.classList.contains("show")) {
+        const outsideClick = !elem.contains(event.target);
+
+        if (outsideClick) {
+          appliancesDropdown.classList.remove("show");
+        } else {
+          appliancesDropdown.classList.add("show");
+        }
+      }
+    });
+    document.addEventListener("click", function (event) {
+      const appliancesDropdown = document.getElementById("ustensilsDropdown");
+      const elem = document.getElementById("dropDownUstensils");
+
+      if (appliancesDropdown.classList.contains("show")) {
+        const outsideClick = !elem.contains(event.target);
+
+        if (outsideClick) {
+          appliancesDropdown.classList.remove("show");
+        } else {
+          appliancesDropdown.classList.add("show");
+        }
+      }
+    });
+    document.addEventListener("click", function (event) {
+      const appliancesDropdown = document.getElementById("ingredientsDropdown");
+      const elem = document.getElementById("dropDownIngredients");
 
       if (appliancesDropdown.classList.contains("show")) {
         const outsideClick = !elem.contains(event.target);
