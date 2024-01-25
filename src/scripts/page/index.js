@@ -62,18 +62,15 @@ class App {
       return 0;
     });
     // tri by 'id'
-    const createCardsDataById = [...fetchedDataFromApi].sort(
-      (a, b) => a.id - b.id
-    );
+    const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
 
     //this creates cards
-    createCardsDataById
+    createCards
       .map((card) => new Card(card))
       .forEach((card) => {
         const templateCards = new CardTemplate(card);
         cardsSection.appendChild(templateCards.createCard());
       });
-    console.log("fetchedDataFromApi", fetchedDataFromApi);
 
     const arrayOfIngredients = [];
     const arrayOfAppliances = [];
@@ -153,7 +150,6 @@ class App {
       ...arrayOfAppliances,
       ...arrayOfUstensils,
     ];
-    // console.log(arrayOfEverything);
 
     //
     //functional programming
@@ -165,7 +161,7 @@ class App {
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
     });
-
+    // show dropdown on btn click
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
     });
@@ -175,7 +171,7 @@ class App {
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
-    //
+    //hide dropdown on page click
     document.addEventListener("click", function (event) {
       const appliancesDropdown = document.getElementById("appliancesDropdown");
       const elem = document.getElementById("dropDownAppliances");
@@ -219,6 +215,7 @@ class App {
       }
     });
 
+    //Dropdown input changes
     this.myDropdownInputIngredients.addEventListener("input", () => {
       this.filterDropdownInputIngredients();
     });
@@ -228,9 +225,9 @@ class App {
     this.myDropdownInputUstensils.addEventListener("input", () => {
       this.filterDropdownInputUstensils();
     });
-
+    //Searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
-      this.filterSearchbarInput(arrayOfEverything, createCardsDataById);
+      this.filterSearchbarInput(arrayOfEverything, createCards);
     });
   }
 
@@ -243,7 +240,6 @@ class App {
         "Rechercher une recette, un ingrédient, ...";
     }
   }
-
   handleClearInput() {
     this.searchInput.value = "";
     this.faMark.style.display = "none";
@@ -352,18 +348,12 @@ class App {
         );
       });
     });
-
-    // Console.log createCardsDataById that match
-    console.log(newMatchingElements);
-
-    // Update your cardsSection with the filtered data
     this.updateCards(newMatchingElements);
   }
 
-  // Add a method to update the cards in the UI
   updateCards(cardsData) {
     const cardsSection = document.querySelector(".cards");
-    cardsSection.innerHTML = ""; // Clear existing cards
+    cardsSection.innerHTML = "";
 
     cardsData
       .map((card) => new Card(card))
