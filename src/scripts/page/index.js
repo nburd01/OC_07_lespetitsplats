@@ -326,14 +326,11 @@ class App {
   //todo : compare arrays and see why everyhting is not appearing on filter
 
   updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi) {
-    // Mapping over each element in matchingElements and converting to uppercase
     let matchingElementsUppercase = matchingElements.map((element) =>
       element.toUpperCase()
     );
 
-    // Filtering fetchedDataFromApi to keep only objects that contain matching elements
     let newMatchingElements = fetchedDataFromApi.filter((card) => {
-      // Convert all properties of the card object to uppercase
       let cardUppercase = Object.fromEntries(
         Object.entries(card).map(([key, value]) => [
           key,
@@ -341,7 +338,6 @@ class App {
         ])
       );
 
-      // Check if any property of the card object contains any matching element
       return matchingElementsUppercase.some((matchingElement) => {
         return Object.values(cardUppercase).some((property) =>
           property.includes(matchingElement)
@@ -350,7 +346,6 @@ class App {
     });
     this.updateCards(newMatchingElements);
   }
-
   updateCards(cardsData) {
     const cardsSection = document.querySelector(".cards");
     cardsSection.innerHTML = "";
