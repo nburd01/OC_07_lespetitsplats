@@ -1284,6 +1284,11 @@ input:focus::placeholder {
   position: absolute;
   top: 4em;
   padding-bottom: 3em;
+  z-index: 3;
+}
+
+.hide {
+  display: none;
 }
 
 #tags {

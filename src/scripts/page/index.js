@@ -184,6 +184,21 @@ class App {
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
+    //
+    document.addEventListener("click", function (event) {
+      const appliancesDropdown = document.getElementById("appliancesDropdown");
+      const elem = document.getElementById("test-test");
+
+      if (appliancesDropdown.classList.contains("show")) {
+        const outsideClick = !elem.contains(event.target);
+
+        if (outsideClick) {
+          appliancesDropdown.classList.remove("show");
+        } else {
+          appliancesDropdown.classList.add("show");
+        }
+      }
+    });
 
     this.myDropdownInputIngredients.addEventListener("input", () => {
       this.filterDropdownInputIngredients();
