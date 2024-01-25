@@ -30,9 +30,9 @@ class App {
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
     //Fetch data
-    const cardsApiData = await this.cardsApi.getCards();
+    const fetchedDataFromApi = await this.cardsApi.getCards();
     // tri by 'name'
-    const cardsDataByIngredient = [...cardsApiData].sort((a, b) => {
+    const cardsDataByIngredient = [...fetchedDataFromApi].sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -41,9 +41,8 @@ class App {
       }
       return 0;
     });
-
     // tri by 'appliance'
-    const cardsDataByAppliance = [...cardsApiData].sort((a, b) => {
+    const cardsDataByAppliance = [...fetchedDataFromApi].sort((a, b) => {
       if (a.appliance < b.appliance) {
         return -1;
       }
@@ -53,7 +52,7 @@ class App {
       return 0;
     });
     // tri by 'appliance'
-    const cardsDataByUstensil = [...cardsApiData].sort((a, b) => {
+    const cardsDataByUstensil = [...fetchedDataFromApi].sort((a, b) => {
       if (a.ustensils < b.ustensils) {
         return -1;
       }
@@ -62,27 +61,19 @@ class App {
       }
       return 0;
     });
-    // tri by 'everything'
-    const cardsDataByEverything = [...cardsApiData].sort((a, b) => {
-      if (a.id < b.id) {
-        return -1;
-      }
-      if (a.id > b.id) {
-        return 1;
-      }
-      return 0;
-    });
-
     // tri by 'id'
-    const cardsDataById = [...cardsApiData].sort((a, b) => a.id - b.id);
+    const createCardsDataById = [...fetchedDataFromApi].sort(
+      (a, b) => a.id - b.id
+    );
 
     //this creates cards
-    cardsDataById
+    createCardsDataById
       .map((card) => new Card(card))
       .forEach((card) => {
         const templateCards = new CardTemplate(card);
         cardsSection.appendChild(templateCards.createCard());
       });
+    console.log("fetchedDataFromApi", fetchedDataFromApi);
 
     const arrayOfIngredients = [];
     const arrayOfAppliances = [];
@@ -239,7 +230,7 @@ class App {
     });
 
     this.mySearchInput.addEventListener("input", () => {
-      this.filterSearchbarInput(arrayOfEverything, cardsDataById);
+      this.filterSearchbarInput(arrayOfEverything, createCardsDataById);
     });
   }
 
@@ -320,7 +311,7 @@ class App {
     }
   }
 
-  filterSearchbarInput(arrayOfEverything, cardsApiData) {
+  filterSearchbarInput(arrayOfEverything, fetchedDataFromApi) {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
       let filterSearchBar = input.toUpperCase();
@@ -332,20 +323,20 @@ class App {
         return element.toUpperCase().includes(filterSearchBar);
       });
 
-      this.updateCardsOnSearchBarInput(matchingElements, cardsApiData);
+      this.updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi);
     });
   }
 
   //todo : compare arrays and see why everyhting is not appearing on filter
 
-  updateCardsOnSearchBarInput(matchingElements, cardsApiData) {
+  updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi) {
     // Mapping over each element in matchingElements and converting to uppercase
     let matchingElementsUppercase = matchingElements.map((element) =>
       element.toUpperCase()
     );
 
-    // Filtering cardsApiData to keep only objects that contain matching elements
-    let newMatchingElements = cardsApiData.filter((card) => {
+    // Filtering fetchedDataFromApi to keep only objects that contain matching elements
+    let newMatchingElements = fetchedDataFromApi.filter((card) => {
       // Convert all properties of the card object to uppercase
       let cardUppercase = Object.fromEntries(
         Object.entries(card).map(([key, value]) => [
@@ -362,7 +353,7 @@ class App {
       });
     });
 
-    // Console.log cardsDataById that match
+    // Console.log createCardsDataById that match
     console.log(newMatchingElements);
 
     // Update your cardsSection with the filtered data

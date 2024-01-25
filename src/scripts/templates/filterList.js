@@ -8,6 +8,7 @@ class SortTemplate {
     this.applianceNames = [];
     this.ustensilNames = [];
   }
+  //Ingredients
   clearDropdownIngredients() {
     this.ingredients = [];
     this.updateDropdownIngredients();
@@ -26,16 +27,15 @@ class SortTemplate {
       this.ingredientsDropdown.appendChild(link);
     });
   }
-  //
+
+  //Appliances
   clearDropdownAppliances() {
     this.ingredients = [];
     this.updateDropdownAppliances();
   }
-
   appendAppliancesName(appliance) {
     this.applianceNames.push(appliance);
   }
-
   updateDropdownAppliances() {
     this.applianceNames.forEach((appliance) => {
       const link = document.createElement("a");
@@ -45,16 +45,15 @@ class SortTemplate {
       this.appliancesDropdown.appendChild(link);
     });
   }
-  //
+
+  //Ustensils
   clearDropdownUstensils() {
     this.ustensils = [];
     this.updateDropdownUstensils();
   }
-
   appendUstensilsName(ustensil) {
     this.ustensilNames.push(ustensil);
   }
-
   updateDropdownUstensils() {
     this.ustensilNames.forEach((ustensil) => {
       const link = document.createElement("a");
