@@ -15,6 +15,12 @@ class App {
     this.myDropdownInputIngredients = document.querySelector(
       "#myDropdownInputIngredients"
     );
+    this.myDropdownInputAppliances = document.querySelector(
+      "#myDropdownInputAppliances"
+    );
+    this.myDropdownInputUstensils = document.querySelector(
+      "#myDropdownInputUstensils"
+    );
     this.mySearchInput = document.querySelector("#mySearchInput");
   }
 
@@ -180,7 +186,13 @@ class App {
     });
 
     this.myDropdownInputIngredients.addEventListener("input", () => {
-      this.filterDropdownInput();
+      this.filterDropdownInputIngredients();
+    });
+    this.myDropdownInputAppliances.addEventListener("input", () => {
+      this.filterDropdownInputAppliances();
+    });
+    this.myDropdownInputUstensils.addEventListener("input", () => {
+      this.filterDropdownInputUstensils();
     });
 
     this.mySearchInput.addEventListener("input", () => {
@@ -204,7 +216,7 @@ class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterDropdownInput() {
+  filterDropdownInputIngredients() {
     let ingredientsDropdownElement;
     let aElement;
     let txtValue;
@@ -215,6 +227,46 @@ class App {
     ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
     console.log(ingredientsDropdownElement);
     aElement = ingredientsDropdownElement.getElementsByTagName("a");
+    for (i = 0; i < aElement.length; i++) {
+      txtValue = aElement[i].textContent || aElement[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+        aElement[i].style.display = "";
+      } else {
+        aElement[i].style.display = "none";
+      }
+    }
+  }
+  filterDropdownInputAppliances() {
+    let appliancesDropdownElement;
+    let aElement;
+    let txtValue;
+    var input, filterDropdown, i;
+    input = document.getElementById("myDropdownInputAppliances");
+    filterDropdown = input.value.toUpperCase();
+    //
+    appliancesDropdownElement = document.getElementById("appliancesDropdown");
+    console.log(appliancesDropdownElement);
+    aElement = appliancesDropdownElement.getElementsByTagName("a");
+    for (i = 0; i < aElement.length; i++) {
+      txtValue = aElement[i].textContent || aElement[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+        aElement[i].style.display = "";
+      } else {
+        aElement[i].style.display = "none";
+      }
+    }
+  }
+  filterDropdownInputUstensils() {
+    let ustensilsDropdownElement;
+    let aElement;
+    let txtValue;
+    var input, filterDropdown, i;
+    input = document.getElementById("myDropdownInputUstensils");
+    filterDropdown = input.value.toUpperCase();
+    //
+    ustensilsDropdownElement = document.getElementById("ustensilsDropdown");
+    console.log(ustensilsDropdownElement);
+    aElement = ustensilsDropdownElement.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
       txtValue = aElement[i].textContent || aElement[i].innerText;
       if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
