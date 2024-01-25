@@ -45,7 +45,7 @@
         class="container flex items-center justify-center mx-auto px-16 h-48 w-auto"
       >
         <h1 class="titleHome mt-6 w-4/6">
-          Cherchez parmi plus de 1500 recettes du quotidien,simples et
+          Cherchez parmi plus de 1500 recettes du quotidien, simples et
           délicieuses
         </h1>
       </div>
@@ -93,13 +93,25 @@
             Ingrédients
           </button>
           <div id="ingredientsDropdown" class="dropdown-content">
-            <input type="text" placeholder="Search.." id="myDropdownInput" />
+            <div class="myDropdownInputDiv">
+              <input type="text" placeholder="Search.." id="myDropdownInput" />
+            </div>
             <a id="tags" href="#tags"></a>
           </div>
         </div>
         <!--  -->
         <div class="dropdown">
           <button class="dropbtn boxSort mt-5 p-4 rounded-lg">Appareils</button>
+          <div id="appliancesDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myDropdownInput" />
+            <a id="tags" href="#tags"></a>
+          </div>
+        </div>
+        <!--  -->
+        <div class="dropdown">
+          <button class="dropbtn boxSort mt-5 p-4 rounded-lg">
+            Ustensiles
+          </button>
           <div id="appliancesDropdown" class="dropdown-content">
             <input type="text" placeholder="Search.." id="myDropdownInput" />
             <a id="tags" href="#tags"></a>

@@ -234,6 +234,7 @@ input:focus::placeholder {
   display: block;
   position: absolute;
   top: 4em;
+  padding-bottom: 3em;
 }
 #tags {
   display: none;
@@ -243,9 +244,30 @@ input:focus::placeholder {
   width: 195px;
 }
 
-#myDropdownInput {
+.ingredientsDropdown {
+  display: flex;
+  align-items: center;
+}
+
+.myDropdownInputDiv {
+  background-color: white;
   width: 195px;
-  padding: 1em 0 0.5em 1em;
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#myDropdownInput {
+  border-radius: 2px;
+  width: 165px;
+  border: 1px solid var(--Light-Grey, #c6c6c6);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sort {
