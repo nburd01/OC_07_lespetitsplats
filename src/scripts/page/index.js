@@ -12,7 +12,9 @@ class App {
     this.ingredientsDropBtn = document.querySelector(".ingredientsDropBtn");
     this.ustensilsDropBtn = document.querySelector(".ustensilsDropBtn");
     this.appliancesDropBtn = document.querySelector(".appliancesDropBtn");
-    this.myDropdownInput = document.querySelector("#myDropdownInput");
+    this.myDropdownInputIngredients = document.querySelector(
+      "#myDropdownInputIngredients"
+    );
     this.mySearchInput = document.querySelector("#mySearchInput");
   }
 
@@ -177,7 +179,7 @@ class App {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
 
-    this.myDropdownInput.addEventListener("input", () => {
+    this.myDropdownInputIngredients.addEventListener("input", () => {
       this.filterDropdownInput();
     });
 
@@ -207,7 +209,7 @@ class App {
     let aElement;
     let txtValue;
     var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInput");
+    input = document.getElementById("myDropdownInputIngredients");
     filterDropdown = input.value.toUpperCase();
     //
     ingredientsDropdownElement = document.getElementById("ingredientsDropdown");

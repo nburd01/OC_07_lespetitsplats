@@ -202,7 +202,7 @@ input:focus::placeholder {
 } */
 
 /* The search field */
-#myDropdownInputIngredient,
+#myDropdownInputIngredients,
 #myDropdownInputAppliances,
 #myDropdownInputUstensils,
 #myDropdownInput {
