@@ -234,6 +234,8 @@ class App {
     });
   }
 
+  //todo : compare arrays and see why everyhting is not appearing on filter
+
   updateCardsOnSearchBarInput(matchingElements, cardsApiData) {
     // Mapping over each element in matchingElements and converting to uppercase
     let matchingElementsUppercase = matchingElements.map((element) =>

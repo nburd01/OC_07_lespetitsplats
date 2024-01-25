@@ -175,6 +175,7 @@ input:focus::placeholder {
   cursor: pointer;
   width: 195px;
   text-align: justify;
+  margin-right: 4em;
 }
 
 /* Dropdown button on hover & focus */
@@ -242,6 +243,15 @@ input:focus::placeholder {
   width: 195px;
 }
 
+#myDropdownInput {
+  width: 195px;
+  padding: 1em 0 0.5em 1em;
+}
+
+.sort {
+  width: 86em;
+  margin-bottom: 2em;
+}
 @media screen and (min-width: 1025px) {
   .fa-solid {
     position: absolute;
