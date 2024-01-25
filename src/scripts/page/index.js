@@ -320,6 +320,8 @@ class App {
     });
   }
 
+  filterSearchbarInputForFilters() {}
+
   //todo : compare arrays and see why everyhting is not appearing on filter
 
   updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi) {
