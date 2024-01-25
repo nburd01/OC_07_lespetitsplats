@@ -15,9 +15,7 @@ class App {
     this.myDropdownInput = document.querySelector("#myDropdownInput");
     this.mySearchInput = document.querySelector("#mySearchInput");
   }
-  //
-  //imperative programming
-  //
+
   async main() {
     const sortTemplate = new SortTemplate();
 
@@ -35,6 +33,7 @@ class App {
       }
       return 0;
     });
+
     // tri by 'appliance'
     const cardsDataByAppliance = [...cardsApiData].sort((a, b) => {
       if (a.appliance < b.appliance) {

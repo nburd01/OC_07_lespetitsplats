@@ -1,7 +1,9 @@
 // sortTemplate.js
 class SortTemplate {
   constructor() {
-    this.dropdown = document.getElementById("ingredientsDropdown");
+    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    this.appliancesDropdown = document.getElementById("appliancesDropdown");
+    this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
     this.ingredientNames = [];
     this.applianceNames = [];
     this.ustensilNames = [];
@@ -17,11 +19,12 @@ class SortTemplate {
 
   updateDropdownIngredients() {
     this.ingredientNames.forEach((ingredient) => {
+      console.log(ingredient);
       const link = document.createElement("a");
-      link.classList.add("sortItem");
+      link.classList.add("sortIngredients");
       link.href = `#${ingredient}`;
       link.textContent = ingredient;
-      this.dropdown.appendChild(link);
+      this.ingredientsDropdown.appendChild(link);
     });
   }
   //
@@ -37,10 +40,10 @@ class SortTemplate {
   updateDropdownAppliances() {
     this.applianceNames.forEach((appliance) => {
       const link = document.createElement("a");
-      link.classList.add("sortItem");
+      link.classList.add("sortAppliances");
       link.href = `#${appliance}`;
       link.textContent = appliance;
-      this.dropdown.appendChild(link);
+      this.appliancesDropdown.appendChild(link);
     });
   }
   //
@@ -56,10 +59,10 @@ class SortTemplate {
   updateDropdownUstensils() {
     this.ustensilNames.forEach((ustensil) => {
       const link = document.createElement("a");
-      link.classList.add("sortItem");
+      link.classList.add("sortUstensils");
       link.href = `#${ustensil}`;
       link.textContent = ustensil;
-      this.dropdown.appendChild(link);
+      this.ustensilsDropdown.appendChild(link);
     });
   }
 }
