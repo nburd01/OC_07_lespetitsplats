@@ -12,17 +12,7 @@ class App {
     this.ingredientsDropBtn = document.querySelector(".ingredientsDropBtn");
     this.ustensilsDropBtn = document.querySelector(".ustensilsDropBtn");
     this.appliancesDropBtn = document.querySelector(".appliancesDropBtn");
-    this.myDropdownInput = document.querySelector("#myDropdownInputIngredient");
-    this.myDropdownInputIngredients = document.querySelector(
-      "#myDropdownInputIngredients"
-    );
-    this.myDropdownInputAppliances = document.querySelector(
-      "#myDropdownInputAppliances"
-    );
-    this.myDropdownInputUstensils = document.querySelector(
-      "#myDropdownInputUstensils"
-    );
-
+    this.myDropdownInput = document.querySelector("#myDropdownInput");
     this.mySearchInput = document.querySelector("#mySearchInput");
   }
 
