@@ -169,7 +169,9 @@ input:focus::placeholder {
 }
 
 /* Dropdown Button */
-.dropbtn {
+.ingredientsDropBtn,
+.appliancesDropBtn,
+.ustensilsDropBtn {
   border-radius: 11px;
   background: #fff;
   cursor: pointer;
@@ -200,7 +202,9 @@ input:focus::placeholder {
 } */
 
 /* The search field */
-#myDropdownInput {
+#myDropdownInputIngredient,
+#myDropdownInputAppliances,
+#myDropdownInputUstensils {
   box-sizing: border-box;
   background-image: url("../../src/assets/images/searchicon.png");
   background-position: 14px 12px;

@@ -19,7 +19,6 @@ class SortTemplate {
 
   updateDropdownIngredients() {
     this.ingredientNames.forEach((ingredient) => {
-      console.log(ingredient);
       const link = document.createElement("a");
       link.classList.add("sortIngredients");
       link.href = `#${ingredient}`;

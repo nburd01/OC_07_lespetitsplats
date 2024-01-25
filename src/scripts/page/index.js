@@ -9,10 +9,20 @@ class App {
     this.cardsSection = document.querySelector(".cards");
     this.searchInput = document.querySelector(".mySearchInput");
     this.faMark = document.querySelector(".fa-solid");
-    this.dropBtn = document.querySelector(".dropbtn");
-    this.ingredientsDropDown = document.querySelector("ingredientsDropdown");
-    this.appliancedDropDown = document.querySelector("appliancesDropdown");
-    this.myDropdownInput = document.querySelector("#myDropdownInput");
+    this.ingredientsDropBtn = document.querySelector(".ingredientsDropBtn");
+    this.ustensilsDropBtn = document.querySelector(".ustensilsDropBtn");
+    this.appliancesDropBtn = document.querySelector(".appliancesDropBtn");
+    this.myDropdownInput = document.querySelector("#myDropdownInputIngredient");
+    this.myDropdownInputIngredients = document.querySelector(
+      "#myDropdownInputIngredients"
+    );
+    this.myDropdownInputAppliances = document.querySelector(
+      "#myDropdownInputAppliances"
+    );
+    this.myDropdownInputUstensils = document.querySelector(
+      "#myDropdownInputUstensils"
+    );
+
     this.mySearchInput = document.querySelector("#mySearchInput");
   }
 
@@ -167,8 +177,14 @@ class App {
       this.handleClearInput();
     });
 
-    this.dropBtn.addEventListener("click", () => {
+    this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
+    });
+    this.ustensilsDropBtn.addEventListener("click", () => {
+      document.getElementById("ustensilsDropdown").classList.toggle("show");
+    });
+    this.appliancesDropBtn.addEventListener("click", () => {
+      document.getElementById("appliancesDropdown").classList.toggle("show");
     });
 
     this.myDropdownInput.addEventListener("input", () => {

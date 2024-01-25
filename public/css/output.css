@@ -1179,7 +1179,9 @@ input:focus::placeholder {
 
 /* Dropdown Button */
 
-.dropbtn {
+.ingredientsDropBtn,
+.appliancesDropBtn,
+.ustensilsDropBtn {
   border-radius: 11px;
   background: #fff;
   cursor: pointer;
@@ -1212,7 +1214,9 @@ input:focus::placeholder {
 
 /* The search field */
 
-#myDropdownInput {
+#myDropdownInputIngredient,
+#myDropdownInputAppliances,
+#myDropdownInputUstensils {
   box-sizing: border-box;
   background-image: url("../../src/assets/images/searchicon.png");
   background-position: 14px 12px;
@@ -1223,6 +1227,14 @@ input:focus::placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 165px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  border-radius: 2px;
+}
+
+#myDropdownInput {
   border-radius: 2px;
   width: 165px;
   margin-top: 0.5em;
