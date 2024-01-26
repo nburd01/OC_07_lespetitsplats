@@ -10,12 +10,15 @@ class SortTemplate {
   }
   //Ingredients
   clearDropdownIngredients() {
-    this.ingredients = [];
+    console.log("clear");
+    this.ingredientNames = [];
     this.updateDropdownIngredients();
   }
 
   appendIngredientsName(ingredient) {
-    this.ingredientNames.push(ingredient);
+    {
+      this.ingredientNames.push(ingredient);
+    }
   }
 
   updateDropdownIngredients() {

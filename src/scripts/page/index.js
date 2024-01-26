@@ -383,17 +383,21 @@ class App {
     let matchingElementsUppercase = matchingElementsIngredients.map((element) =>
       element.toUpperCase()
     );
-    console.log("matchingElementsUppercase", matchingElementsUppercase);
+
+    // Clear and update the dropdown in the SortTemplate
+    this.sortTemplate.clearDropdownIngredients();
+
+    // Append new ingredients to the SortTemplate
     matchingElementsUppercase.forEach((ingredient) => {
-      console.log("ingredient", ingredient);
-      // this.sortTemplate.appendIngredientsName(ingredient);
+      this.sortTemplate.appendIngredientsName(ingredient);
     });
 
-    // this.sortTemplate.updateDropdownIngredients();
+    // Update the dropdown in the SortTemplate
+    this.sortTemplate.updateDropdownIngredients();
   }
 
   updateIngredientsFilterAfterNewIngredientsArray(newMatchingIngredients) {
-    console.log("newMatchingIngredients", newMatchingIngredients);
+    // console.log("newMatchingIngredients", newMatchingIngredients);
   }
   updateCards(cardsData) {
     const cardsSection = document.querySelector(".cards");
