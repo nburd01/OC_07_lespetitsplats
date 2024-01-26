@@ -232,6 +232,7 @@ class App {
     });
     //Searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
+      this.ingredientNames = [];
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
       this.filterSearchbarInputWithIngredientsArray(
         arrayOfIngredients,
