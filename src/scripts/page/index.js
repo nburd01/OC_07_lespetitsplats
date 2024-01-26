@@ -22,10 +22,12 @@ class App {
       "#myDropdownInputUstensils"
     );
     this.mySearchInput = document.querySelector("#mySearchInput");
+    this.sortTemplate = new SortTemplate();
   }
 
   async main() {
-    const sortTemplate = new SortTemplate();
+    // const sortTemplate = new SortTemplate();
+    const sortTemplate = this.sortTemplate;
 
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
@@ -153,6 +155,12 @@ class App {
 
     this.searchInput.addEventListener("input", () => {
       this.handleSearchBarInputChange();
+      this.filterSearchbarInputForCards(arrayOfEverything, createCards);
+      this.filterSearchbarInputWithIngredientsArray(
+        arrayOfIngredients,
+        createCards,
+        sortTemplate
+      );
     });
 
     this.faMark.addEventListener("click", () => {
@@ -225,7 +233,16 @@ class App {
     //Searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
+      this.filterSearchbarInputWithIngredientsArray(
+        arrayOfIngredients,
+        createCards,
+        sortTemplate
+      );
     });
+
+    // Access sortTemplate as this.sortTemplate
+    this.sortTemplate.appendIngredientsName();
+    this.sortTemplate.updateDropdownIngredients();
   }
 
   handleSearchBarInputChange() {
@@ -252,7 +269,7 @@ class App {
     filterDropdown = input.value.toUpperCase();
     //
     ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
-    console.log(ingredientsDropdownElement);
+
     aElement = ingredientsDropdownElement.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
       txtValue = aElement[i].textContent || aElement[i].innerText;
@@ -272,7 +289,6 @@ class App {
     filterDropdown = input.value.toUpperCase();
     //
     appliancesDropdownElement = document.getElementById("appliancesDropdown");
-    console.log(appliancesDropdownElement);
     aElement = appliancesDropdownElement.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
       txtValue = aElement[i].textContent || aElement[i].innerText;
@@ -292,7 +308,6 @@ class App {
     filterDropdown = input.value.toUpperCase();
     //
     ustensilsDropdownElement = document.getElementById("ustensilsDropdown");
-    console.log(ustensilsDropdownElement);
     aElement = ustensilsDropdownElement.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
       txtValue = aElement[i].textContent || aElement[i].innerText;
@@ -309,18 +324,36 @@ class App {
       let input = this.searchInput.value;
       let filterSearchBar = input.toUpperCase();
 
-      // Declare matchingElements here
       let matchingElements;
 
       matchingElements = arrayOfEverything.filter((element) => {
         return element.toUpperCase().includes(filterSearchBar);
       });
-
       this.updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi);
     });
   }
 
-  filterSearchbarInputForFilters() {}
+  filterSearchbarInputWithIngredientsArray(
+    arrayOfIngredients,
+    fetchedDataFromApi,
+    sortTemplate
+  ) {
+    this.searchInput.addEventListener("input", () => {
+      let input = this.searchInput.value;
+      let filterSearchBar = input.toUpperCase();
+
+      let matchingElementsIngredients;
+
+      matchingElementsIngredients = arrayOfIngredients.filter((element) => {
+        return element.toUpperCase().includes(filterSearchBar);
+      });
+      this.updateIngredientsFilterArrayOnSearchBarInput(
+        matchingElementsIngredients,
+        fetchedDataFromApi,
+        sortTemplate
+      );
+    });
+  }
 
   //todo : compare arrays and see why everyhting is not appearing on filter
 
@@ -345,6 +378,23 @@ class App {
     });
     this.updateCards(newMatchingElements);
   }
+
+  updateIngredientsFilterArrayOnSearchBarInput(matchingElementsIngredients) {
+    let matchingElementsUppercase = matchingElementsIngredients.map((element) =>
+      element.toUpperCase()
+    );
+    console.log("matchingElementsUppercase", matchingElementsUppercase);
+    matchingElementsUppercase.forEach((ingredient) => {
+      console.log("ingredient", ingredient);
+      // this.sortTemplate.appendIngredientsName(ingredient);
+    });
+
+    // this.sortTemplate.updateDropdownIngredients();
+  }
+
+  updateIngredientsFilterAfterNewIngredientsArray(newMatchingIngredients) {
+    console.log("newMatchingIngredients", newMatchingIngredients);
+  }
   updateCards(cardsData) {
     const cardsSection = document.querySelector(".cards");
     cardsSection.innerHTML = "";
@@ -361,6 +411,7 @@ class App {
 const initApp = async () => {
   const app = new App();
   app.main();
+  app.sortTemplate.updateDropdownIngredients();
 };
 
 initApp();
