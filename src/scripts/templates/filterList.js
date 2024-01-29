@@ -10,19 +10,26 @@ class SortTemplate {
   }
   //Ingredients
   clearDropdownIngredients() {
-    console.log("clear");
     this.ingredientNames = [];
+    // console.log("ingredientNames", this.ingredientNames);
+    this.ingredients = [];
+    this.arrayOfIngredients = [];
     this.updateDropdownIngredients();
   }
 
   appendIngredientsName(ingredient) {
     {
       this.ingredientNames.push(ingredient);
+      // console.log("this.ingredientNames", this.ingredientNames);
     }
   }
 
   updateDropdownIngredients() {
+    // Clear existing elements in the dropdown
+    this.ingredientsDropdown.innerHTML = "";
+
     this.ingredientNames.forEach((ingredient) => {
+      // console.log(ingredient);
       const link = document.createElement("a");
       link.classList.add("sortIngredients");
       link.href = `#${ingredient}`;

@@ -232,7 +232,6 @@ class App {
     });
     //Searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
-      this.ingredientNames = [];
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
       this.filterSearchbarInputWithIngredientsArray(
         arrayOfIngredients,
@@ -348,11 +347,28 @@ class App {
       matchingElementsIngredients = arrayOfIngredients.filter((element) => {
         return element.toUpperCase().includes(filterSearchBar);
       });
-      this.updateIngredientsFilterArrayOnSearchBarInput(
-        matchingElementsIngredients,
-        fetchedDataFromApi,
-        sortTemplate
-      );
+
+      matchingElementsIngredients.forEach((ingredient) => {
+        console.log(ingredient);
+        const ingredientNameFirst = ingredient.charAt(0);
+        const ingredientNameRest = ingredient.slice(1);
+        const ingredientName = ingredientNameFirst + ingredientNameRest;
+        if (matchingElementsIngredients.includes(ingredientName)) {
+          this.updateIngredientsFilterArrayOnSearchBarInput(
+            matchingElementsIngredients,
+            ingredientName,
+            fetchedDataFromApi,
+            sortTemplate
+          );
+        }
+      });
+      // console.log("matchingElementsIngredients", matchingElementsIngredients);
+
+      // this.updateIngredientsFilterArrayOnSearchBarInput(
+      //   matchingElementsIngredients,
+      //   fetchedDataFromApi,
+      //   sortTemplate
+      // );
     });
   }
 
@@ -380,10 +396,8 @@ class App {
     this.updateCards(newMatchingElements);
   }
 
-  updateIngredientsFilterArrayOnSearchBarInput(matchingElementsIngredients) {
-    let matchingElementsUppercase = matchingElementsIngredients.map((element) =>
-      element.toUpperCase()
-    );
+  updateIngredientsFilterArrayOnSearchBarInput(ingredientName) {
+    let matchingElementsUppercase = ingredientName.map((element) => element);
 
     // Clear and update the dropdown in the SortTemplate
     this.sortTemplate.clearDropdownIngredients();
