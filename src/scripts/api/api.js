@@ -19,7 +19,7 @@ class Api {
       return res.json();
     } catch (error) {
       console.error("Error fetching data:", error);
-      throw error; // Rethrow the error to be caught in the calling code
+      throw error;
     }
   }
 }

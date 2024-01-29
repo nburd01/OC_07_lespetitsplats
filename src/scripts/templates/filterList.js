@@ -53,14 +53,12 @@ class SortTemplate {
   }
 
   filterDropdownInputIngredients() {
-    console.log(1);
     let ingredientsDropdownElement;
     let aElement;
     let txtValue;
     var input, filterDropdown, i;
     input = document.getElementById("myDropdownInputIngredients");
     filterDropdown = input.value.toUpperCase();
-    //
     ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
 
     aElement = ingredientsDropdownElement.getElementsByTagName("a");

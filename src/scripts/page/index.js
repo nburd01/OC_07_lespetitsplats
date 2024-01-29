@@ -26,7 +26,6 @@ class App {
   }
 
   async main() {
-    // const sortTemplate = new SortTemplate();
     const sortTemplate = this.sortTemplate;
 
     this.faMark.style.display = "none";
@@ -269,7 +268,6 @@ class App {
     var input, filterDropdown, i;
     input = document.getElementById("myDropdownInputIngredients");
     filterDropdown = input.value.toUpperCase();
-    //
     ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
 
     aElement = ingredientsDropdownElement.getElementsByTagName("a");
@@ -289,7 +287,6 @@ class App {
     var input, filterDropdown, i;
     input = document.getElementById("myDropdownInputAppliances");
     filterDropdown = input.value.toUpperCase();
-    //
     appliancesDropdownElement = document.getElementById("appliancesDropdown");
     aElement = appliancesDropdownElement.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
@@ -308,7 +305,6 @@ class App {
     var input, filterDropdown, i;
     input = document.getElementById("myDropdownInputUstensils");
     filterDropdown = input.value.toUpperCase();
-    //
     ustensilsDropdownElement = document.getElementById("ustensilsDropdown");
     aElement = ustensilsDropdownElement.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
@@ -366,8 +362,6 @@ class App {
       });
     });
   }
-
-  //todo : compare arrays and see why everyhting is not appearing on filter
 
   updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi) {
     let matchingElementsUppercase = matchingElements.map((element) =>

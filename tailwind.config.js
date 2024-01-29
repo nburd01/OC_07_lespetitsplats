@@ -13,9 +13,6 @@ module.exports = {
         hero: "url('../../src/assets/images/home.jpeg')",
       },
     },
-    // colors: {
-    //   customYellow: "#FFD15B",
-    // },
     fontSize: {
       sm: "0.8rem",
       base: "1rem",
