@@ -17,6 +17,7 @@ class SortTemplate {
     this.ingredients = [];
     this.arrayOfIngredients = [];
     this.updateDropdownIngredients();
+    this.filterDropdownInputIngredients();
   }
 
   appendIngredientsName(ingredient) {
@@ -35,34 +36,42 @@ class SortTemplate {
     const searchInput = document.createElement("input");
     searchInput.id = "myDropdownInputIngredients";
     searchInput.placeholder = "Rechercher";
-
-    const searchIcon = document.createElement("svg");
-    searchIcon.classList.add("searchicon", "h-5", "w-5", "fill-black");
-    searchIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    searchIcon.setAttribute("x", "0px");
-    searchIcon.setAttribute("y", "0px");
-    searchIcon.setAttribute("width", "50");
-    searchIcon.setAttribute("height", "50");
-    searchIcon.setAttribute("viewBox", "0 0 30 30");
-
-    const path = document.createElement("path");
-    path.setAttribute(
-      "d",
-      "M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
-    );
+    searchInput.addEventListener("input", () => {
+      this.filterDropdownInputIngredients();
+    });
 
     this.ingredientsDropdown.appendChild(searchInputDiv);
     searchInputDiv.appendChild(searchInput);
-    searchInputDiv.appendChild(searchIcon);
 
     this.ingredientNames.forEach((ingredient) => {
-      // console.log(ingredient);
       const link = document.createElement("a");
       link.classList.add("sortIngredients");
       link.href = `#${ingredient}`;
       link.textContent = ingredient;
       this.ingredientsDropdown.appendChild(link);
     });
+  }
+
+  filterDropdownInputIngredients() {
+    console.log(1);
+    let ingredientsDropdownElement;
+    let aElement;
+    let txtValue;
+    var input, filterDropdown, i;
+    input = document.getElementById("myDropdownInputIngredients");
+    filterDropdown = input.value.toUpperCase();
+    //
+    ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
+
+    aElement = ingredientsDropdownElement.getElementsByTagName("a");
+    for (i = 0; i < aElement.length; i++) {
+      txtValue = aElement[i].textContent || aElement[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+        aElement[i].style.display = "";
+      } else {
+        aElement[i].style.display = "none";
+      }
+    }
   }
 
   //Appliances

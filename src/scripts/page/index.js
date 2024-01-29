@@ -222,6 +222,7 @@ class App {
 
     //Dropdown input changes
     this.myDropdownInputIngredients.addEventListener("input", () => {
+      console.log(2);
       this.filterDropdownInputIngredients();
     });
     this.myDropdownInputAppliances.addEventListener("input", () => {
@@ -261,6 +262,7 @@ class App {
   }
 
   filterDropdownInputIngredients() {
+    console.log(1);
     let ingredientsDropdownElement;
     let aElement;
     let txtValue;
@@ -362,13 +364,6 @@ class App {
           );
         }
       });
-      // console.log("matchingElementsIngredients", matchingElementsIngredients);
-
-      // this.updateIngredientsFilterArrayOnSearchBarInput(
-      //   matchingElementsIngredients,
-      //   fetchedDataFromApi,
-      //   sortTemplate
-      // );
     });
   }
 
@@ -411,9 +406,6 @@ class App {
     this.sortTemplate.updateDropdownIngredients();
   }
 
-  updateIngredientsFilterAfterNewIngredientsArray(newMatchingIngredients) {
-    // console.log("newMatchingIngredients", newMatchingIngredients);
-  }
   updateCards(cardsData) {
     const cardsSection = document.querySelector(".cards");
     cardsSection.innerHTML = "";
