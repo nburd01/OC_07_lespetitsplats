@@ -69,30 +69,21 @@ class SortTemplate {
         const tagAnchorClose = document.createElement("i");
         tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
         tagAnchor.appendChild(tagAnchorClose);
-        console.log(this.tagsArray);
+        // console.log(this.tagsArray);
 
         tag.addEventListener("click", () => {
           const clickedTagText = tagAnchor.textContent;
-          console.log(clickedTagText);
-
-          // Find the index of the clicked tag in this.tagsArray
+          // console.log(clickedTagText);
           const index = this.tagsArray.indexOf(clickedTagText);
-          console.log(index);
+          // console.log(index);
 
-          if (index !== -1) {
-            // Remove the tag from this.tagsArray
-            this.tagsArray.splice(index, 1);
+          this.tagsArray.splice(index, 1);
 
-            // Find and remove the corresponding <li> element from the DOM
-            const liToRemove = Array.from(tagsList.children).find((li) =>
-              li.textContent.includes(clickedTagText)
-            );
-            if (liToRemove) {
-              liToRemove.remove();
-            }
-
-            console.log(this.tagsArray);
-            // Update any other UI as needed
+          const liToRemove = Array.from(tagsList.children).find((li) =>
+            li.textContent.includes(clickedTagText)
+          );
+          if (liToRemove) {
+            liToRemove.remove();
           }
         });
       });

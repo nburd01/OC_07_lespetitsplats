@@ -221,7 +221,6 @@ class App {
 
     //Dropdown input changes
     this.myDropdownInputIngredients.addEventListener("input", () => {
-      console.log(2);
       this.filterDropdownInputIngredients();
     });
     this.myDropdownInputAppliances.addEventListener("input", () => {
@@ -261,7 +260,6 @@ class App {
   }
 
   filterDropdownInputIngredients() {
-    console.log(1);
     let ingredientsDropdownElement;
     let aElement;
     let txtValue;
@@ -347,7 +345,7 @@ class App {
       });
 
       matchingElementsIngredients.forEach((ingredient) => {
-        console.log(ingredient);
+        // console.log(ingredient);
         const ingredientNameFirst = ingredient.charAt(0);
         const ingredientNameRest = ingredient.slice(1);
         const ingredientName = ingredientNameFirst + ingredientNameRest;
