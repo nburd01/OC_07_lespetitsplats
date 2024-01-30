@@ -1152,7 +1152,7 @@ body {
 }
 
 ul li {
-  flex: 0 0 calc(50% - 10px);
+  /* flex: 0 0 calc(50% - 10px); */
   margin: 0 5px;
 }
 
@@ -1323,6 +1323,36 @@ input:focus::placeholder {
 .sort {
   width: 86em;
   margin-bottom: 2em;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.tagsArrayDiv {
+  display: flex;
+  width: inherit;
+  height: -moz-min-content;
+  height: min-content;
+}
+
+.tagsArrayDiv ul {
+  display: flex;
+  width: inherit;
+}
+
+.tagsArrayDiv ul li a {
+  display: inline-flex;
+  padding: 17px 18px;
+  align-items: center;
+  gap: 60px;
+  border-radius: 10px;
+  background: #ffd15b;
+}
+
+.tagsList {
+  margin: 1em 0;
 }
 
 @media screen and (min-width: 1025px) {

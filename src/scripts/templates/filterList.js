@@ -6,14 +6,18 @@ class SortTemplate {
       document.getElementsByClassName("dropdown-content");
     this.appliancesDropdown = document.getElementById("appliancesDropdown");
     this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
+    this.tagsArrayDiv = document.getElementsByClassName("tagsArrayDiv");
+    this.tagsList = document.getElementsByClassName("tagsList");
     this.ingredientNames = [];
     this.applianceNames = [];
     this.ustensilNames = [];
+    this.ingredientLinks = [];
+    this.tagsArray = [];
   }
+
   //Ingredients
   clearDropdownIngredients() {
     this.ingredientNames = [];
-    // console.log("ingredientNames", this.ingredientNames);
     this.ingredients = [];
     this.arrayOfIngredients = [];
     this.updateDropdownIngredients();
@@ -23,12 +27,10 @@ class SortTemplate {
   appendIngredientsName(ingredient) {
     {
       this.ingredientNames.push(ingredient);
-      // console.log("this.ingredientNames", this.ingredientNames);
     }
   }
 
   updateDropdownIngredients() {
-    // Clear existing elements in the dropdown
     this.ingredientsDropdown.innerHTML = "";
     const searchInputDiv = document.createElement("div");
     searchInputDiv.classList.add("myDropdownInputDiv");
@@ -49,6 +51,22 @@ class SortTemplate {
       link.href = `#${ingredient}`;
       link.textContent = ingredient;
       this.ingredientsDropdown.appendChild(link);
+    });
+    const tagsArray = [];
+    const ingredientLinks = document.querySelectorAll(".sortIngredients");
+    const tagsList = document.querySelector(".tagsList");
+    ingredientLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        this.tagsArray.push(link.textContent);
+        const tag = document.createElement("li");
+        tag.classList.add("tag-li");
+        const tagAnchor = document.createElement("a");
+        tagAnchor.classList.add("tag-anchor");
+
+        tagAnchor.textContent = link.textContent;
+        tagsList.appendChild(tag);
+        tag.appendChild(tagAnchor);
+      });
     });
   }
 
