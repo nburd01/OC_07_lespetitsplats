@@ -66,6 +66,9 @@ class SortTemplate {
         tagAnchor.textContent = link.textContent;
         tagsList.appendChild(tag);
         tag.appendChild(tagAnchor);
+        const tagAnchorClose = document.createElement("i");
+        tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
+        tagAnchor.appendChild(tagAnchorClose);
       });
     });
   }
