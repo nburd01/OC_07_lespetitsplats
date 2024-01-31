@@ -32,6 +32,7 @@ class App {
     const cardsSection = document.querySelector(".cards");
     //Fetch data
     const fetchedDataFromApi = await this.cardsApi.getCards();
+
     // tri by 'name'
     const cardsDataByIngredient = [...fetchedDataFromApi].sort((a, b) => {
       if (a.name < b.name) {
@@ -242,6 +243,8 @@ class App {
     // Access sortTemplate as this.sortTemplate
     this.sortTemplate.appendIngredientsName();
     this.sortTemplate.updateDropdownIngredients();
+    this.sortTemplate.findMatchingElements(fetchedDataFromApi);
+    this.sortTemplate.handleTagClick(fetchedDataFromApi);
   }
 
   handleSearchBarInputChange() {
