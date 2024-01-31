@@ -1,4 +1,6 @@
 // sortTemplate.js
+
+import { App } from "../page/index.js";
 class SortTemplate {
   constructor() {
     this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
@@ -97,7 +99,7 @@ class SortTemplate {
       let upperCaseTag = element.toUpperCase();
       ingredientLinksUpperCase.push(upperCaseTag);
     });
-    console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
+    // console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
     return ingredientLinksUpperCase;
   }
 
@@ -119,29 +121,27 @@ class SortTemplate {
     fetchedDataFromApi,
     ingredientLinksUpperCase
   ) {
-    console.log(fetchedDataFromApi);
     console.log(ingredientLinksUpperCase);
-    // Example: Concatenate the data and the matching elements
-    const manipulatedData = fetchedDataFromApi.map((item) => {
-      // Manipulate the item based on ingredientLinksUpperCase or other logic
-      // For example, add a property indicating whether it matches
-      item.isMatching = ingredientLinksUpperCase.includes(item.someProperty);
-      return item;
-    });
+    //objet de cards uppercase
+    let fetchedDataFromApiUppercase;
+    fetchedDataFromApiUppercase = fetchedDataFromApi.filter((card) => {
+      let cardUppercase = Object.fromEntries(
+        Object.entries(card).map(([key, value]) => [
+          key,
+          String(value).toUpperCase(),
+        ])
+      );
 
-    console.log("Manipulated Data", manipulatedData);
-  }
-
-  updateCards(cardsData) {
-    const cardsSection = document.querySelector(".cards");
-    cardsSection.innerHTML = "";
-
-    cardsData
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const templateCards = new CardTemplate(card);
-        cardsSection.appendChild(templateCards.createCard());
+      // parmis les objets lesquels incluent quelque chose de l'array ingredientLinksUpperCase
+      return ingredientLinksUpperCase.some((matchingElement) => {
+        return Object.values(cardUppercase).some((property) =>
+          property.includes(matchingElement)
+        );
       });
+    });
+    console.log(fetchedDataFromApiUppercase);
+    const appInstance = new App();
+    appInstance.updateCards(fetchedDataFromApiUppercase);
   }
 
   filterDropdownInputIngredients() {

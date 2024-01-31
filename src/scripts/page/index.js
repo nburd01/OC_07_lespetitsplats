@@ -3,7 +3,7 @@ import { Card } from "../class/cards.js";
 import { CardTemplate } from "../templates/cardList.js";
 import { SortTemplate } from "../templates/filterList.js";
 
-class App {
+export class App {
   constructor() {
     this.cardsApi = new CardsApi("/src/data/recipes.json");
     this.cardsSection = document.querySelector(".cards");
