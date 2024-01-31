@@ -99,7 +99,6 @@ class SortTemplate {
 
   findMatchingElements(fetchedDataFromApi) {
     let ingredientLinksUpperCase = [];
-    // console.log(this.tagsArray);
     this.tagsArray.forEach((element) => {
       let upperCaseTag = element.toUpperCase();
       ingredientLinksUpperCase.push(upperCaseTag);
@@ -113,7 +112,6 @@ class SortTemplate {
     ingredientLinks.forEach((link) => {
       link.addEventListener("click", () => {
         console.log("fetchedDataFromApi3", fetchedDataFromApi);
-
         this.findMatchingElements();
       });
     });
