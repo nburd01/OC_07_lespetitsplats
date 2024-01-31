@@ -1,3 +1,5 @@
+import { Card } from "../class/cards";
+
 // sortTemplate.js
 class SortTemplate {
   constructor() {
