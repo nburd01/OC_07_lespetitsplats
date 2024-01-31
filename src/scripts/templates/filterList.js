@@ -121,25 +121,29 @@ class SortTemplate {
     fetchedDataFromApi,
     ingredientLinksUpperCase
   ) {
-    console.log(ingredientLinksUpperCase);
-    //objet de cards uppercase
     let fetchedDataFromApiUppercase;
-    fetchedDataFromApiUppercase = fetchedDataFromApi.filter((card) => {
-      let cardUppercase = Object.fromEntries(
-        Object.entries(card).map(([key, value]) => [
-          key,
-          String(value).toUpperCase(),
-        ])
-      );
+    fetchedDataFromApiUppercase = fetchedDataFromApi
+      .filter((card) => {
+        // Convert all properties in the ingredients array to uppercase
+        let ingredientsUppercase = card.ingredients.map((ingredient) => ({
+          ...ingredient,
+          ingredient: String(ingredient.ingredient).toUpperCase(),
+        }));
 
-      // parmis les objets lesquels incluent quelque chose de l'array ingredientLinksUpperCase
-      return ingredientLinksUpperCase.some((matchingElement) => {
-        return Object.values(cardUppercase).some((property) =>
-          property.includes(matchingElement)
-        );
+        // Check if any matching element is present in the ingredients array
+        return ingredientLinksUpperCase.some((matchingElement) => {
+          // Check if any ingredient includes the matching element
+          return ingredientsUppercase.some((ingredient) =>
+            String(ingredient.ingredient).includes(matchingElement)
+          );
+        });
+      })
+      .map((filteredCard) => {
+        // Log only the ingredients
+        console.log("filteredCard", filteredCard.ingredients);
+        return filteredCard; // If you want to keep the whole object
       });
-    });
-    console.log(fetchedDataFromApiUppercase);
+
     const appInstance = new App();
     appInstance.updateCards(fetchedDataFromApiUppercase);
   }
