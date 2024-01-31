@@ -57,10 +57,6 @@ class SortTemplate {
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     const tagsList = document.querySelector(".tagsList");
 
-    // console.log("fetchedDataFromApi", fetchedDataFromApi);
-    // this.updateCardListafterTagPick(fetchedDataFromApi);
-    // Move this line here
-    // console.log("fetchedDataFromApi1", fetchedDataFromApi);
     ingredientLinks.forEach((link) => {
       link.addEventListener("click", () => {
         this.tagsArray.push(link.textContent);
@@ -74,12 +70,11 @@ class SortTemplate {
         const tagAnchorClose = document.createElement("i");
         tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
         tagAnchor.appendChild(tagAnchorClose);
-        // Set fetchedDataFromApi to the current data
-        // this.fetchedDataFromApi = fetchedDataFromApi;
-        this.findMatchingElements(fetchedDataFromApi);
+
+        this.findMatchingElements();
 
         tag.addEventListener("click", () => {
-          this.findMatchingElements();
+          // this.findMatchingElements();
           const clickedTagText = tagAnchor.textContent;
           const index = this.tagsArray.indexOf(clickedTagText);
           this.tagsArray.splice(index, 1);
@@ -92,18 +87,18 @@ class SortTemplate {
             liToRemove.remove();
           }
         });
-        // console.log("fetchedDataFromApi", fetchedDataFromApi);
       });
     });
   }
 
-  findMatchingElements(fetchedDataFromApi) {
+  findMatchingElements() {
     let ingredientLinksUpperCase = [];
     this.tagsArray.forEach((element) => {
       let upperCaseTag = element.toUpperCase();
       ingredientLinksUpperCase.push(upperCaseTag);
     });
     console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
+    return ingredientLinksUpperCase;
   }
 
   handleTagClick(fetchedDataFromApi, tagsArray) {
@@ -111,10 +106,30 @@ class SortTemplate {
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     ingredientLinks.forEach((link) => {
       link.addEventListener("click", () => {
-        console.log("fetchedDataFromApi3", fetchedDataFromApi);
-        this.findMatchingElements();
+        const ingredientLinksUpperCase = this.findMatchingElements();
+        this.manipulateApiWithMatchingElements(
+          fetchedDataFromApi,
+          ingredientLinksUpperCase
+        );
       });
     });
+  }
+
+  manipulateApiWithMatchingElements(
+    fetchedDataFromApi,
+    ingredientLinksUpperCase
+  ) {
+    console.log(fetchedDataFromApi);
+    console.log(ingredientLinksUpperCase);
+    // Example: Concatenate the data and the matching elements
+    const manipulatedData = fetchedDataFromApi.map((item) => {
+      // Manipulate the item based on ingredientLinksUpperCase or other logic
+      // For example, add a property indicating whether it matches
+      item.isMatching = ingredientLinksUpperCase.includes(item.someProperty);
+      return item;
+    });
+
+    console.log("Manipulated Data", manipulatedData);
   }
 
   updateCards(cardsData) {

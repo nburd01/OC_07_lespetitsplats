@@ -243,7 +243,7 @@ class App {
     // Access sortTemplate as this.sortTemplate
     this.sortTemplate.appendIngredientsName();
     this.sortTemplate.updateDropdownIngredients();
-    this.sortTemplate.findMatchingElements(fetchedDataFromApi);
+    // this.sortTemplate.findMatchingElements(fetchedDataFromApi);
     this.sortTemplate.handleTagClick(fetchedDataFromApi);
   }
 
