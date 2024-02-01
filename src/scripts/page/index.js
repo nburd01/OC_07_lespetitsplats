@@ -34,15 +34,17 @@ export class App {
     const fetchedDataFromApi = await this.cardsApi.getCards();
 
     // tri by 'name'
-    const cardsDataByIngredient = [...fetchedDataFromApi].sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
+    const normalizeCardsDataByIngredient = [...fetchedDataFromApi].sort(
+      (a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
       }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    });
+    );
     // tri by 'appliance'
     const cardsDataByAppliance = [...fetchedDataFromApi].sort((a, b) => {
       if (a.appliance < b.appliance) {
@@ -83,10 +85,12 @@ export class App {
       .map((card) => new Card(card))
       .forEach((card) => {
         const appliance = card._appliance || [];
+        //mise en forme : normalise
         const applianceNameFirst = appliance.charAt(0);
         const applianceNameRest = appliance.slice(1);
         const applianceName = applianceNameFirst + applianceNameRest;
         let pluralapplianceName = applianceName + "s";
+        //condition
         if (
           !arrayOfAppliances.includes(applianceName) &&
           !arrayOfAppliances.includes(pluralapplianceName)
@@ -101,7 +105,7 @@ export class App {
     sortTemplate.updateDropdownAppliances();
 
     //sort ingredient function
-    cardsDataByIngredient
+    normalizeCardsDataByIngredient
       .map((card) => new Card(card))
       .forEach((card) => {
         const ingredients = card._ingredients || [];
@@ -321,14 +325,17 @@ export class App {
   filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
-      let filterSearchBar = input.toUpperCase();
+      let mainSearchBarInputUpperCase = input.toUpperCase();
 
-      let matchingElements;
+      let inputMatchingElements;
 
-      matchingElements = arrayOfEverything.filter((element) => {
-        return element.toUpperCase().includes(filterSearchBar);
+      inputMatchingElements = arrayOfEverything.filter((element) => {
+        return element.toUpperCase().includes(mainSearchBarInputUpperCase);
       });
-      this.updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi);
+      this.updateCardsOnSearchBarInput(
+        inputMatchingElements,
+        fetchedDataFromApi
+      );
     });
   }
 
@@ -339,12 +346,12 @@ export class App {
   ) {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
-      let filterSearchBar = input.toUpperCase();
+      let mainSearchBarInputUpperCase = input.toUpperCase();
 
       let matchingElementsIngredients;
 
       matchingElementsIngredients = arrayOfIngredients.filter((element) => {
-        return element.toUpperCase().includes(filterSearchBar);
+        return element.toUpperCase().includes(mainSearchBarInputUpperCase);
       });
 
       matchingElementsIngredients.forEach((ingredient) => {
@@ -364,26 +371,29 @@ export class App {
     });
   }
 
-  updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi) {
-    let matchingElementsUppercase = matchingElements.map((element) =>
+  updateCardsOnSearchBarInput(inputMatchingElements, fetchedDataFromApi) {
+    let matchingElementsUppercase = inputMatchingElements.map((element) =>
       element.toUpperCase()
     );
+    //Trouve les inputMatchingElements en Uppercase
 
-    let newMatchingElements = fetchedDataFromApi.filter((card) => {
+    let newMatchingElementsAfterInput = fetchedDataFromApi.filter((card) => {
       let cardUppercase = Object.fromEntries(
         Object.entries(card).map(([key, value]) => [
           key,
           String(value).toUpperCase(),
         ])
       );
+      //Enregistre les éléments de cards en uppercase : cardUppercase
 
       return matchingElementsUppercase.some((matchingElement) => {
         return Object.values(cardUppercase).some((property) =>
           property.includes(matchingElement)
         );
       });
+      //Retourne les cardUpperCase qui détiennent les inputMatchingElements
     });
-    this.updateCards(newMatchingElements);
+    this.updateCards(newMatchingElementsAfterInput);
   }
 
   updateIngredientsFilterArrayOnSearchBarInput(ingredientName) {
@@ -402,6 +412,7 @@ export class App {
   }
 
   updateCards(cardsData) {
+    console.log(cardsData);
     const cardsSection = document.querySelector(".cards");
     cardsSection.innerHTML = "";
 
@@ -412,6 +423,8 @@ export class App {
         cardsSection.appendChild(templateCards.createCard());
       });
   }
+  //efface le innerHTML des cartes
+  //Pour chaque element dans cards il créer une nouvelle Card avec les données de newMatchingElementsAfterInput
 }
 
 const initApp = async () => {

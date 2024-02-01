@@ -33,6 +33,7 @@ class SortTemplate {
   }
 
   updateDropdownIngredients(fetchedDataFromApi) {
+    //create dropdown template
     this.ingredientsDropdown.innerHTML = "";
     const searchInputDiv = document.createElement("div");
     searchInputDiv.classList.add("myDropdownInputDiv");
@@ -40,6 +41,7 @@ class SortTemplate {
     const searchInput = document.createElement("input");
     searchInput.id = "myDropdownInputIngredients";
     searchInput.placeholder = "Rechercher";
+
     searchInput.addEventListener("input", () => {
       this.filterDropdownInputIngredients();
     });
@@ -47,6 +49,7 @@ class SortTemplate {
     this.ingredientsDropdown.appendChild(searchInputDiv);
     searchInputDiv.appendChild(searchInput);
 
+    //create link template for Each
     this.ingredientNames.forEach((ingredient) => {
       const link = document.createElement("a");
       link.classList.add("sortIngredients");
@@ -59,7 +62,9 @@ class SortTemplate {
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     const tagsList = document.querySelector(".tagsList");
 
+    //Event click on Link pushes clicked link text to this.tagsArray within the matching elements scope. Reverse when click on tag to delete
     ingredientLinks.forEach((link) => {
+      // tag template creation
       link.addEventListener("click", () => {
         this.tagsArray.push(link.textContent);
         const tag = document.createElement("li");
@@ -72,23 +77,20 @@ class SortTemplate {
         const tagAnchorClose = document.createElement("i");
         tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
         tagAnchor.appendChild(tagAnchorClose);
+      });
 
-        this.findMatchingElements();
-
-        tag.addEventListener("click", () => {
-          // this.findMatchingElements();
-          const clickedTagText = tagAnchor.textContent;
+      // remove tag on click of it
+      tagsList.addEventListener("click", (event) => {
+        if (event.target.classList.contains("closeTag")) {
+          const clickedTagText = event.target.previousSibling.textContent;
           const index = this.tagsArray.indexOf(clickedTagText);
           this.tagsArray.splice(index, 1);
-          let tagsArray2 = this.tagsArray;
 
-          const liToRemove = Array.from(tagsList.children).find((li) =>
-            li.textContent.includes(clickedTagText)
-          );
-          if (liToRemove) {
-            liToRemove.remove();
-          }
-        });
+          // remove the corresponding li element
+          event.target.closest("li").remove();
+
+          this.findMatchingElements();
+        }
       });
     });
   }
@@ -99,7 +101,7 @@ class SortTemplate {
       let upperCaseTag = element.toUpperCase();
       ingredientLinksUpperCase.push(upperCaseTag);
     });
-    // console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
+    console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
     return ingredientLinksUpperCase;
   }
   //
@@ -109,7 +111,7 @@ class SortTemplate {
     ingredientLinks.forEach((link) => {
       link.addEventListener("click", () => {
         const ingredientLinksUpperCase = this.findMatchingElements();
-        this.manipulateApiWithMatchingElements(
+        this.normalizeApiWithMatchingElements(
           fetchedDataFromApi,
           ingredientLinksUpperCase
         );
@@ -117,7 +119,7 @@ class SortTemplate {
     });
   }
   //compare matching elements with api data and update cards for ingredients
-  manipulateApiWithMatchingElements(
+  normalizeApiWithMatchingElements(
     fetchedDataFromApi,
     ingredientLinksUpperCase
   ) {
