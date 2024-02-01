@@ -56,15 +56,17 @@ export class App {
       return 0;
     });
     // tri by 'ustensil'
-    const cardsDataByUstensil = [...fetchedDataFromApi].sort((a, b) => {
-      if (a.ustensils < b.ustensils) {
-        return -1;
+    const normalizeCardsDataByUstensil = [...fetchedDataFromApi].sort(
+      (a, b) => {
+        if (a.ustensils < b.ustensils) {
+          return -1;
+        }
+        if (a.ustensils > b.ustensils) {
+          return 1;
+        }
+        return 0;
       }
-      if (a.ustensils > b.ustensils) {
-        return 1;
-      }
-      return 0;
-    });
+    );
     // tri by 'id'
     const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
 
@@ -128,7 +130,7 @@ export class App {
     sortTemplate.updateDropdownIngredients();
 
     //sort ustensil function
-    cardsDataByUstensil
+    normalizeCardsDataByUstensil
       .map((card) => new Card(card))
       .forEach((card) => {
         const ustensils = card._ustensils || [];
@@ -180,48 +182,29 @@ export class App {
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
-    //hide dropdown on page click
-    document.addEventListener("click", function (event) {
-      const appliancesDropdown = document.getElementById("appliancesDropdown");
-      const elem = document.getElementById("dropDownAppliances");
 
-      if (appliancesDropdown.classList.contains("show")) {
-        const outsideClick = !elem.contains(event.target);
+    function handleDropdown(dropdownId, elemId) {
+      const dropdown = document.getElementById(dropdownId);
+      const elem = document.getElementById(elemId);
+      if (dropdownId.classList.contains("show")) {
+        const outsideClick = !elemId.contains(event.target);
 
         if (outsideClick) {
-          appliancesDropdown.classList.remove("show");
+          dropdownId.classList.remove("show");
         } else {
-          appliancesDropdown.classList.add("show");
+          dropdownId.classList.add("show");
         }
       }
+    }
+
+    document.addEventListener("click", function (event) {
+      handleDropdown(appliancesDropdown, dropDownAppliances);
     });
     document.addEventListener("click", function (event) {
-      const appliancesDropdown = document.getElementById("ustensilsDropdown");
-      const elem = document.getElementById("dropDownUstensils");
-
-      if (appliancesDropdown.classList.contains("show")) {
-        const outsideClick = !elem.contains(event.target);
-
-        if (outsideClick) {
-          appliancesDropdown.classList.remove("show");
-        } else {
-          appliancesDropdown.classList.add("show");
-        }
-      }
+      handleDropdown(ustensilsDropdown, dropDownUstensils);
     });
     document.addEventListener("click", function (event) {
-      const appliancesDropdown = document.getElementById("ingredientsDropdown");
-      const elem = document.getElementById("dropDownIngredients");
-
-      if (appliancesDropdown.classList.contains("show")) {
-        const outsideClick = !elem.contains(event.target);
-
-        if (outsideClick) {
-          appliancesDropdown.classList.remove("show");
-        } else {
-          appliancesDropdown.classList.add("show");
-        }
-      }
+      handleDropdown(ingredientsDropdown, dropDownIngredients);
     });
 
     //Dropdown input changes
