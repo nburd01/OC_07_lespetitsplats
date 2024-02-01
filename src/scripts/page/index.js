@@ -159,6 +159,11 @@ export class App {
       ...arrayOfUstensils,
     ];
 
+    // --------------------------------
+    // Event listeners
+    // --------------------------------
+
+    //Searchbar inputs
     this.searchInput.addEventListener("input", () => {
       this.handleSearchBarInputChange();
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
@@ -168,11 +173,11 @@ export class App {
         sortTemplate
       );
     });
-
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
     });
-    // show dropdown on btn click
+
+    //Toggle dropdown btn
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
     });
@@ -182,20 +187,6 @@ export class App {
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
-
-    function handleDropdownHelper(dropdownId, elemId) {
-      const dropdown = document.getElementById(dropdownId);
-      const elem = document.getElementById(elemId);
-      if (dropdownId.classList.contains("show")) {
-        const outsideClick = !elemId.contains(event.target);
-
-        if (outsideClick) {
-          dropdownId.classList.remove("show");
-        } else {
-          dropdownId.classList.add("show");
-        }
-      }
-    }
 
     //Dropdown clicks
     document.addEventListener("click", function (event) {
@@ -236,6 +227,24 @@ export class App {
         sortTemplate
       );
     });
+
+    // --------------------------------
+    // Functions
+    // --------------------------------
+
+    function handleDropdownHelper(dropdownId, elemId) {
+      const dropdown = document.getElementById(dropdownId);
+      const elem = document.getElementById(elemId);
+      if (dropdownId.classList.contains("show")) {
+        const outsideClick = !elemId.contains(event.target);
+
+        if (outsideClick) {
+          dropdownId.classList.remove("show");
+        } else {
+          dropdownId.classList.add("show");
+        }
+      }
+    }
 
     // Access sortTemplate as this.sortTemplate
     this.sortTemplate.appendIngredientsName();
