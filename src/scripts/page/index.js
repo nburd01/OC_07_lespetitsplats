@@ -183,7 +183,7 @@ export class App {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
 
-    function handleDropdown(dropdownId, elemId) {
+    function handleDropdownHelper(dropdownId, elemId) {
       const dropdown = document.getElementById(dropdownId);
       const elem = document.getElementById(elemId);
       if (dropdownId.classList.contains("show")) {
@@ -198,24 +198,33 @@ export class App {
     }
 
     document.addEventListener("click", function (event) {
-      handleDropdown(appliancesDropdown, dropDownAppliances);
+      handleDropdownHelper(appliancesDropdown, dropDownAppliances);
     });
     document.addEventListener("click", function (event) {
-      handleDropdown(ustensilsDropdown, dropDownUstensils);
+      handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
     });
     document.addEventListener("click", function (event) {
-      handleDropdown(ingredientsDropdown, dropDownIngredients);
+      handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
     });
 
     //Dropdown input changes
     this.myDropdownInputIngredients.addEventListener("input", () => {
-      this.filterDropdownInput(myDropdownInputIngredients, ingredientsDropdown);
+      this.filterDropdownInputHelper(
+        myDropdownInputIngredients,
+        ingredientsDropdown
+      );
     });
     this.myDropdownInputAppliances.addEventListener("input", () => {
-      this.filterDropdownInput(myDropdownInputAppliances, appliancesDropdown);
+      this.filterDropdownInputHelper(
+        myDropdownInputAppliances,
+        appliancesDropdown
+      );
     });
     this.myDropdownInputUstensils.addEventListener("input", () => {
-      this.filterDropdownInput(myDropdownInputUstensils, ustensilsDropdown);
+      this.filterDropdownInputHelper(
+        myDropdownInputUstensils,
+        ustensilsDropdown
+      );
     });
     //Searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
@@ -230,7 +239,6 @@ export class App {
     // Access sortTemplate as this.sortTemplate
     this.sortTemplate.appendIngredientsName();
     this.sortTemplate.updateDropdownIngredients();
-    // this.sortTemplate.findMatchingElements(fetchedDataFromApi);
     this.sortTemplate.handleTagClick(fetchedDataFromApi);
   }
 
@@ -249,7 +257,7 @@ export class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterDropdownInput(inputId, dropdownElementId) {
+  filterDropdownInputHelper(inputId, dropdownElementId) {
     console.log(inputId, dropdownElementId);
     let dropdownElement;
     let aElement;

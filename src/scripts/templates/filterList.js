@@ -23,7 +23,7 @@ class SortTemplate {
     this.ingredients = [];
     this.arrayOfIngredients = [];
     this.updateDropdownIngredients();
-    this.filterDropdownInputIngredients();
+    this.filterDropdownInputHelperIngredients();
   }
 
   appendIngredientsName(ingredient) {
@@ -43,7 +43,7 @@ class SortTemplate {
     searchInput.placeholder = "Rechercher";
 
     searchInput.addEventListener("input", () => {
-      this.filterDropdownInputIngredients();
+      this.filterDropdownInputHelperIngredients();
     });
 
     this.ingredientsDropdown.appendChild(searchInputDiv);
@@ -146,7 +146,7 @@ class SortTemplate {
     appInstance.updateCards(fetchedDataFromApiUppercase);
   }
 
-  filterDropdownInputIngredients() {
+  filterDropdownInputHelperIngredients() {
     let ingredientsDropdownElement;
     let aElement;
     let txtValue;
