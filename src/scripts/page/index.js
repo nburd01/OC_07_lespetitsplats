@@ -197,6 +197,7 @@ export class App {
       }
     }
 
+    //Dropdown clicks
     document.addEventListener("click", function (event) {
       handleDropdownHelper(appliancesDropdown, dropDownAppliances);
     });
