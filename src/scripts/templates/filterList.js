@@ -102,7 +102,7 @@ class SortTemplate {
     // console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
     return ingredientLinksUpperCase;
   }
-
+  //
   handleTagClick(fetchedDataFromApi, tagsArray) {
     tagsArray = this.tagsArray;
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
@@ -116,7 +116,7 @@ class SortTemplate {
       });
     });
   }
-
+  //compare matching elements with api data and update cards for ingredients
   manipulateApiWithMatchingElements(
     fetchedDataFromApi,
     ingredientLinksUpperCase
@@ -124,24 +124,20 @@ class SortTemplate {
     let fetchedDataFromApiUppercase;
     fetchedDataFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
-        // Convert all properties in the ingredients array to uppercase
         let ingredientsUppercase = card.ingredients.map((ingredient) => ({
           ...ingredient,
           ingredient: String(ingredient.ingredient).toUpperCase(),
         }));
 
-        // Check if any matching element is present in the ingredients array
         return ingredientLinksUpperCase.some((matchingElement) => {
-          // Check if any ingredient includes the matching element
           return ingredientsUppercase.some((ingredient) =>
             String(ingredient.ingredient).includes(matchingElement)
           );
         });
       })
       .map((filteredCard) => {
-        // Log only the ingredients
         console.log("filteredCard", filteredCard.ingredients);
-        return filteredCard; // If you want to keep the whole object
+        return filteredCard;
       });
 
     const appInstance = new App();

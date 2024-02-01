@@ -53,7 +53,7 @@ export class App {
       }
       return 0;
     });
-    // tri by 'appliance'
+    // tri by 'ustensil'
     const cardsDataByUstensil = [...fetchedDataFromApi].sort((a, b) => {
       if (a.ustensils < b.ustensils) {
         return -1;
