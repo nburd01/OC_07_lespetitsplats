@@ -270,62 +270,6 @@ export class App {
     }
   }
 
-  // filterDropdownInputIngredients() {
-  //   let ingredientsDropdownElement;
-  //   let aElement;
-  //   let txtValue;
-  //   var input, filterDropdown, i;
-  //   input = document.getElementById("myDropdownInputIngredients");
-  //   filterDropdown = input.value.toUpperCase();
-  //   ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
-
-  //   aElement = ingredientsDropdownElement.getElementsByTagName("a");
-  //   for (i = 0; i < aElement.length; i++) {
-  //     txtValue = aElement[i].textContent || aElement[i].innerText;
-  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-  //       aElement[i].style.display = "";
-  //     } else {
-  //       aElement[i].style.display = "none";
-  //     }
-  //   }
-  // }
-  // filterDropdownInputAppliances() {
-  //   let appliancesDropdownElement;
-  //   let aElement;
-  //   let txtValue;
-  //   var input, filterDropdown, i;
-  //   input = document.getElementById("myDropdownInputAppliances");
-  //   filterDropdown = input.value.toUpperCase();
-  //   appliancesDropdownElement = document.getElementById("appliancesDropdown");
-  //   aElement = appliancesDropdownElement.getElementsByTagName("a");
-  //   for (i = 0; i < aElement.length; i++) {
-  //     txtValue = aElement[i].textContent || aElement[i].innerText;
-  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-  //       aElement[i].style.display = "";
-  //     } else {
-  //       aElement[i].style.display = "none";
-  //     }
-  //   }
-  // }
-  // filterDropdownInputUstensils() {
-  //   let ustensilsDropdownElement;
-  //   let aElement;
-  //   let txtValue;
-  //   var input, filterDropdown, i;
-  //   input = document.getElementById("myDropdownInputUstensils");
-  //   filterDropdown = input.value.toUpperCase();
-  //   ustensilsDropdownElement = document.getElementById("ustensilsDropdown");
-  //   aElement = ustensilsDropdownElement.getElementsByTagName("a");
-  //   for (i = 0; i < aElement.length; i++) {
-  //     txtValue = aElement[i].textContent || aElement[i].innerText;
-  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-  //       aElement[i].style.display = "";
-  //     } else {
-  //       aElement[i].style.display = "none";
-  //     }
-  //   }
-  // }
-
   filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
