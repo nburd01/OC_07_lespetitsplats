@@ -209,13 +209,13 @@ export class App {
 
     //Dropdown input changes
     this.myDropdownInputIngredients.addEventListener("input", () => {
-      this.filterDropdownInputIngredients();
+      this.filterDropdownInput(myDropdownInputIngredients, ingredientsDropdown);
     });
     this.myDropdownInputAppliances.addEventListener("input", () => {
-      this.filterDropdownInputAppliances();
+      this.filterDropdownInput(myDropdownInputAppliances, appliancesDropdown);
     });
     this.myDropdownInputUstensils.addEventListener("input", () => {
-      this.filterDropdownInputUstensils();
+      this.filterDropdownInput(myDropdownInputUstensils, ustensilsDropdown);
     });
     //Searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
@@ -249,16 +249,17 @@ export class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterDropdownInputIngredients() {
-    let ingredientsDropdownElement;
+  filterDropdownInput(inputId, dropdownElementId) {
+    console.log(inputId, dropdownElementId);
+    let dropdownElement;
     let aElement;
     let txtValue;
     var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInputIngredients");
-    filterDropdown = input.value.toUpperCase();
-    ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
+    input = document.getElementById(inputId);
+    filterDropdown = inputId.value.toUpperCase();
+    dropdownElement = document.getElementById(dropdownElementId);
 
-    aElement = ingredientsDropdownElement.getElementsByTagName("a");
+    aElement = dropdownElementId.getElementsByTagName("a");
     for (i = 0; i < aElement.length; i++) {
       txtValue = aElement[i].textContent || aElement[i].innerText;
       if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
@@ -268,42 +269,62 @@ export class App {
       }
     }
   }
-  filterDropdownInputAppliances() {
-    let appliancesDropdownElement;
-    let aElement;
-    let txtValue;
-    var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInputAppliances");
-    filterDropdown = input.value.toUpperCase();
-    appliancesDropdownElement = document.getElementById("appliancesDropdown");
-    aElement = appliancesDropdownElement.getElementsByTagName("a");
-    for (i = 0; i < aElement.length; i++) {
-      txtValue = aElement[i].textContent || aElement[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-        aElement[i].style.display = "";
-      } else {
-        aElement[i].style.display = "none";
-      }
-    }
-  }
-  filterDropdownInputUstensils() {
-    let ustensilsDropdownElement;
-    let aElement;
-    let txtValue;
-    var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInputUstensils");
-    filterDropdown = input.value.toUpperCase();
-    ustensilsDropdownElement = document.getElementById("ustensilsDropdown");
-    aElement = ustensilsDropdownElement.getElementsByTagName("a");
-    for (i = 0; i < aElement.length; i++) {
-      txtValue = aElement[i].textContent || aElement[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-        aElement[i].style.display = "";
-      } else {
-        aElement[i].style.display = "none";
-      }
-    }
-  }
+
+  // filterDropdownInputIngredients() {
+  //   let ingredientsDropdownElement;
+  //   let aElement;
+  //   let txtValue;
+  //   var input, filterDropdown, i;
+  //   input = document.getElementById("myDropdownInputIngredients");
+  //   filterDropdown = input.value.toUpperCase();
+  //   ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
+
+  //   aElement = ingredientsDropdownElement.getElementsByTagName("a");
+  //   for (i = 0; i < aElement.length; i++) {
+  //     txtValue = aElement[i].textContent || aElement[i].innerText;
+  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+  //       aElement[i].style.display = "";
+  //     } else {
+  //       aElement[i].style.display = "none";
+  //     }
+  //   }
+  // }
+  // filterDropdownInputAppliances() {
+  //   let appliancesDropdownElement;
+  //   let aElement;
+  //   let txtValue;
+  //   var input, filterDropdown, i;
+  //   input = document.getElementById("myDropdownInputAppliances");
+  //   filterDropdown = input.value.toUpperCase();
+  //   appliancesDropdownElement = document.getElementById("appliancesDropdown");
+  //   aElement = appliancesDropdownElement.getElementsByTagName("a");
+  //   for (i = 0; i < aElement.length; i++) {
+  //     txtValue = aElement[i].textContent || aElement[i].innerText;
+  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+  //       aElement[i].style.display = "";
+  //     } else {
+  //       aElement[i].style.display = "none";
+  //     }
+  //   }
+  // }
+  // filterDropdownInputUstensils() {
+  //   let ustensilsDropdownElement;
+  //   let aElement;
+  //   let txtValue;
+  //   var input, filterDropdown, i;
+  //   input = document.getElementById("myDropdownInputUstensils");
+  //   filterDropdown = input.value.toUpperCase();
+  //   ustensilsDropdownElement = document.getElementById("ustensilsDropdown");
+  //   aElement = ustensilsDropdownElement.getElementsByTagName("a");
+  //   for (i = 0; i < aElement.length; i++) {
+  //     txtValue = aElement[i].textContent || aElement[i].innerText;
+  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+  //       aElement[i].style.display = "";
+  //     } else {
+  //       aElement[i].style.display = "none";
+  //     }
+  //   }
+  // }
 
   filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
     this.searchInput.addEventListener("input", () => {
