@@ -10,7 +10,7 @@ class SortTemplate {
     this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
     this.tagsArrayDiv = document.getElementsByClassName("tagsArrayDiv");
     this.tagsList = document.getElementsByClassName("tagsList");
-    this.ingredientNames = [];
+    this.itemNames = [];
     this.applianceNames = [];
     this.ustensilNames = [];
     this.ingredientLinks = [];
@@ -19,7 +19,7 @@ class SortTemplate {
 
   clearDropdown() {}
   appendElementName() {}
-  updateDropdown() {}
+  updateDropdownItems() {}
   findMatchingElements() {}
   handleTagClick() {}
   normalizeApiWithMatchingElements() {}
@@ -27,20 +27,24 @@ class SortTemplate {
 
   //Ingredients
   clearDropdownIngredients() {
-    this.ingredientNames = [];
+    this.itemNames = [];
     this.ingredients = [];
     this.arrayOfIngredients = [];
-    this.updateDropdownIngredients();
+    this.updateDropdownItems();
     this.filterDropdownInputHelperIngredients();
   }
 
-  appendIngredientsName(ingredient) {
-    {
-      this.ingredientNames.push(ingredient);
-    }
-  }
+  // appendIngredientsName(item) {
+  //   console.log("item", item);
+  //   {
+  //     this.itemNames.push(item);
+  //   }
+  // }
 
-  updateDropdownIngredients(fetchedDataFromApi) {
+  updateDropdownItems(itemArrays) {
+    console.log(itemArrays);
+    // console.log(arrayOfIngredientNames);
+    // console.log(arrayOfUstensilNames);
     //create dropdown template
     this.ingredientsDropdown.innerHTML = "";
     const searchInputDiv = document.createElement("div");
@@ -58,7 +62,7 @@ class SortTemplate {
     searchInputDiv.appendChild(searchInput);
 
     //create link template for Each
-    this.ingredientNames.forEach((ingredient) => {
+    this.itemNames.forEach((ingredient) => {
       const link = document.createElement("a");
       link.classList.add("sortIngredients");
       link.href = `#${ingredient}`;
@@ -174,41 +178,41 @@ class SortTemplate {
     }
   }
 
-  //Appliances
-  clearDropdownAppliances() {
-    this.ingredients = [];
-    this.updateDropdownAppliances();
-  }
-  appendAppliancesName(appliance) {
-    this.applianceNames.push(appliance);
-  }
-  updateDropdownAppliances() {
-    this.applianceNames.forEach((appliance) => {
-      const link = document.createElement("a");
-      link.classList.add("sortAppliances");
-      link.href = `#${appliance}`;
-      link.textContent = appliance;
-      this.appliancesDropdown.appendChild(link);
-    });
-  }
+  // //Appliances
+  // clearDropdownAppliances() {
+  //   this.ingredients = [];
+  //   this.updateDropdownAppliances();
+  // }
+  // appendAppliancesName(appliance) {
+  //   this.applianceNames.push(appliance);
+  // }
+  // updateDropdownAppliances() {
+  //   this.applianceNames.forEach((appliance) => {
+  //     const link = document.createElement("a");
+  //     link.classList.add("sortAppliances");
+  //     link.href = `#${appliance}`;
+  //     link.textContent = appliance;
+  //     this.appliancesDropdown.appendChild(link);
+  //   });
+  // }
 
-  //Ustensils
-  clearDropdownUstensils() {
-    this.ustensils = [];
-    this.updateDropdownUstensils();
-  }
-  appendUstensilsName(ustensil) {
-    this.ustensilNames.push(ustensil);
-  }
-  updateDropdownUstensils() {
-    this.ustensilNames.forEach((ustensil) => {
-      const link = document.createElement("a");
-      link.classList.add("sortUstensils");
-      link.href = `#${ustensil}`;
-      link.textContent = ustensil;
-      this.ustensilsDropdown.appendChild(link);
-    });
-  }
+  // //Ustensils
+  // clearDropdownUstensils() {
+  //   this.ustensils = [];
+  //   this.updateDropdownUstensils();
+  // }
+  // appendUstensilsName(ustensil) {
+  //   this.ustensilNames.push(ustensil);
+  // }
+  // updateDropdownUstensils() {
+  //   this.ustensilNames.forEach((ustensil) => {
+  //     const link = document.createElement("a");
+  //     link.classList.add("sortUstensils");
+  //     link.href = `#${ustensil}`;
+  //     link.textContent = ustensil;
+  //     this.ustensilsDropdown.appendChild(link);
+  //   });
+  // }
 }
 
 export { SortTemplate };

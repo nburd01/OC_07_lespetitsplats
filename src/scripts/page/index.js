@@ -39,41 +39,47 @@ export class App {
     const fetchedDataFromApi = await this.cardsApi.getCards();
 
     // tri a-z by 'name'
-    const normalizeCardsDataByIngredient = [...fetchedDataFromApi].sort(
-      (a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
+    const sortCardsDataByIngredient = [...fetchedDataFromApi].sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
       }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    const arrayOfIngredientNames = sortCardsDataByIngredient.flatMap((recipe) =>
+      recipe.ingredients.map((ingredient) => ingredient.ingredient)
     );
     // tri a-z by 'appliance'
-    const normalizeCardsDataByAppliance = [...fetchedDataFromApi].sort(
-      (a, b) => {
-        if (a.appliance < b.appliance) {
-          return -1;
-        }
-        if (a.appliance > b.appliance) {
-          return 1;
-        }
-        return 0;
+    const sortCardsDataByAppliance = [...fetchedDataFromApi].sort((a, b) => {
+      if (a.appliance < b.appliance) {
+        return -1;
       }
-    );
-    // tri a-z by 'ustensil'
-    const normalizeCardsDataByUstensil = [...fetchedDataFromApi].sort(
-      (a, b) => {
-        if (a.ustensils < b.ustensils) {
-          return -1;
-        }
-        if (a.ustensils > b.ustensils) {
-          return 1;
-        }
-        return 0;
+      if (a.appliance > b.appliance) {
+        return 1;
       }
+      return 0;
+    });
+
+    const arrayOfApplianceNames = sortCardsDataByAppliance.map(
+      (obj) => obj.appliance
     );
+
+    const sortCardsDataByUstensil = [...fetchedDataFromApi].sort((a, b) => {
+      if (a.ustensils < b.ustensils) {
+        return -1;
+      }
+      if (a.ustensils > b.ustensils) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const arrayOfUstensilNames = sortCardsDataByUstensil.flatMap(
+      (recipeData) => recipeData.ustensils
+    );
+
     // tri by 'id'
     const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
 
@@ -92,76 +98,64 @@ export class App {
     // ------------------------
     // Normalizing
     // ------------------------
+    const itemArrays = {
+      arrayOfApplianceNames: [],
+      arrayOfIngredientNames: [],
+      arrayOfUstensilNames: [],
+    };
+    normalizingData(
+      arrayOfApplianceNames,
+      "appliance",
+      sortTemplate,
+      itemArrays,
+      "arrayOfApplianceNames"
+    );
 
-    //sort appliance function
-    normalizeCardsDataByAppliance
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const appliance = card._appliance || [];
+    normalizingData(
+      arrayOfIngredientNames,
+      "ingredients",
+      sortTemplate,
+      itemArrays,
+      "arrayOfIngredientNames"
+    );
+
+    normalizingData(
+      arrayOfUstensilNames,
+      "ustensils",
+      sortTemplate,
+      itemArrays,
+      "arrayOfUstensilNames"
+    );
+
+    //ressort une liste
+    function normalizingData(
+      normalizeCardsData,
+      item,
+      sortTemplate,
+      itemArrays,
+      targetArrayName
+    ) {
+      let arrayOfItems = [];
+      normalizeCardsData.forEach((card, index) => {
+        const itemValue = card || "";
+        //convert to strings
         //mise en forme : normalise
-        const applianceNameFirst = appliance.charAt(0);
-        const applianceNameRest = appliance.slice(1);
-        const applianceName = applianceNameFirst + applianceNameRest;
-        let pluralapplianceName = applianceName + "s";
+        const itemNameFirst = itemValue.charAt(0);
+        const itemNameRest = itemValue.slice(1);
+        const itemName = itemNameFirst + itemNameRest;
+        let pluralItemName = itemName + "s";
         //condition
         if (
-          !arrayOfAppliances.includes(applianceName) &&
-          !arrayOfAppliances.includes(pluralapplianceName)
+          !arrayOfItems.includes(itemName) &&
+          !arrayOfItems.includes(pluralItemName)
         ) {
-          arrayOfAppliances.push(applianceName);
+          arrayOfItems.push(itemName);
         }
       });
-
-    arrayOfAppliances.forEach((appliance) => {
-      sortTemplate.appendAppliancesName(appliance);
-    });
-    sortTemplate.updateDropdownAppliances();
-
-    //sort ingredient function
-    normalizeCardsDataByIngredient
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const ingredients = card._ingredients || [];
-        ingredients.forEach((ingredient) => {
-          const ingredientNameFirst = ingredient.ingredient.charAt(0);
-          const ingredientNameRest = ingredient.ingredient.slice(1);
-          const ingredientName = ingredientNameFirst + ingredientNameRest;
-          let pluralIngredientName = ingredientName + "s";
-          if (
-            !arrayOfIngredients.includes(ingredientName) &&
-            !arrayOfIngredients.includes(pluralIngredientName)
-          ) {
-            arrayOfIngredients.push(ingredientName);
-          }
-        });
-      });
-    arrayOfIngredients.forEach((ingredient) => {
-      sortTemplate.appendIngredientsName(ingredient);
-    });
-    sortTemplate.updateDropdownIngredients();
-
-    //sort ustensil function
-    normalizeCardsDataByUstensil
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const ustensils = card._ustensils || [];
-        ustensils.forEach((ustensil) => {
-          const ustensilNameFirst = ustensil.charAt(0).toUpperCase();
-          const ustensilNameRest = ustensil.slice(1);
-          const ustensilName = ustensilNameFirst + ustensilNameRest;
-          let pluralustensilName = ustensilName + "s";
-          if (
-            !arrayOfUstensils.includes(ustensilName) &&
-            !arrayOfUstensils.includes(pluralustensilName)
-          ) {
-            arrayOfUstensils.push(ustensilName);
-          }
-        });
-      });
-    arrayOfUstensils.forEach((ustensil) => {
-      sortTemplate.appendUstensilsName(ustensil);
-    });
-    sortTemplate.updateDropdownUstensils();
+      // console.log(arrayOfItems);
+      itemArrays[targetArrayName].push(...arrayOfItems);
+      sortTemplate.updateDropdownItems(itemArrays);
+    }
 
     //sort everything function
     const arrayOfEverything = [
@@ -244,8 +238,8 @@ export class App {
     }
 
     // Access sortTemplate as this.sortTemplate
-    this.sortTemplate.appendIngredientsName();
-    this.sortTemplate.updateDropdownIngredients();
+    // this.sortTemplate.appendIngredientsName();
+    this.sortTemplate.updateDropdownItems();
     this.sortTemplate.handleTagClick(fetchedDataFromApi);
   }
 
@@ -356,7 +350,7 @@ export class App {
 const initApp = async () => {
   const app = new App();
   app.main();
-  app.sortTemplate.updateDropdownIngredients();
+  app.sortTemplate.updateDropdownItems();
 };
 
 initApp();
