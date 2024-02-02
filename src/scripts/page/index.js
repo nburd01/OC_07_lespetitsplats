@@ -30,10 +30,15 @@ export class App {
 
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
+
+    // ------------------------
+    // Fetching
+    // ------------------------
+
     //Fetch data
     const fetchedDataFromApi = await this.cardsApi.getCards();
 
-    // tri by 'name'
+    // tri a-z by 'name'
     const normalizeCardsDataByIngredient = [...fetchedDataFromApi].sort(
       (a, b) => {
         if (a.name < b.name) {
@@ -45,17 +50,19 @@ export class App {
         return 0;
       }
     );
-    // tri by 'appliance'
-    const cardsDataByAppliance = [...fetchedDataFromApi].sort((a, b) => {
-      if (a.appliance < b.appliance) {
-        return -1;
+    // tri a-z by 'appliance'
+    const normalizeCardsDataByAppliance = [...fetchedDataFromApi].sort(
+      (a, b) => {
+        if (a.appliance < b.appliance) {
+          return -1;
+        }
+        if (a.appliance > b.appliance) {
+          return 1;
+        }
+        return 0;
       }
-      if (a.appliance > b.appliance) {
-        return 1;
-      }
-      return 0;
-    });
-    // tri by 'ustensil'
+    );
+    // tri a-z by 'ustensil'
     const normalizeCardsDataByUstensil = [...fetchedDataFromApi].sort(
       (a, b) => {
         if (a.ustensils < b.ustensils) {
@@ -82,8 +89,12 @@ export class App {
     const arrayOfAppliances = [];
     const arrayOfUstensils = [];
 
+    // ------------------------
+    // Normalizing
+    // ------------------------
+
     //sort appliance function
-    cardsDataByAppliance
+    normalizeCardsDataByAppliance
       .map((card) => new Card(card))
       .forEach((card) => {
         const appliance = card._appliance || [];
@@ -159,14 +170,13 @@ export class App {
       ...arrayOfUstensils,
     ];
 
+    // ------------------------
+    // Events
+    // ------------------------
+
     this.searchInput.addEventListener("input", () => {
       this.handleSearchBarInputChange();
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
-      this.filterSearchbarInputWithIngredientsArray(
-        arrayOfIngredients,
-        createCards,
-        sortTemplate
-      );
     });
 
     this.faMark.addEventListener("click", () => {
@@ -182,20 +192,6 @@ export class App {
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
-
-    function handleDropdownHelper(dropdownId, elemId) {
-      const dropdown = document.getElementById(dropdownId);
-      const elem = document.getElementById(elemId);
-      if (dropdownId.classList.contains("show")) {
-        const outsideClick = !elemId.contains(event.target);
-
-        if (outsideClick) {
-          dropdownId.classList.remove("show");
-        } else {
-          dropdownId.classList.add("show");
-        }
-      }
-    }
 
     //Dropdown clicks
     document.addEventListener("click", function (event) {
@@ -227,15 +223,25 @@ export class App {
         ustensilsDropdown
       );
     });
-    //Searchbar input changes
+
+    //Main searchbar input changes
     this.mySearchInput.addEventListener("input", () => {
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
-      this.filterSearchbarInputWithIngredientsArray(
-        arrayOfIngredients,
-        createCards,
-        sortTemplate
-      );
     });
+
+    function handleDropdownHelper(dropdownId, elemId) {
+      const dropdown = document.getElementById(dropdownId);
+      const elem = document.getElementById(elemId);
+      if (dropdownId.classList.contains("show")) {
+        const outsideClick = !elemId.contains(event.target);
+
+        if (outsideClick) {
+          dropdownId.classList.remove("show");
+        } else {
+          dropdownId.classList.add("show");
+        }
+      }
+    }
 
     // Access sortTemplate as this.sortTemplate
     this.sortTemplate.appendIngredientsName();
@@ -243,20 +249,9 @@ export class App {
     this.sortTemplate.handleTagClick(fetchedDataFromApi);
   }
 
-  handleSearchBarInputChange() {
-    if (this.searchInput.value !== "") {
-      this.faMark.style.display = "block";
-    } else {
-      this.faMark.style.display = "none";
-      this.searchInput.placeholder =
-        "Rechercher une recette, un ingrédient, ...";
-    }
-  }
-  handleClearInput() {
-    this.searchInput.value = "";
-    this.faMark.style.display = "none";
-    this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
-  }
+  // ------------------------
+  // Helpers
+  // ------------------------
 
   filterDropdownInputHelper(inputId, dropdownElementId) {
     console.log(inputId, dropdownElementId);
@@ -279,6 +274,25 @@ export class App {
     }
   }
 
+  // ------------------------
+  // Searchbar
+  // ------------------------
+
+  handleSearchBarInputChange() {
+    if (this.searchInput.value !== "") {
+      this.faMark.style.display = "block";
+    } else {
+      this.faMark.style.display = "none";
+      this.searchInput.placeholder =
+        "Rechercher une recette, un ingrédient, ...";
+    }
+  }
+  handleClearInput() {
+    this.searchInput.value = "";
+    this.faMark.style.display = "none";
+    this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
+  }
+
   filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
@@ -296,37 +310,9 @@ export class App {
     });
   }
 
-  filterSearchbarInputWithIngredientsArray(
-    arrayOfIngredients,
-    fetchedDataFromApi,
-    sortTemplate
-  ) {
-    this.searchInput.addEventListener("input", () => {
-      let input = this.searchInput.value;
-      let mainSearchBarInputUpperCase = input.toUpperCase();
-
-      let matchingElementsIngredients;
-
-      matchingElementsIngredients = arrayOfIngredients.filter((element) => {
-        return element.toUpperCase().includes(mainSearchBarInputUpperCase);
-      });
-
-      matchingElementsIngredients.forEach((ingredient) => {
-        // console.log(ingredient);
-        const ingredientNameFirst = ingredient.charAt(0);
-        const ingredientNameRest = ingredient.slice(1);
-        const ingredientName = ingredientNameFirst + ingredientNameRest;
-        if (matchingElementsIngredients.includes(ingredientName)) {
-          this.updateIngredientsFilterArrayOnSearchBarInput(
-            matchingElementsIngredients,
-            ingredientName,
-            fetchedDataFromApi,
-            sortTemplate
-          );
-        }
-      });
-    });
-  }
+  // ------------------------
+  // Cards manipulation
+  // ------------------------
 
   updateCardsOnSearchBarInput(inputMatchingElements, fetchedDataFromApi) {
     let matchingElementsUppercase = inputMatchingElements.map((element) =>
@@ -353,21 +339,6 @@ export class App {
     this.updateCards(newMatchingElementsAfterInput);
   }
 
-  updateIngredientsFilterArrayOnSearchBarInput(ingredientName) {
-    let matchingElementsUppercase = ingredientName.map((element) => element);
-
-    // Clear and update the dropdown in the SortTemplate
-    this.sortTemplate.clearDropdownIngredients();
-
-    // Append new ingredients to the SortTemplate
-    matchingElementsUppercase.forEach((ingredient) => {
-      this.sortTemplate.appendIngredientsName(ingredient);
-    });
-
-    // Update the dropdown in the SortTemplate
-    this.sortTemplate.updateDropdownIngredients();
-  }
-
   updateCards(cardsData) {
     console.log(cardsData);
     const cardsSection = document.querySelector(".cards");
@@ -380,8 +351,6 @@ export class App {
         cardsSection.appendChild(templateCards.createCard());
       });
   }
-  //efface le innerHTML des cartes
-  //Pour chaque element dans cards il créer une nouvelle Card avec les données de newMatchingElementsAfterInput
 }
 
 const initApp = async () => {

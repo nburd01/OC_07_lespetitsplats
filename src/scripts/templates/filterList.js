@@ -17,6 +17,14 @@ class SortTemplate {
     this.tagsArray = [];
   }
 
+  clearDropdown() {}
+  appendElementName() {}
+  updateDropdown() {}
+  findMatchingElements() {}
+  handleTagClick() {}
+  normalizeApiWithMatchingElements() {}
+  filterDropdownInputHelper() {}
+
   //Ingredients
   clearDropdownIngredients() {
     this.ingredientNames = [];
