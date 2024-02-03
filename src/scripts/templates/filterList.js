@@ -83,23 +83,10 @@ class SortTemplate {
   // ------------------------
 
   handleTagClick(fetchedDataFromApi) {
-    const tagsList = document.querySelector(".tagsList");
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     ingredientLinks.forEach((link) => {
       link.addEventListener("click", () => {
-        //Push to array
-        this.tagsArray.push(link.textContent);
-        //Create elements
-        const tag = document.createElement("li");
-        tag.classList.add("tag-li");
-        const tagAnchor = document.createElement("a");
-        tagAnchor.classList.add("tag-anchor");
-        tagAnchor.textContent = link.textContent;
-        tagsList.appendChild(tag);
-        tag.appendChild(tagAnchor);
-        const tagAnchorClose = document.createElement("i");
-        tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
-        tagAnchor.appendChild(tagAnchorClose);
+        this.creatingLiElements(link);
         //Normalize
         const ingredientLinksUpperCase = this.findMatchingElements();
         console.log("tagsArrayUpperCase", ingredientLinksUpperCase);
@@ -108,8 +95,25 @@ class SortTemplate {
           ingredientLinksUpperCase
         );
       });
-      this.closeTagClick();
+      this.closeTagClick(link);
     });
+  }
+
+  creatingLiElements(link) {
+    const tagsList = document.querySelector(".tagsList");
+    //Push to array
+    this.tagsArray.push(link.textContent);
+    //Create elements
+    const tag = document.createElement("li");
+    tag.classList.add("tag-li");
+    const tagAnchor = document.createElement("a");
+    tagAnchor.classList.add("tag-anchor");
+    tagAnchor.textContent = link.textContent;
+    tagsList.appendChild(tag);
+    tag.appendChild(tagAnchor);
+    const tagAnchorClose = document.createElement("i");
+    tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
+    tagAnchor.appendChild(tagAnchorClose);
   }
 
   closeTagClick() {
