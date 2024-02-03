@@ -91,10 +91,6 @@ export class App {
         cardsSection.appendChild(templateCards.createCard());
       });
 
-    const arrayOfIngredients = [];
-    const arrayOfAppliances = [];
-    const arrayOfUstensils = [];
-
     // ------------------------
     // Normalizing
     // ------------------------
@@ -126,6 +122,14 @@ export class App {
       itemArrays,
       "arrayOfUstensilNames"
     );
+
+    const arrayOfIngredientsNames = [];
+    const arrayOfAppliancesNames = [];
+    const arrayOfUstensilsNames = [];
+
+    const itemsArrayAppliance = [];
+    const itemsArrayIngredient = [];
+    const itemsArrayUstensil = [];
 
     //ressort une liste
     function normalizingData(
@@ -165,9 +169,9 @@ export class App {
 
     //sort everything function
     const arrayOfEverything = [
-      ...arrayOfIngredients,
-      ...arrayOfAppliances,
-      ...arrayOfUstensils,
+      ...itemArrays.arrayOfIngredientNames,
+      ...itemArrays.arrayOfApplianceNames,
+      ...itemArrays.arrayOfUstensilNames,
     ];
 
     // ------------------------
@@ -343,7 +347,6 @@ export class App {
   }
 
   updateCards(cardsData) {
-    console.log(cardsData);
     const cardsSection = document.querySelector(".cards");
     cardsSection.innerHTML = "";
 

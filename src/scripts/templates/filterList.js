@@ -17,65 +17,53 @@ class SortTemplate {
     this.tagsArray = [];
   }
 
-  // clearDropdown() {}
-  // appendElementName() {}
-  // // updateDropdownItems() {}
-  // findMatchingElements() {}
-  // handleTagClick() {}
-  // normalizeApiWithMatchingElements() {}
-  // filterDropdownInputHelper() {}
-
-  //Ingredients
-  clearDropdownIngredients() {
-    this.itemNames = [];
-    this.ingredients = [];
-    this.arrayOfIngredients = [];
-    // this.updateDropdownItems();
-    this.filterDropdownInputHelperIngredients();
-  }
-
   updateDropdownItems(
     itemsaArrayAppliance,
     itemsArrayIngredient,
     itemsArrayUstensil
   ) {
     if (itemsaArrayAppliance) {
-      this.appliancesDropdown.innerHTML = "";
+      // this.appliancesDropdown.innerHTML = "";
       dropdownLinkCreationHelper(itemsaArrayAppliance);
     }
     if (itemsArrayIngredient) {
-      // console.log("itemsArrayIngredient", itemsArrayIngredient);
-      //creation of elements
+      // ------------------------
+      // Creation of elements
+      // ------------------------
       this.ingredientsDropdown.innerHTML = "";
       dropdownLinkCreationHelper(itemsArrayIngredient);
-      //Search input
-      // const searchInputDiv = document.createElement("div");
-      // searchInputDiv.classList.add("myDropdownInputDiv");
 
-      // const searchInput = document.createElement("input");
-      // searchInput.id = "myDropdownInputIngredients";
-      // searchInput.placeholder = "Rechercher";
+      // ------------------------
+      // Search input event
+      // ------------------------
+      const searchInputDiv = document.createElement("div");
+      searchInputDiv.classList.add("myDropdownInputDiv");
 
-      // searchInput.addEventListener("input", () => {
-      //   this.filterDropdownInputHelperIngredients();
-      // });
+      const searchInput = document.createElement("input");
+      searchInput.id = "myDropdownInputIngredients";
+      searchInput.placeholder = "Rechercher";
 
-      // this.ingredientsDropdown.appendChild(searchInputDiv);
-      // searchInputDiv.appendChild(searchInput);
+      searchInput.addEventListener("input", () => {
+        this.filterDropdownInputHelperIngredients();
+      });
 
-      // // //create link template for Each
-      // itemsArrayIngredient.forEach((ingredient) => {
-      //   console.log(ingredient);
-      //   const link = document.createElement("a");
-      //   link.classList.add("sortIngredients");
-      //   link.href = `#${ingredient}`;
-      //   link.textContent = ingredient;
-      //   this.ingredientsDropdown.appendChild(link);
-      // });
+      this.ingredientsDropdown.appendChild(searchInputDiv);
+      searchInputDiv.appendChild(searchInput);
 
-      // const tagsArray = [];
-      // const ingredientLinks = document.querySelectorAll(".sortIngredients");
-      // const tagsList = document.querySelector(".tagsList");
+      // ------------------------
+      // Creation of links
+      // ------------------------
+      itemsArrayIngredient.forEach((ingredient) => {
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${ingredient}`;
+        link.textContent = ingredient;
+        this.ingredientsDropdown.appendChild(link);
+      });
+
+      const tagsArray = [];
+      const ingredientLinks = document.querySelectorAll(".sortIngredients");
+      const tagsList = document.querySelector(".tagsList");
     }
 
     function dropdownLinkCreationHelper(arrayOfElements) {
@@ -87,98 +75,67 @@ class SortTemplate {
         // this.elementsDropdown.appendChild(link);
         // console.log(element);
       });
-      // Closing bracket for forEach loop
     }
-
-    //creation of elements
-    // this.ingredientsDropdown.innerHTML = "";
-    // const searchInputDiv = document.createElement("div");
-    // searchInputDiv.classList.add("myDropdownInputDiv");
-
-    // const searchInput = document.createElement("input");
-    // searchInput.id = "myDropdownInputIngredients";
-    // searchInput.placeholder = "Rechercher";
-
-    // searchInput.addEventListener("input", () => {
-    //   this.filterDropdownInputHelperIngredients();
-    // });
-
-    // this.ingredientsDropdown.appendChild(searchInputDiv);
-    // searchInputDiv.appendChild(searchInput);
-
-    // //create link template for Each
-    // this.itemNames.forEach((ingredient) => {
-    //   const link = document.createElement("a");
-    //   link.classList.add("sortIngredients");
-    //   link.href = `#${ingredient}`;
-    //   link.textContent = ingredient;
-    //   this.ingredientsDropdown.appendChild(link);
-    // });
-
-    // const tagsArray = [];
-    // const ingredientLinks = document.querySelectorAll(".sortIngredients");
-    // const tagsList = document.querySelector(".tagsList");
-
-    // ------------------------
-    // Events
-    // ------------------------
-
-    //Event click on Link pushes clicked link text to this.tagsArray within the matching elements scope. Reverse when click on tag to delete
-    // ingredientLinks.forEach((link) => {
-    //   // tag template creation
-    //   link.addEventListener("click", () => {
-    //     this.tagsArray.push(link.textContent);
-    //     const tag = document.createElement("li");
-    //     tag.classList.add("tag-li");
-    //     const tagAnchor = document.createElement("a");
-    //     tagAnchor.classList.add("tag-anchor");
-    //     tagAnchor.textContent = link.textContent;
-    //     tagsList.appendChild(tag);
-    //     tag.appendChild(tagAnchor);
-    //     const tagAnchorClose = document.createElement("i");
-    //     tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
-    //     tagAnchor.appendChild(tagAnchorClose);
-    //   });
-
-    //   // remove tag on click of it
-    //   tagsList.addEventListener("click", (event) => {
-    //     if (event.target.classList.contains("closeTag")) {
-    //       const clickedTagText = event.target.previousSibling.textContent;
-    //       const index = this.tagsArray.indexOf(clickedTagText);
-    //       this.tagsArray.splice(index, 1);
-
-    //       // remove the corresponding li element
-    //       event.target.closest("li").remove();
-
-    //       this.findMatchingElements();
-    //     }
-    //   });
-    // });
   }
 
-  findMatchingElements() {
-    let ingredientLinksUpperCase = [];
-    this.tagsArray.forEach((element) => {
-      let upperCaseTag = element.toUpperCase();
-      ingredientLinksUpperCase.push(upperCaseTag);
-    });
-    console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
-    return ingredientLinksUpperCase;
-  }
-  //
-  handleTagClick(fetchedDataFromApi, tagsArray) {
-    tagsArray = this.tagsArray;
+  // ------------------------
+  // Events
+  // ------------------------
+
+  handleTagClick(fetchedDataFromApi) {
+    const tagsList = document.querySelector(".tagsList");
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     ingredientLinks.forEach((link) => {
       link.addEventListener("click", () => {
+        //Push to array
+        this.tagsArray.push(link.textContent);
+        //Create elements
+        const tag = document.createElement("li");
+        tag.classList.add("tag-li");
+        const tagAnchor = document.createElement("a");
+        tagAnchor.classList.add("tag-anchor");
+        tagAnchor.textContent = link.textContent;
+        tagsList.appendChild(tag);
+        tag.appendChild(tagAnchor);
+        const tagAnchorClose = document.createElement("i");
+        tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
+        tagAnchor.appendChild(tagAnchorClose);
+        //Normalize
         const ingredientLinksUpperCase = this.findMatchingElements();
+        console.log("tagsArrayUpperCase", ingredientLinksUpperCase);
         this.normalizeApiWithMatchingElements(
           fetchedDataFromApi,
           ingredientLinksUpperCase
         );
       });
+      this.closeTagClick();
     });
   }
+
+  closeTagClick() {
+    const tagsList = document.querySelector(".tagsList");
+    tagsList.addEventListener("click", (event) => {
+      if (event.target.classList.contains("closeTag")) {
+        const clickedTagText = event.target.previousSibling.textContent;
+        const index = this.tagsArray.indexOf(clickedTagText);
+        this.tagsArray.splice(index, 1);
+        // remove the corresponding li element
+        event.target.closest("li").remove();
+        this.findMatchingElements();
+      }
+    });
+  }
+
+  findMatchingElements() {
+    let ingredientLinksUpperCase = [];
+    // console.log("this.tagsArray", this.tagsArray);
+    this.tagsArray.forEach((element) => {
+      let upperCaseTag = element.toUpperCase();
+      ingredientLinksUpperCase.push(upperCaseTag);
+    });
+    return ingredientLinksUpperCase;
+  }
+
   //compare matching elements with api data and update cards for ingredients
   normalizeApiWithMatchingElements(
     fetchedDataFromApi,
@@ -199,7 +156,7 @@ class SortTemplate {
         });
       })
       .map((filteredCard) => {
-        console.log("filteredCard", filteredCard.ingredients);
+        // console.log("filteredCard", filteredCard.ingredients);
         return filteredCard;
       });
 
@@ -226,42 +183,6 @@ class SortTemplate {
       }
     }
   }
-
-  // //Appliances
-  // clearDropdownAppliances() {
-  //   this.ingredients = [];
-  //   this.updateDropdownAppliances();
-  // }
-  // appendAppliancesName(appliance) {
-  //   this.applianceNames.push(appliance);
-  // }
-  // updateDropdownAppliances() {
-  //   this.applianceNames.forEach((appliance) => {
-  //     const link = document.createElement("a");
-  //     link.classList.add("sortAppliances");
-  //     link.href = `#${appliance}`;
-  //     link.textContent = appliance;
-  //     this.appliancesDropdown.appendChild(link);
-  //   });
-  // }
-
-  // //Ustensils
-  // clearDropdownUstensils() {
-  //   this.ustensils = [];
-  //   this.updateDropdownUstensils();
-  // }
-  // appendUstensilsName(ustensil) {
-  //   this.ustensilNames.push(ustensil);
-  // }
-  // updateDropdownUstensils() {
-  //   this.ustensilNames.forEach((ustensil) => {
-  //     const link = document.createElement("a");
-  //     link.classList.add("sortUstensils");
-  //     link.href = `#${ustensil}`;
-  //     link.textContent = ustensil;
-  //     this.ustensilsDropdown.appendChild(link);
-  //   });
-  // }
 }
 
 export { SortTemplate };
