@@ -152,9 +152,15 @@ export class App {
           arrayOfItems.push(itemName);
         }
       });
-      // console.log(arrayOfItems);
       itemArrays[targetArrayName].push(...arrayOfItems);
-      sortTemplate.updateDropdownItems(itemArrays);
+      let itemsArrayAppliance = itemArrays.arrayOfApplianceNames;
+      let itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
+      let itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
+      sortTemplate.updateDropdownItems(
+        itemsArrayAppliance,
+        itemsArrayIngredient,
+        itemsArrayUstensil
+      );
     }
 
     //sort everything function
@@ -288,6 +294,8 @@ export class App {
   }
 
   filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
+    console.log("arrayOfEverything", arrayOfEverything);
+    console.log("fetchedDataFromApi", fetchedDataFromApi);
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
       let mainSearchBarInputUpperCase = input.toUpperCase();
@@ -297,6 +305,7 @@ export class App {
       inputMatchingElements = arrayOfEverything.filter((element) => {
         return element.toUpperCase().includes(mainSearchBarInputUpperCase);
       });
+      // console.log(inputMatchingElements);
       this.updateCardsOnSearchBarInput(
         inputMatchingElements,
         fetchedDataFromApi
