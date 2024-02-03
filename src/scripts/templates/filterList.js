@@ -87,12 +87,12 @@ class SortTemplate {
     ingredientLinks.forEach((link) => {
       link.addEventListener("click", () => {
         this.creatingLiElements(link);
-        //Normalize
-        const ingredientLinksUpperCase = this.findMatchingElements();
-        console.log("tagsArrayUpperCase", ingredientLinksUpperCase);
+        //Normalize matching Items
+        const matchingItemLinksUpperCase = this.findMatchingElements();
+        //Compare normalize matching items with API elements
         this.normalizeApiWithMatchingElements(
           fetchedDataFromApi,
-          ingredientLinksUpperCase
+          matchingItemLinksUpperCase
         );
       });
       this.closeTagClick(link);
@@ -131,19 +131,19 @@ class SortTemplate {
   }
 
   findMatchingElements() {
-    let ingredientLinksUpperCase = [];
+    let matchingItemLinksUpperCase = [];
     // console.log("this.tagsArray", this.tagsArray);
     this.tagsArray.forEach((element) => {
       let upperCaseTag = element.toUpperCase();
-      ingredientLinksUpperCase.push(upperCaseTag);
+      matchingItemLinksUpperCase.push(upperCaseTag);
     });
-    return ingredientLinksUpperCase;
+    return matchingItemLinksUpperCase;
   }
 
   //compare matching elements with api data and update cards for ingredients
   normalizeApiWithMatchingElements(
     fetchedDataFromApi,
-    ingredientLinksUpperCase
+    matchingItemLinksUpperCase
   ) {
     let fetchedDataFromApiUppercase;
     fetchedDataFromApiUppercase = fetchedDataFromApi
@@ -153,7 +153,7 @@ class SortTemplate {
           ingredient: String(ingredient.ingredient).toUpperCase(),
         }));
 
-        return ingredientLinksUpperCase.some((matchingElement) => {
+        return matchingItemLinksUpperCase.some((matchingElement) => {
           return ingredientsUppercase.some((ingredient) =>
             String(ingredient.ingredient).includes(matchingElement)
           );
