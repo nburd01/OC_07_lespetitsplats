@@ -100,8 +100,11 @@ class SortTemplate {
         const index = this.tagsArray.indexOf(clickedTagText);
         this.tagsArray.splice(index, 1);
         event.target.closest("li").remove();
-        console.log("this.tagsArray", this.tagsArray);
         const matchingItemLinksUpperCase = this.findMatchingElements();
+        this.normalizeApiWithMatchingElements(
+          fetchedDataFromApi,
+          matchingItemLinksUpperCase
+        );
         // Additional logic...
       }
     };
@@ -124,7 +127,6 @@ class SortTemplate {
       let upperCaseTag = element.toUpperCase();
       matchingItemLinksUpperCase.push(upperCaseTag);
     });
-    console.log("this.tagsArray", this.tagsArray);
     return matchingItemLinksUpperCase;
   }
 
