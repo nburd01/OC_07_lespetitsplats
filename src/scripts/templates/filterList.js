@@ -174,9 +174,14 @@ class SortTemplate {
         // console.log("filteredCard", filteredCard.ingredients);
         return filteredCard;
       });
-
-    const appInstance = new App();
-    appInstance.updateCards(fetchedDataFromApiUppercase);
+    console.log(matchingItemLinksUpperCase);
+    if (matchingItemLinksUpperCase.length > 0) {
+      const appInstance = new App();
+      appInstance.updateCards(fetchedDataFromApiUppercase);
+    } else {
+      const appInstance = new App();
+      appInstance.updateCards(fetchedDataFromApi);
+    }
   }
 
   filterDropdownInputHelperIngredients() {
