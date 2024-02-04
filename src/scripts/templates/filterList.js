@@ -83,21 +83,54 @@ class SortTemplate {
   // ------------------------
 
   handleTagClick(fetchedDataFromApi) {
+    const tagsList = document.querySelector(".tagsList");
+
+    const handleTagClick = (link) => {
+      this.creatingLiElements(link);
+      const matchingItemLinksUpperCase = this.findMatchingElements();
+      this.normalizeApiWithMatchingElements(
+        fetchedDataFromApi,
+        matchingItemLinksUpperCase
+      );
+    };
+
+    const closeTagClick = (event) => {
+      if (event.target.classList.contains("closeTag")) {
+        const clickedTagText = event.target.previousSibling.textContent;
+        const index = this.tagsArray.indexOf(clickedTagText);
+        this.tagsArray.splice(index, 1);
+        event.target.closest("li").remove();
+        console.log("this.tagsArray", this.tagsArray);
+        const matchingItemLinksUpperCase = this.findMatchingElements();
+        // Additional logic...
+      }
+    };
+
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     ingredientLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        this.creatingLiElements(link);
-        //Normalize matching Items
-        const matchingItemLinksUpperCase = this.findMatchingElements();
-        //Compare normalize matching items with API elements
-        this.normalizeApiWithMatchingElements(
-          fetchedDataFromApi,
-          matchingItemLinksUpperCase
-        );
-      });
-      this.closeTagClick(link);
+      link.addEventListener("click", () => handleTagClick(link));
     });
+
+    tagsList.addEventListener("click", closeTagClick);
   }
+
+  // ------------------------
+  // Logic
+  // ------------------------
+
+  findMatchingElements() {
+    let matchingItemLinksUpperCase = [];
+    this.tagsArray.forEach((element) => {
+      let upperCaseTag = element.toUpperCase();
+      matchingItemLinksUpperCase.push(upperCaseTag);
+    });
+    console.log("this.tagsArray", this.tagsArray);
+    return matchingItemLinksUpperCase;
+  }
+
+  // ------------------------
+  // Creation
+  // ------------------------
 
   creatingLiElements(link) {
     const tagsList = document.querySelector(".tagsList");
@@ -114,30 +147,6 @@ class SortTemplate {
     const tagAnchorClose = document.createElement("i");
     tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
     tagAnchor.appendChild(tagAnchorClose);
-  }
-
-  closeTagClick() {
-    const tagsList = document.querySelector(".tagsList");
-    tagsList.addEventListener("click", (event) => {
-      if (event.target.classList.contains("closeTag")) {
-        const clickedTagText = event.target.previousSibling.textContent;
-        const index = this.tagsArray.indexOf(clickedTagText);
-        this.tagsArray.splice(index, 1);
-        // remove the corresponding li element
-        event.target.closest("li").remove();
-        this.findMatchingElements();
-      }
-    });
-  }
-
-  findMatchingElements() {
-    let matchingItemLinksUpperCase = [];
-    // console.log("this.tagsArray", this.tagsArray);
-    this.tagsArray.forEach((element) => {
-      let upperCaseTag = element.toUpperCase();
-      matchingItemLinksUpperCase.push(upperCaseTag);
-    });
-    return matchingItemLinksUpperCase;
   }
 
   //compare matching elements with api data and update cards for ingredients
