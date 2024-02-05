@@ -1152,7 +1152,7 @@ body {
 }
 
 ul li {
-  /* flex: 0 0 calc(50% - 10px); */
+  flex: 0 0 calc(50% - 10px);
   margin: 0 5px;
 }
 
