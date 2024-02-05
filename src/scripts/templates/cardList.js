@@ -46,6 +46,8 @@ class CardTemplate {
     this._card._ingredients.forEach((ingredient) => {
       //li
       const ingredientItem = document.createElement("li");
+      ingredientItem.classList.add("li-card");
+
       //div
       const ingredientItemItemDiv = document.createElement("div");
       const ingredientItemUnitDiv = document.createElement("div");

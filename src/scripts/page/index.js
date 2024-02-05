@@ -259,7 +259,6 @@ export class App {
 
   filterDropdownInputHelper(inputId, dropdownElementId) {
     console.log(inputId, dropdownElementId);
-    let dropdownElement;
     let aElement;
     let txtValue;
     var input, filterDropdown, i;
