@@ -156,39 +156,27 @@ class SortTemplate {
     fetchedDataFromApi,
     matchingItemLinksUpperCase
   ) {
-    let cardsCorrespondingToAllWords = [];
     let filteredObjectsFromApiUppercase;
     filteredObjectsFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
-        //transform to uppercase
         let ingredientsUppercase = card.ingredients.map((ingredient) => ({
           ...ingredient,
           ingredient: String(ingredient.ingredient).toUpperCase(),
         }));
-
         return matchingItemLinksUpperCase.every((matchingElement) => {
-          return ingredientsUppercase.some((ingredient) =>
-            String(ingredient.ingredient).includes(matchingElement)
+          return ingredientsUppercase.some(
+            (ingredient) =>
+              String(ingredient.ingredient).toUpperCase() ===
+              matchingElement.toUpperCase()
           );
         });
       })
       .map((cardCorrespondingToOneWord) => {
-        console.log(
-          "cardCorrespondingToOneWord",
-          cardCorrespondingToOneWord.ingredients
-        );
+        console.log(cardCorrespondingToOneWord);
         return cardCorrespondingToOneWord;
       });
-    console.log("matchingItemLinksUpperCase", matchingItemLinksUpperCase);
-    console.log(
-      "filteredObjectsFromApiUppercase",
-      filteredObjectsFromApiUppercase
-    );
-    //maintenant refaire un tri de filteredObjectsFromApiUppercase pour trouver les Objects qui contiennent A ET B
 
     if (matchingItemLinksUpperCase.length > 0) {
-      // Je dois montrer les cards qui comprennent le tag A ET le tag B
-      //pour
       const appInstance = new App();
       appInstance.updateCards(filteredObjectsFromApiUppercase);
     } else {
