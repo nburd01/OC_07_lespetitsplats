@@ -160,12 +160,13 @@ class SortTemplate {
     let filteredObjectsFromApiUppercase;
     filteredObjectsFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
+        //transform to uppercase
         let ingredientsUppercase = card.ingredients.map((ingredient) => ({
           ...ingredient,
           ingredient: String(ingredient.ingredient).toUpperCase(),
         }));
 
-        return matchingItemLinksUpperCase.some((matchingElement) => {
+        return matchingItemLinksUpperCase.every((matchingElement) => {
           return ingredientsUppercase.some((ingredient) =>
             String(ingredient.ingredient).includes(matchingElement)
           );
