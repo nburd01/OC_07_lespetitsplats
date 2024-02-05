@@ -10,141 +10,182 @@ class SortTemplate {
     this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
     this.tagsArrayDiv = document.getElementsByClassName("tagsArrayDiv");
     this.tagsList = document.getElementsByClassName("tagsList");
-    this.ingredientNames = [];
+    this.itemNames = [];
     this.applianceNames = [];
     this.ustensilNames = [];
     this.ingredientLinks = [];
     this.tagsArray = [];
   }
 
-  //Ingredients
-  clearDropdownIngredients() {
-    this.ingredientNames = [];
-    this.ingredients = [];
-    this.arrayOfIngredients = [];
-    this.updateDropdownIngredients();
-    this.filterDropdownInputIngredients();
-  }
+  updateDropdownItems(
+    itemsaArrayAppliance,
+    itemsArrayIngredient,
+    itemsArrayUstensil
+  ) {
+    if (itemsaArrayAppliance) {
+      // this.appliancesDropdown.innerHTML = "";
+      dropdownLinkCreationHelper(itemsaArrayAppliance);
+    }
+    if (itemsArrayIngredient) {
+      // ------------------------
+      // Creation of elements
+      // ------------------------
+      this.ingredientsDropdown.innerHTML = "";
+      dropdownLinkCreationHelper(itemsArrayIngredient);
 
-  appendIngredientsName(ingredient) {
-    {
-      this.ingredientNames.push(ingredient);
+      // ------------------------
+      // Search input event
+      // ------------------------
+      const searchInputDiv = document.createElement("div");
+      searchInputDiv.classList.add("myDropdownInputDiv");
+
+      const searchInput = document.createElement("input");
+      searchInput.id = "myDropdownInputIngredients";
+      searchInput.placeholder = "Rechercher";
+
+      searchInput.addEventListener("input", () => {
+        this.filterDropdownInputHelperIngredients();
+      });
+
+      this.ingredientsDropdown.appendChild(searchInputDiv);
+      searchInputDiv.appendChild(searchInput);
+
+      // ------------------------
+      // Creation of links
+      // ------------------------
+      itemsArrayIngredient.forEach((ingredient) => {
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${ingredient}`;
+        link.textContent = ingredient;
+        this.ingredientsDropdown.appendChild(link);
+      });
+
+      const tagsArray = [];
+      const ingredientLinks = document.querySelectorAll(".sortIngredients");
+      const tagsList = document.querySelector(".tagsList");
+    }
+
+    function dropdownLinkCreationHelper(arrayOfElements) {
+      arrayOfElements.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortElements");
+        link.href = `#${element}`;
+        link.textContent = element;
+        // this.elementsDropdown.appendChild(link);
+        // console.log(element);
+      });
     }
   }
 
-  updateDropdownIngredients(fetchedDataFromApi) {
-    this.ingredientsDropdown.innerHTML = "";
-    const searchInputDiv = document.createElement("div");
-    searchInputDiv.classList.add("myDropdownInputDiv");
+  // ------------------------
+  // Events
+  // ------------------------
 
-    const searchInput = document.createElement("input");
-    searchInput.id = "myDropdownInputIngredients";
-    searchInput.placeholder = "Rechercher";
-    searchInput.addEventListener("input", () => {
-      this.filterDropdownInputIngredients();
-    });
-
-    this.ingredientsDropdown.appendChild(searchInputDiv);
-    searchInputDiv.appendChild(searchInput);
-
-    this.ingredientNames.forEach((ingredient) => {
-      const link = document.createElement("a");
-      link.classList.add("sortIngredients");
-      link.href = `#${ingredient}`;
-      link.textContent = ingredient;
-      this.ingredientsDropdown.appendChild(link);
-    });
-
-    const tagsArray = [];
-    const ingredientLinks = document.querySelectorAll(".sortIngredients");
+  handleTagClick(fetchedDataFromApi) {
     const tagsList = document.querySelector(".tagsList");
 
-    ingredientLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        this.tagsArray.push(link.textContent);
-        const tag = document.createElement("li");
-        tag.classList.add("tag-li");
-        const tagAnchor = document.createElement("a");
-        tagAnchor.classList.add("tag-anchor");
-        tagAnchor.textContent = link.textContent;
-        tagsList.appendChild(tag);
-        tag.appendChild(tagAnchor);
-        const tagAnchorClose = document.createElement("i");
-        tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
-        tagAnchor.appendChild(tagAnchorClose);
+    const handleTagClick = (link) => {
+      this.creatingLiElements(link);
+      const matchingItemLinksUpperCase = this.findMatchingElements();
+      this.normalizeApiWithMatchingElements(
+        fetchedDataFromApi,
+        matchingItemLinksUpperCase
+      );
+    };
 
-        this.findMatchingElements();
+    const closeTagClick = (event) => {
+      if (event.target.classList.contains("closeTag")) {
+        const clickedTagText = event.target.previousSibling.textContent;
+        const index = this.tagsArray.indexOf(clickedTagText);
+        this.tagsArray.splice(index, 1);
+        event.target.closest("li").remove();
+        const matchingItemLinksUpperCase = this.findMatchingElements();
+        this.normalizeApiWithMatchingElements(
+          fetchedDataFromApi,
+          matchingItemLinksUpperCase
+        );
+        // Additional logic...
+      }
+    };
 
-        tag.addEventListener("click", () => {
-          // this.findMatchingElements();
-          const clickedTagText = tagAnchor.textContent;
-          const index = this.tagsArray.indexOf(clickedTagText);
-          this.tagsArray.splice(index, 1);
-          let tagsArray2 = this.tagsArray;
-
-          const liToRemove = Array.from(tagsList.children).find((li) =>
-            li.textContent.includes(clickedTagText)
-          );
-          if (liToRemove) {
-            liToRemove.remove();
-          }
-        });
-      });
-    });
-  }
-
-  findMatchingElements() {
-    let ingredientLinksUpperCase = [];
-    this.tagsArray.forEach((element) => {
-      let upperCaseTag = element.toUpperCase();
-      ingredientLinksUpperCase.push(upperCaseTag);
-    });
-    // console.log("ingredientLinksUpperCase", ingredientLinksUpperCase);
-    return ingredientLinksUpperCase;
-  }
-  //
-  handleTagClick(fetchedDataFromApi, tagsArray) {
-    tagsArray = this.tagsArray;
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     ingredientLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        const ingredientLinksUpperCase = this.findMatchingElements();
-        this.manipulateApiWithMatchingElements(
-          fetchedDataFromApi,
-          ingredientLinksUpperCase
-        );
-      });
+      link.addEventListener("click", () => handleTagClick(link));
     });
+
+    tagsList.addEventListener("click", closeTagClick);
   }
+
+  // ------------------------
+  // Logic
+  // ------------------------
+
+  findMatchingElements() {
+    let matchingItemLinksUpperCase = [];
+    this.tagsArray.forEach((element) => {
+      let upperCaseTag = element.toUpperCase();
+      matchingItemLinksUpperCase.push(upperCaseTag);
+    });
+    return matchingItemLinksUpperCase;
+  }
+
+  // ------------------------
+  // Creation
+  // ------------------------
+
+  creatingLiElements(link) {
+    const tagsList = document.querySelector(".tagsList");
+    //Push to array
+    this.tagsArray.push(link.textContent);
+    //Create elements
+    const tag = document.createElement("li");
+    tag.classList.add("tag-li");
+    const tagAnchor = document.createElement("a");
+    tagAnchor.classList.add("tag-anchor");
+    tagAnchor.textContent = link.textContent;
+    tagsList.appendChild(tag);
+    tag.appendChild(tagAnchor);
+    const tagAnchorClose = document.createElement("i");
+    tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
+    tagAnchor.appendChild(tagAnchorClose);
+  }
+
   //compare matching elements with api data and update cards for ingredients
-  manipulateApiWithMatchingElements(
+  normalizeApiWithMatchingElements(
     fetchedDataFromApi,
-    ingredientLinksUpperCase
+    matchingItemLinksUpperCase
   ) {
-    let fetchedDataFromApiUppercase;
-    fetchedDataFromApiUppercase = fetchedDataFromApi
+    let filteredObjectsFromApiUppercase;
+    filteredObjectsFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
         let ingredientsUppercase = card.ingredients.map((ingredient) => ({
           ...ingredient,
           ingredient: String(ingredient.ingredient).toUpperCase(),
         }));
-
-        return ingredientLinksUpperCase.some((matchingElement) => {
-          return ingredientsUppercase.some((ingredient) =>
-            String(ingredient.ingredient).includes(matchingElement)
+        return matchingItemLinksUpperCase.every((matchingElement) => {
+          return ingredientsUppercase.some(
+            (ingredient) =>
+              String(ingredient.ingredient).toUpperCase() ===
+              matchingElement.toUpperCase()
           );
         });
       })
-      .map((filteredCard) => {
-        console.log("filteredCard", filteredCard.ingredients);
-        return filteredCard;
+      .map((cardCorrespondingToOneWord) => {
+        console.log(cardCorrespondingToOneWord);
+        return cardCorrespondingToOneWord;
       });
 
-    const appInstance = new App();
-    appInstance.updateCards(fetchedDataFromApiUppercase);
+    if (matchingItemLinksUpperCase.length > 0) {
+      const appInstance = new App();
+      appInstance.updateCards(filteredObjectsFromApiUppercase);
+    } else {
+      const appInstance = new App();
+      appInstance.updateCards(fetchedDataFromApi);
+    }
   }
 
-  filterDropdownInputIngredients() {
+  filterDropdownInputHelperIngredients() {
     let ingredientsDropdownElement;
     let aElement;
     let txtValue;
@@ -162,42 +203,6 @@ class SortTemplate {
         aElement[i].style.display = "none";
       }
     }
-  }
-
-  //Appliances
-  clearDropdownAppliances() {
-    this.ingredients = [];
-    this.updateDropdownAppliances();
-  }
-  appendAppliancesName(appliance) {
-    this.applianceNames.push(appliance);
-  }
-  updateDropdownAppliances() {
-    this.applianceNames.forEach((appliance) => {
-      const link = document.createElement("a");
-      link.classList.add("sortAppliances");
-      link.href = `#${appliance}`;
-      link.textContent = appliance;
-      this.appliancesDropdown.appendChild(link);
-    });
-  }
-
-  //Ustensils
-  clearDropdownUstensils() {
-    this.ustensils = [];
-    this.updateDropdownUstensils();
-  }
-  appendUstensilsName(ustensil) {
-    this.ustensilNames.push(ustensil);
-  }
-  updateDropdownUstensils() {
-    this.ustensilNames.forEach((ustensil) => {
-      const link = document.createElement("a");
-      link.classList.add("sortUstensils");
-      link.href = `#${ustensil}`;
-      link.textContent = ustensil;
-      this.ustensilsDropdown.appendChild(link);
-    });
   }
 }
 

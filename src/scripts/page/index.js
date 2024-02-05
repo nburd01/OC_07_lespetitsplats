@@ -30,11 +30,16 @@ export class App {
 
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
+
+    // ------------------------
+    // Fetching
+    // ------------------------
+
     //Fetch data
     const fetchedDataFromApi = await this.cardsApi.getCards();
 
-    // tri by 'name'
-    const cardsDataByIngredient = [...fetchedDataFromApi].sort((a, b) => {
+    // tri a-z by 'name'
+    const sortCardsDataByIngredient = [...fetchedDataFromApi].sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -43,8 +48,11 @@ export class App {
       }
       return 0;
     });
-    // tri by 'appliance'
-    const cardsDataByAppliance = [...fetchedDataFromApi].sort((a, b) => {
+    const arrayOfIngredientNames = sortCardsDataByIngredient.flatMap((recipe) =>
+      recipe.ingredients.map((ingredient) => ingredient.ingredient)
+    );
+    // tri a-z by 'appliance'
+    const sortCardsDataByAppliance = [...fetchedDataFromApi].sort((a, b) => {
       if (a.appliance < b.appliance) {
         return -1;
       }
@@ -53,8 +61,12 @@ export class App {
       }
       return 0;
     });
-    // tri by 'ustensil'
-    const cardsDataByUstensil = [...fetchedDataFromApi].sort((a, b) => {
+
+    const arrayOfApplianceNames = sortCardsDataByAppliance.map(
+      (obj) => obj.appliance
+    );
+
+    const sortCardsDataByUstensil = [...fetchedDataFromApi].sort((a, b) => {
       if (a.ustensils < b.ustensils) {
         return -1;
       }
@@ -63,6 +75,11 @@ export class App {
       }
       return 0;
     });
+
+    const arrayOfUstensilNames = sortCardsDataByUstensil.flatMap(
+      (recipeData) => recipeData.ustensils
+    );
+
     // tri by 'id'
     const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
 
@@ -74,93 +91,96 @@ export class App {
         cardsSection.appendChild(templateCards.createCard());
       });
 
-    const arrayOfIngredients = [];
-    const arrayOfAppliances = [];
-    const arrayOfUstensils = [];
+    // ------------------------
+    // Normalizing
+    // ------------------------
+    const itemArrays = {
+      arrayOfApplianceNames: [],
+      arrayOfIngredientNames: [],
+      arrayOfUstensilNames: [],
+    };
+    normalizingData(
+      arrayOfApplianceNames,
+      "appliance",
+      sortTemplate,
+      itemArrays,
+      "arrayOfApplianceNames"
+    );
 
-    //sort appliance function
-    cardsDataByAppliance
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const appliance = card._appliance || [];
-        const applianceNameFirst = appliance.charAt(0);
-        const applianceNameRest = appliance.slice(1);
-        const applianceName = applianceNameFirst + applianceNameRest;
-        let pluralapplianceName = applianceName + "s";
+    normalizingData(
+      arrayOfIngredientNames,
+      "ingredients",
+      sortTemplate,
+      itemArrays,
+      "arrayOfIngredientNames"
+    );
+
+    normalizingData(
+      arrayOfUstensilNames,
+      "ustensils",
+      sortTemplate,
+      itemArrays,
+      "arrayOfUstensilNames"
+    );
+
+    const arrayOfIngredientsNames = [];
+    const arrayOfAppliancesNames = [];
+    const arrayOfUstensilsNames = [];
+
+    const itemsArrayAppliance = [];
+    const itemsArrayIngredient = [];
+    const itemsArrayUstensil = [];
+
+    //ressort une liste
+    function normalizingData(
+      normalizeCardsData,
+      item,
+      sortTemplate,
+      itemArrays,
+      targetArrayName
+    ) {
+      let arrayOfItems = [];
+      normalizeCardsData.forEach((card, index) => {
+        const itemValue = card || "";
+        //convert to strings
+        //mise en forme : normalise
+        const itemNameFirst = itemValue.charAt(0);
+        const itemNameRest = itemValue.slice(1);
+        const itemName = itemNameFirst + itemNameRest;
+        let pluralItemName = itemName + "s";
+        //condition
         if (
-          !arrayOfAppliances.includes(applianceName) &&
-          !arrayOfAppliances.includes(pluralapplianceName)
+          !arrayOfItems.includes(itemName) &&
+          !arrayOfItems.includes(pluralItemName)
         ) {
-          arrayOfAppliances.push(applianceName);
+          arrayOfItems.push(itemName);
         }
       });
-
-    arrayOfAppliances.forEach((appliance) => {
-      sortTemplate.appendAppliancesName(appliance);
-    });
-    sortTemplate.updateDropdownAppliances();
-
-    //sort ingredient function
-    cardsDataByIngredient
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const ingredients = card._ingredients || [];
-        ingredients.forEach((ingredient) => {
-          const ingredientNameFirst = ingredient.ingredient.charAt(0);
-          const ingredientNameRest = ingredient.ingredient.slice(1);
-          const ingredientName = ingredientNameFirst + ingredientNameRest;
-          let pluralIngredientName = ingredientName + "s";
-          if (
-            !arrayOfIngredients.includes(ingredientName) &&
-            !arrayOfIngredients.includes(pluralIngredientName)
-          ) {
-            arrayOfIngredients.push(ingredientName);
-          }
-        });
-      });
-    arrayOfIngredients.forEach((ingredient) => {
-      sortTemplate.appendIngredientsName(ingredient);
-    });
-    sortTemplate.updateDropdownIngredients();
-
-    //sort ustensil function
-    cardsDataByUstensil
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const ustensils = card._ustensils || [];
-        ustensils.forEach((ustensil) => {
-          const ustensilNameFirst = ustensil.charAt(0).toUpperCase();
-          const ustensilNameRest = ustensil.slice(1);
-          const ustensilName = ustensilNameFirst + ustensilNameRest;
-          let pluralustensilName = ustensilName + "s";
-          if (
-            !arrayOfUstensils.includes(ustensilName) &&
-            !arrayOfUstensils.includes(pluralustensilName)
-          ) {
-            arrayOfUstensils.push(ustensilName);
-          }
-        });
-      });
-    arrayOfUstensils.forEach((ustensil) => {
-      sortTemplate.appendUstensilsName(ustensil);
-    });
-    sortTemplate.updateDropdownUstensils();
+      itemArrays[targetArrayName].push(...arrayOfItems);
+      let itemsArrayAppliance = itemArrays.arrayOfApplianceNames;
+      let itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
+      let itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
+      sortTemplate.updateDropdownItems(
+        itemsArrayAppliance,
+        itemsArrayIngredient,
+        itemsArrayUstensil
+      );
+    }
 
     //sort everything function
     const arrayOfEverything = [
-      ...arrayOfIngredients,
-      ...arrayOfAppliances,
-      ...arrayOfUstensils,
+      ...itemArrays.arrayOfIngredientNames,
+      ...itemArrays.arrayOfApplianceNames,
+      ...itemArrays.arrayOfUstensilNames,
     ];
+
+    // ------------------------
+    // Events
+    // ------------------------
 
     this.searchInput.addEventListener("input", () => {
       this.handleSearchBarInputChange();
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
-      this.filterSearchbarInputWithIngredientsArray(
-        arrayOfIngredients,
-        createCards,
-        sortTemplate
-      );
     });
 
     this.faMark.addEventListener("click", () => {
@@ -176,76 +196,91 @@ export class App {
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
-    //hide dropdown on page click
+
+    //Dropdown clicks
     document.addEventListener("click", function (event) {
-      const appliancesDropdown = document.getElementById("appliancesDropdown");
-      const elem = document.getElementById("dropDownAppliances");
-
-      if (appliancesDropdown.classList.contains("show")) {
-        const outsideClick = !elem.contains(event.target);
-
-        if (outsideClick) {
-          appliancesDropdown.classList.remove("show");
-        } else {
-          appliancesDropdown.classList.add("show");
-        }
-      }
+      handleDropdownHelper(appliancesDropdown, dropDownAppliances);
     });
     document.addEventListener("click", function (event) {
-      const appliancesDropdown = document.getElementById("ustensilsDropdown");
-      const elem = document.getElementById("dropDownUstensils");
-
-      if (appliancesDropdown.classList.contains("show")) {
-        const outsideClick = !elem.contains(event.target);
-
-        if (outsideClick) {
-          appliancesDropdown.classList.remove("show");
-        } else {
-          appliancesDropdown.classList.add("show");
-        }
-      }
+      handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
     });
     document.addEventListener("click", function (event) {
-      const appliancesDropdown = document.getElementById("ingredientsDropdown");
-      const elem = document.getElementById("dropDownIngredients");
-
-      if (appliancesDropdown.classList.contains("show")) {
-        const outsideClick = !elem.contains(event.target);
-
-        if (outsideClick) {
-          appliancesDropdown.classList.remove("show");
-        } else {
-          appliancesDropdown.classList.add("show");
-        }
-      }
+      handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
     });
 
     //Dropdown input changes
     this.myDropdownInputIngredients.addEventListener("input", () => {
-      this.filterDropdownInputIngredients();
+      this.filterDropdownInputHelper(
+        myDropdownInputIngredients,
+        ingredientsDropdown
+      );
     });
     this.myDropdownInputAppliances.addEventListener("input", () => {
-      this.filterDropdownInputAppliances();
+      this.filterDropdownInputHelper(
+        myDropdownInputAppliances,
+        appliancesDropdown
+      );
     });
     this.myDropdownInputUstensils.addEventListener("input", () => {
-      this.filterDropdownInputUstensils();
-    });
-    //Searchbar input changes
-    this.mySearchInput.addEventListener("input", () => {
-      this.filterSearchbarInputForCards(arrayOfEverything, createCards);
-      this.filterSearchbarInputWithIngredientsArray(
-        arrayOfIngredients,
-        createCards,
-        sortTemplate
+      this.filterDropdownInputHelper(
+        myDropdownInputUstensils,
+        ustensilsDropdown
       );
     });
 
+    //Main searchbar input changes
+    this.mySearchInput.addEventListener("input", () => {
+      this.filterSearchbarInputForCards(arrayOfEverything, createCards);
+    });
+
+    function handleDropdownHelper(dropdownId, elemId) {
+      const dropdown = document.getElementById(dropdownId);
+      const elem = document.getElementById(elemId);
+      if (dropdownId.classList.contains("show")) {
+        const outsideClick = !elemId.contains(event.target);
+
+        if (outsideClick) {
+          dropdownId.classList.remove("show");
+        } else {
+          dropdownId.classList.add("show");
+        }
+      }
+    }
+
     // Access sortTemplate as this.sortTemplate
-    this.sortTemplate.appendIngredientsName();
-    this.sortTemplate.updateDropdownIngredients();
-    // this.sortTemplate.findMatchingElements(fetchedDataFromApi);
+    // this.sortTemplate.appendIngredientsName();
+    this.sortTemplate.updateDropdownItems();
     this.sortTemplate.handleTagClick(fetchedDataFromApi);
   }
+
+  // ------------------------
+  // Helpers
+  // ------------------------
+
+  filterDropdownInputHelper(inputId, dropdownElementId) {
+    console.log(inputId, dropdownElementId);
+    let dropdownElement;
+    let aElement;
+    let txtValue;
+    var input, filterDropdown, i;
+    input = document.getElementById(inputId);
+    filterDropdown = inputId.value.toUpperCase();
+    dropdownElement = document.getElementById(dropdownElementId);
+
+    aElement = dropdownElementId.getElementsByTagName("a");
+    for (i = 0; i < aElement.length; i++) {
+      txtValue = aElement[i].textContent || aElement[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+        aElement[i].style.display = "";
+      } else {
+        aElement[i].style.display = "none";
+      }
+    }
+  }
+
+  // ------------------------
+  // Searchbar
+  // ------------------------
 
   handleSearchBarInputChange() {
     if (this.searchInput.value !== "") {
@@ -262,143 +297,53 @@ export class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterDropdownInputIngredients() {
-    let ingredientsDropdownElement;
-    let aElement;
-    let txtValue;
-    var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInputIngredients");
-    filterDropdown = input.value.toUpperCase();
-    ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
-
-    aElement = ingredientsDropdownElement.getElementsByTagName("a");
-    for (i = 0; i < aElement.length; i++) {
-      txtValue = aElement[i].textContent || aElement[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-        aElement[i].style.display = "";
-      } else {
-        aElement[i].style.display = "none";
-      }
-    }
-  }
-  filterDropdownInputAppliances() {
-    let appliancesDropdownElement;
-    let aElement;
-    let txtValue;
-    var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInputAppliances");
-    filterDropdown = input.value.toUpperCase();
-    appliancesDropdownElement = document.getElementById("appliancesDropdown");
-    aElement = appliancesDropdownElement.getElementsByTagName("a");
-    for (i = 0; i < aElement.length; i++) {
-      txtValue = aElement[i].textContent || aElement[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-        aElement[i].style.display = "";
-      } else {
-        aElement[i].style.display = "none";
-      }
-    }
-  }
-  filterDropdownInputUstensils() {
-    let ustensilsDropdownElement;
-    let aElement;
-    let txtValue;
-    var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInputUstensils");
-    filterDropdown = input.value.toUpperCase();
-    ustensilsDropdownElement = document.getElementById("ustensilsDropdown");
-    aElement = ustensilsDropdownElement.getElementsByTagName("a");
-    for (i = 0; i < aElement.length; i++) {
-      txtValue = aElement[i].textContent || aElement[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-        aElement[i].style.display = "";
-      } else {
-        aElement[i].style.display = "none";
-      }
-    }
-  }
-
   filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
+    console.log("arrayOfEverything", arrayOfEverything);
+    console.log("fetchedDataFromApi", fetchedDataFromApi);
     this.searchInput.addEventListener("input", () => {
       let input = this.searchInput.value;
-      let filterSearchBar = input.toUpperCase();
+      let mainSearchBarInputUpperCase = input.toUpperCase();
 
-      let matchingElements;
+      let inputMatchingElements;
 
-      matchingElements = arrayOfEverything.filter((element) => {
-        return element.toUpperCase().includes(filterSearchBar);
+      inputMatchingElements = arrayOfEverything.filter((element) => {
+        return element.toUpperCase().includes(mainSearchBarInputUpperCase);
       });
-      this.updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi);
+      // console.log(inputMatchingElements);
+      this.updateCardsOnSearchBarInput(
+        inputMatchingElements,
+        fetchedDataFromApi
+      );
     });
   }
 
-  filterSearchbarInputWithIngredientsArray(
-    arrayOfIngredients,
-    fetchedDataFromApi,
-    sortTemplate
-  ) {
-    this.searchInput.addEventListener("input", () => {
-      let input = this.searchInput.value;
-      let filterSearchBar = input.toUpperCase();
+  // ------------------------
+  // Cards manipulation
+  // ------------------------
 
-      let matchingElementsIngredients;
-
-      matchingElementsIngredients = arrayOfIngredients.filter((element) => {
-        return element.toUpperCase().includes(filterSearchBar);
-      });
-
-      matchingElementsIngredients.forEach((ingredient) => {
-        // console.log(ingredient);
-        const ingredientNameFirst = ingredient.charAt(0);
-        const ingredientNameRest = ingredient.slice(1);
-        const ingredientName = ingredientNameFirst + ingredientNameRest;
-        if (matchingElementsIngredients.includes(ingredientName)) {
-          this.updateIngredientsFilterArrayOnSearchBarInput(
-            matchingElementsIngredients,
-            ingredientName,
-            fetchedDataFromApi,
-            sortTemplate
-          );
-        }
-      });
-    });
-  }
-
-  updateCardsOnSearchBarInput(matchingElements, fetchedDataFromApi) {
-    let matchingElementsUppercase = matchingElements.map((element) =>
+  updateCardsOnSearchBarInput(inputMatchingElements, fetchedDataFromApi) {
+    let matchingElementsUppercase = inputMatchingElements.map((element) =>
       element.toUpperCase()
     );
+    //Trouve les inputMatchingElements en Uppercase
 
-    let newMatchingElements = fetchedDataFromApi.filter((card) => {
+    let newMatchingElementsAfterInput = fetchedDataFromApi.filter((card) => {
       let cardUppercase = Object.fromEntries(
         Object.entries(card).map(([key, value]) => [
           key,
           String(value).toUpperCase(),
         ])
       );
+      //Enregistre les éléments de cards en uppercase : cardUppercase
 
       return matchingElementsUppercase.some((matchingElement) => {
         return Object.values(cardUppercase).some((property) =>
           property.includes(matchingElement)
         );
       });
+      //Retourne les cardUpperCase qui détiennent les inputMatchingElements
     });
-    this.updateCards(newMatchingElements);
-  }
-
-  updateIngredientsFilterArrayOnSearchBarInput(ingredientName) {
-    let matchingElementsUppercase = ingredientName.map((element) => element);
-
-    // Clear and update the dropdown in the SortTemplate
-    this.sortTemplate.clearDropdownIngredients();
-
-    // Append new ingredients to the SortTemplate
-    matchingElementsUppercase.forEach((ingredient) => {
-      this.sortTemplate.appendIngredientsName(ingredient);
-    });
-
-    // Update the dropdown in the SortTemplate
-    this.sortTemplate.updateDropdownIngredients();
+    this.updateCards(newMatchingElementsAfterInput);
   }
 
   updateCards(cardsData) {
@@ -417,7 +362,7 @@ export class App {
 const initApp = async () => {
   const app = new App();
   app.main();
-  app.sortTemplate.updateDropdownIngredients();
+  app.sortTemplate.updateDropdownItems();
 };
 
 initApp();
