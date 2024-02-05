@@ -156,8 +156,9 @@ class SortTemplate {
     fetchedDataFromApi,
     matchingItemLinksUpperCase
   ) {
-    let fetchedDataFromApiUppercase;
-    fetchedDataFromApiUppercase = fetchedDataFromApi
+    let cardsCorrespondingToAllWords = [];
+    let filteredObjectsFromApiUppercase;
+    filteredObjectsFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
         let ingredientsUppercase = card.ingredients.map((ingredient) => ({
           ...ingredient,
@@ -170,14 +171,25 @@ class SortTemplate {
           );
         });
       })
-      .map((filteredCard) => {
-        // console.log("filteredCard", filteredCard.ingredients);
-        return filteredCard;
+      .map((cardCorrespondingToOneWord) => {
+        console.log(
+          "cardCorrespondingToOneWord",
+          cardCorrespondingToOneWord.ingredients
+        );
+        return cardCorrespondingToOneWord;
       });
-    console.log(matchingItemLinksUpperCase);
+    console.log("matchingItemLinksUpperCase", matchingItemLinksUpperCase);
+    console.log(
+      "filteredObjectsFromApiUppercase",
+      filteredObjectsFromApiUppercase
+    );
+    //maintenant refaire un tri de filteredObjectsFromApiUppercase pour trouver les Objects qui contiennent A ET B
+
     if (matchingItemLinksUpperCase.length > 0) {
+      // Je dois montrer les cards qui comprennent le tag A ET le tag B
+      //pour
       const appInstance = new App();
-      appInstance.updateCards(fetchedDataFromApiUppercase);
+      appInstance.updateCards(filteredObjectsFromApiUppercase);
     } else {
       const appInstance = new App();
       appInstance.updateCards(fetchedDataFromApi);
