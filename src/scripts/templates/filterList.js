@@ -15,13 +15,20 @@ class SortTemplate {
     this.ustensilNames = [];
     this.ingredientLinks = [];
     this.tagsArray = [];
+    this.searchInput = document.querySelector(".mySearchInput");
   }
 
   updateDropdownItems(
     itemsaArrayAppliance,
     itemsArrayIngredient,
-    itemsArrayUstensil
+    itemsArrayUstensil,
+    userInput
   ) {
+    //récupère le user input de searchbar
+    console.log("userInput", userInput);
+    //comparer à l'array itemsArrayIngredient de mots dans chaque dropdown
+
+    //1.filtrer et comparerl'input avec les éléments li
     if (itemsaArrayAppliance) {
       // this.appliancesDropdown.innerHTML = "";
       dropdownLinkCreationHelper(itemsaArrayAppliance);
@@ -53,6 +60,7 @@ class SortTemplate {
       // ------------------------
       // Creation of links
       // ------------------------
+
       itemsArrayIngredient.forEach((ingredient) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
@@ -67,13 +75,19 @@ class SortTemplate {
     }
 
     function dropdownLinkCreationHelper(arrayOfElements) {
+      // let userInputArray = [];
+      // itemsArrayIngredient.filter((userInput) => {
+      //   userInputArray.push(userInput);
+      // });
+      //pass userinput to this function
+      // console.log("userInputArray", userInputArray);
+      //Compare arrayOfElements with userInput
+      //
       arrayOfElements.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortElements");
         link.href = `#${element}`;
         link.textContent = element;
-        // this.elementsDropdown.appendChild(link);
-        // console.log(element);
       });
     }
   }
@@ -86,7 +100,7 @@ class SortTemplate {
     const tagsList = document.querySelector(".tagsList");
 
     const handleTagClick = (link) => {
-      this.creatingLiElements(link);
+      this.creatingTagElements(link);
       const matchingItemLinksUpperCase = this.findMatchingElements();
       this.normalizeApiWithMatchingElements(
         fetchedDataFromApi,
@@ -134,7 +148,7 @@ class SortTemplate {
   // Creation
   // ------------------------
 
-  creatingLiElements(link) {
+  creatingTagElements(link) {
     const tagsList = document.querySelector(".tagsList");
     //Push to array
     this.tagsArray.push(link.textContent);
@@ -172,7 +186,6 @@ class SortTemplate {
         });
       })
       .map((cardCorrespondingToOneWord) => {
-        console.log(cardCorrespondingToOneWord);
         return cardCorrespondingToOneWord;
       });
 

@@ -83,7 +83,9 @@ export class App {
     // tri by 'id'
     const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
 
-    //this creates cards
+    // ------------------------
+    // Creating
+    // ------------------------
     createCards
       .map((card) => new Card(card))
       .forEach((card) => {
@@ -297,22 +299,32 @@ export class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
-    console.log("arrayOfEverything", arrayOfEverything);
-    console.log("fetchedDataFromApi", fetchedDataFromApi);
+  filterSearchbarInputForCards(
+    arrayOfEverything,
+    fetchedDataFromApi,
+    arrayOfApplianceNames,
+    arrayOfIngredientNames,
+    arrayOfUstensilNames
+  ) {
     this.searchInput.addEventListener("input", () => {
-      let input = this.searchInput.value;
-      let mainSearchBarInputUpperCase = input.toUpperCase();
+      let userInput = this.searchInput.value;
+      let mainSearchBarInputUpperCase = userInput.toUpperCase();
 
       let inputMatchingElements;
 
       inputMatchingElements = arrayOfEverything.filter((element) => {
         return element.toUpperCase().includes(mainSearchBarInputUpperCase);
       });
-      // console.log(inputMatchingElements);
+
       this.updateCardsOnSearchBarInput(
         inputMatchingElements,
         fetchedDataFromApi
+      );
+      this.sortTemplate.updateDropdownItems(
+        arrayOfApplianceNames,
+        arrayOfIngredientNames,
+        arrayOfUstensilNames,
+        userInput
       );
     });
   }
@@ -326,7 +338,6 @@ export class App {
       element.toUpperCase()
     );
     //Trouve les inputMatchingElements en Uppercase
-
     let newMatchingElementsAfterInput = fetchedDataFromApi.filter((card) => {
       let cardUppercase = Object.fromEntries(
         Object.entries(card).map(([key, value]) => [
@@ -343,7 +354,12 @@ export class App {
       });
       //Retourne les cardUpperCase qui détiennent les inputMatchingElements
     });
-    this.updateCards(newMatchingElementsAfterInput);
+    if (this.searchInput.value.length > 3) {
+      this.updateCards(newMatchingElementsAfterInput);
+    }
+    if (this.searchInput.value.length <= 0) {
+      this.updateCards(newMatchingElementsAfterInput);
+    }
   }
 
   updateCards(cardsData) {
