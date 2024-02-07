@@ -18,27 +18,18 @@ class SortTemplate {
     this.searchInput = document.querySelector(".mySearchInput");
   }
 
-  updateDropdownItems(
-    itemsaArrayAppliance,
-    itemsArrayIngredient,
-    itemsArrayUstensil,
-    userInput
-  ) {
-    //récupère le user input de searchbar
-    console.log("userInput", userInput);
-    //comparer à l'array itemsArrayIngredient de mots dans chaque dropdown
-
-    //1.filtrer et comparerl'input avec les éléments li
-    if (itemsaArrayAppliance) {
-      // this.appliancesDropdown.innerHTML = "";
-      dropdownLinkCreationHelper(itemsaArrayAppliance);
-    }
+  updateDropdownItems(itemsArrayIngredient, matchingElement) {
     if (itemsArrayIngredient) {
       // ------------------------
       // Creation of elements
       // ------------------------
       this.ingredientsDropdown.innerHTML = "";
-      dropdownLinkCreationHelper(itemsArrayIngredient);
+      if (matchingElement != null) {
+        itemsArrayIngredient = matchingElement;
+        dropdownLinkCreationHelper(matchingElement);
+      } else {
+        dropdownLinkCreationHelper(itemsArrayIngredient);
+      }
 
       // ------------------------
       // Search input event
@@ -60,7 +51,6 @@ class SortTemplate {
       // ------------------------
       // Creation of links
       // ------------------------
-
       itemsArrayIngredient.forEach((ingredient) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
@@ -75,14 +65,6 @@ class SortTemplate {
     }
 
     function dropdownLinkCreationHelper(arrayOfElements) {
-      // let userInputArray = [];
-      // itemsArrayIngredient.filter((userInput) => {
-      //   userInputArray.push(userInput);
-      // });
-      //pass userinput to this function
-      // console.log("userInputArray", userInputArray);
-      //Compare arrayOfElements with userInput
-      //
       arrayOfElements.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortElements");
@@ -100,6 +82,8 @@ class SortTemplate {
     const tagsList = document.querySelector(".tagsList");
 
     const handleTagClick = (link) => {
+      //ici link n'est pas attribué quand il y a le
+      console.log(link);
       this.creatingTagElements(link);
       const matchingItemLinksUpperCase = this.findMatchingElements();
       this.normalizeApiWithMatchingElements(
@@ -119,7 +103,6 @@ class SortTemplate {
           fetchedDataFromApi,
           matchingItemLinksUpperCase
         );
-        // Additional logic...
       }
     };
 
@@ -165,7 +148,6 @@ class SortTemplate {
     tagAnchor.appendChild(tagAnchorClose);
   }
 
-  //compare matching elements with api data and update cards for ingredients
   normalizeApiWithMatchingElements(
     fetchedDataFromApi,
     matchingItemLinksUpperCase

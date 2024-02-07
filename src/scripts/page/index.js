@@ -27,6 +27,9 @@ export class App {
 
   async main() {
     const sortTemplate = this.sortTemplate;
+    let itemsArrayAppliance = [];
+    let itemsArrayIngredient = [];
+    let itemsArrayUstensil = [];
 
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
@@ -125,14 +128,6 @@ export class App {
       "arrayOfUstensilNames"
     );
 
-    const arrayOfIngredientsNames = [];
-    const arrayOfAppliancesNames = [];
-    const arrayOfUstensilsNames = [];
-
-    const itemsArrayAppliance = [];
-    const itemsArrayIngredient = [];
-    const itemsArrayUstensil = [];
-
     //ressort une liste
     function normalizingData(
       normalizeCardsData,
@@ -158,21 +153,17 @@ export class App {
           arrayOfItems.push(itemName);
         }
       });
+
       itemArrays[targetArrayName].push(...arrayOfItems);
-      let itemsArrayAppliance = itemArrays.arrayOfApplianceNames;
-      let itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
-      let itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
-      sortTemplate.updateDropdownItems(
-        itemsArrayAppliance,
-        itemsArrayIngredient,
-        itemsArrayUstensil
-      );
+      itemsArrayAppliance = itemArrays.arrayOfApplianceNames;
+      itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
+      itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
     }
 
     //sort everything function
     const arrayOfEverything = [
-      ...itemArrays.arrayOfIngredientNames,
       ...itemArrays.arrayOfApplianceNames,
+      ...itemArrays.arrayOfIngredientNames,
       ...itemArrays.arrayOfUstensilNames,
     ];
 
@@ -181,7 +172,7 @@ export class App {
     // ------------------------
 
     this.searchInput.addEventListener("input", () => {
-      this.handleSearchBarInputChange();
+      this.handleSearchBarInputChange(itemsArrayIngredient);
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
     });
 
@@ -248,10 +239,7 @@ export class App {
         }
       }
     }
-
-    // Access sortTemplate as this.sortTemplate
-    // this.sortTemplate.appendIngredientsName();
-    this.sortTemplate.updateDropdownItems();
+    this.sortTemplate.updateDropdownItems(itemsArrayIngredient);
     this.sortTemplate.handleTagClick(fetchedDataFromApi);
   }
 
@@ -260,7 +248,8 @@ export class App {
   // ------------------------
 
   filterDropdownInputHelper(inputId, dropdownElementId) {
-    console.log(inputId, dropdownElementId);
+    console.log(inputId);
+    console.log(dropdownElementId);
     let dropdownElement;
     let aElement;
     let txtValue;
@@ -284,8 +273,20 @@ export class App {
   // Searchbar
   // ------------------------
 
-  handleSearchBarInputChange() {
+  handleSearchBarInputChange(itemsArrayIngredient) {
+    const userInput = this.searchInput.value.toLowerCase();
+
     if (this.searchInput.value !== "") {
+      // Filter itemsArrayIngredient based on the input value
+      const matchingIngredients = itemsArrayIngredient.filter((ingredient) =>
+        ingredient.toLowerCase().includes(userInput)
+      );
+
+      // Log the matching ingredients
+      this.sortTemplate.updateDropdownItems(
+        itemsArrayIngredient,
+        matchingIngredients
+      );
       this.faMark.style.display = "block";
     } else {
       this.faMark.style.display = "none";
@@ -293,6 +294,7 @@ export class App {
         "Rechercher une recette, un ingrédient, ...";
     }
   }
+
   handleClearInput() {
     this.searchInput.value = "";
     this.faMark.style.display = "none";
@@ -319,12 +321,6 @@ export class App {
       this.updateCardsOnSearchBarInput(
         inputMatchingElements,
         fetchedDataFromApi
-      );
-      this.sortTemplate.updateDropdownItems(
-        arrayOfApplianceNames,
-        arrayOfIngredientNames,
-        arrayOfUstensilNames,
-        userInput
       );
     });
   }
@@ -378,7 +374,6 @@ export class App {
 const initApp = async () => {
   const app = new App();
   app.main();
-  app.sortTemplate.updateDropdownItems();
 };
 
 initApp();
