@@ -163,8 +163,6 @@ export class App {
       itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
     }
 
-    console.log(itemArrays);
-
     //sort everything function
     const arrayOfEverything = [
       ...itemArrays.arrayOfApplianceNames,
@@ -177,7 +175,11 @@ export class App {
     // ------------------------
 
     this.searchInput.addEventListener("input", () => {
-      this.handleSearchBarInputChange(itemsArrayIngredient);
+      this.handleSearchBarInputChange(
+        itemsArrayIngredient,
+        itemsArrayAppliance,
+        itemsArrayUstensil
+      );
       this.filterSearchbarInputForCards(arrayOfEverything, createCards);
     });
 
@@ -278,7 +280,11 @@ export class App {
   // Searchbar
   // ------------------------
 
-  handleSearchBarInputChange(itemsArrayIngredient) {
+  handleSearchBarInputChange(
+    itemsArrayIngredient,
+    itemsArrayAppliance,
+    itemsArrayUstensil
+  ) {
     const userInput = this.searchInput.value.toLowerCase();
 
     if (this.searchInput.value !== "") {
@@ -286,12 +292,29 @@ export class App {
       const matchingIngredients = itemsArrayIngredient.filter((ingredient) =>
         ingredient.toLowerCase().includes(userInput)
       );
+      const matchingAppliances = itemsArrayAppliance.filter((appliance) =>
+        appliance.toLowerCase().includes(userInput)
+      );
+      const matchingUstensils = itemsArrayUstensil.filter((ustensil) =>
+        ustensil.toLowerCase().includes(userInput)
+      );
 
       // Log the matching ingredients
       this.sortTemplate.updateDropdownItems(
         itemsArrayIngredient,
         matchingIngredients
       );
+      // this.sortTemplate.updateDropdownItems(
+      //   itemsArrayAppliance,
+      //   this.appliancesDropdown,
+      //   matchingAppliances
+      // );
+      // this.sortTemplate.updateDropdownItems(
+      //   itemsArrayUstensil,
+      //   this.ustensilsDropdown,
+      //   matchingUstensils
+      // );
+
       this.faMark.style.display = "block";
     } else {
       this.faMark.style.display = "none";
