@@ -79,7 +79,7 @@ class SortTemplate {
   // Events
   // ------------------------
 
-  handleTagClick(fetchedDataFromApi) {
+  tagClickManagement(fetchedDataFromApi) {
     const tagsList = document.querySelector(".tagsList");
 
     const handleTagClick = (link) => {

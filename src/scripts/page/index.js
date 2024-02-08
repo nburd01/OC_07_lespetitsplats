@@ -245,7 +245,7 @@ export class App {
       }
     }
     this.sortTemplate.updateDropdownItems(itemsArrayIngredient);
-    this.sortTemplate.handleTagClick(fetchedDataFromApi);
+    this.sortTemplate.tagClickManagement(fetchedDataFromApi);
   }
 
   // ------------------------
