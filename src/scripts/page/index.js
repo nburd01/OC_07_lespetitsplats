@@ -23,6 +23,9 @@ export class App {
     );
     this.mySearchInput = document.querySelector("#mySearchInput");
     this.sortTemplate = new SortTemplate();
+    this.ingredientsDropdown = document.querySelectorAll(".sortIngredients");
+    this.appliancesDropdown = document.querySelectorAll(".sortAppliances");
+    this.ustensilsDropdown = document.querySelectorAll(".sortUstensils");
   }
 
   async main() {
@@ -141,7 +144,7 @@ export class App {
         const itemValue = card || "";
         //convert to strings
         //mise en forme : normalise
-        const itemNameFirst = itemValue.charAt(0);
+        const itemNameFirst = itemValue.charAt(0).toUpperCase();
         const itemNameRest = itemValue.slice(1);
         const itemName = itemNameFirst + itemNameRest;
         let pluralItemName = itemName + "s";
@@ -159,6 +162,8 @@ export class App {
       itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
       itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
     }
+
+    console.log(itemArrays);
 
     //sort everything function
     const arrayOfEverything = [
@@ -301,13 +306,7 @@ export class App {
     this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
   }
 
-  filterSearchbarInputForCards(
-    arrayOfEverything,
-    fetchedDataFromApi,
-    arrayOfApplianceNames,
-    arrayOfIngredientNames,
-    arrayOfUstensilNames
-  ) {
+  filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
     this.searchInput.addEventListener("input", () => {
       let userInput = this.searchInput.value;
       let mainSearchBarInputUpperCase = userInput.toUpperCase();
@@ -350,7 +349,7 @@ export class App {
       });
       //Retourne les cardUpperCase qui détiennent les inputMatchingElements
     });
-    if (this.searchInput.value.length > 3) {
+    if (this.searchInput.value.length > 2) {
       this.updateCards(newMatchingElementsAfterInput);
     }
     if (this.searchInput.value.length <= 0) {
