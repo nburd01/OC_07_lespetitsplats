@@ -61,6 +61,7 @@ class SortTemplate {
 
       const tagsArray = [];
       const ingredientLinks = document.querySelectorAll(".sortIngredients");
+      //onclick
       const tagsList = document.querySelector(".tagsList");
     }
 
@@ -83,7 +84,7 @@ class SortTemplate {
 
     const handleTagClick = (link) => {
       //ici link n'est pas attribué quand il y a le
-      console.log(link);
+      // console.log(link);
       this.creatingTagElements(link);
       const matchingItemLinksUpperCase = this.findMatchingElements();
       this.normalizeApiWithMatchingElements(
@@ -91,7 +92,7 @@ class SortTemplate {
         matchingItemLinksUpperCase
       );
     };
-
+    // mettre event sur ingredientsDropdown
     const closeTagClick = (event) => {
       if (event.target.classList.contains("closeTag")) {
         const clickedTagText = event.target.previousSibling.textContent;
@@ -105,10 +106,16 @@ class SortTemplate {
         );
       }
     };
+    const ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    ingredientsDropdown.addEventListener("click", (event) => {
+      console.log(event.target);
+      const target = event.target;
 
-    const ingredientLinks = document.querySelectorAll(".sortIngredients");
-    ingredientLinks.forEach((link) => {
-      link.addEventListener("click", () => handleTagClick(link));
+      // Check if the clicked element has the class "sortIngredients"
+      if (target.classList.contains("sortIngredients")) {
+        // Handle the click on a child element with the class "sortIngredients"
+        handleTagClick(target);
+      }
     });
 
     tagsList.addEventListener("click", closeTagClick);
