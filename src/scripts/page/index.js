@@ -302,16 +302,18 @@ export class App {
       // Log the matching ingredients
       this.sortTemplate.updateDropdownItems(
         itemsArrayIngredient,
+        ".myDropdownInputDiv",
+        ".sortIngredients",
         matchingIngredients
       );
       // this.sortTemplate.updateDropdownItems(
       //   itemsArrayAppliance,
-      //   this.appliancesDropdown,
+      //   ".sortAppliances",
       //   matchingAppliances
       // );
       // this.sortTemplate.updateDropdownItems(
       //   itemsArrayUstensil,
-      //   this.ustensilsDropdown,
+      //   ".sortUstensils",
       //   matchingUstensils
       // );
 

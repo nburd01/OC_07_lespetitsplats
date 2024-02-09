@@ -18,31 +18,36 @@ class SortTemplate {
     this.searchInput = document.querySelector(".mySearchInput");
   }
 
-  updateDropdownItems(itemsArrayIngredient, matchingElement) {
-    if (itemsArrayIngredient) {
+  updateDropdownItems(
+    elementArray,
+    myDropdownInputDiv,
+    sortIngredients,
+    matchingElement
+  ) {
+    if (elementArray) {
       // ------------------------
       // Creation of elements
       // ------------------------
       this.ingredientsDropdown.innerHTML = "";
       if (matchingElement != null) {
-        itemsArrayIngredient = matchingElement;
+        elementArray = matchingElement;
         dropdownLinkCreationHelper(matchingElement);
       } else {
-        dropdownLinkCreationHelper(itemsArrayIngredient);
+        dropdownLinkCreationHelper(elementArray);
       }
 
       // ------------------------
       // Search input event
       // ------------------------
       const searchInputDiv = document.createElement("div");
-      searchInputDiv.classList.add("myDropdownInputDiv");
+      searchInputDiv.classList.add(myDropdownInputDiv);
 
       const searchInput = document.createElement("input");
-      searchInput.id = "myDropdownInputIngredients";
+      searchInput.id = sortIngredients;
       searchInput.placeholder = "Rechercher";
 
       searchInput.addEventListener("input", () => {
-        this.filterDropdownInputHelperIngredients();
+        this.filterDropdownInputHelper();
       });
 
       this.ingredientsDropdown.appendChild(searchInputDiv);
@@ -51,11 +56,11 @@ class SortTemplate {
       // ------------------------
       // Creation of links
       // ------------------------
-      itemsArrayIngredient.forEach((ingredient) => {
+      elementArray.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
-        link.href = `#${ingredient}`;
-        link.textContent = ingredient;
+        link.href = `#${element}`;
+        link.textContent = element;
         this.ingredientsDropdown.appendChild(link);
       });
 
@@ -84,10 +89,9 @@ class SortTemplate {
 
     const handleTagClick = (link) => {
       //ici link n'est pas attribué quand il y a le
-      // console.log(link);
       this.creatingTagElements(link);
       const matchingItemLinksUpperCase = this.findMatchingElements();
-      this.normalizeApiWithMatchingElements(
+      this.normalizeApiWithMatchingElementsAndUpdateCards(
         fetchedDataFromApi,
         matchingItemLinksUpperCase
       );
@@ -100,7 +104,7 @@ class SortTemplate {
         this.tagsArray.splice(index, 1);
         event.target.closest("li").remove();
         const matchingItemLinksUpperCase = this.findMatchingElements();
-        this.normalizeApiWithMatchingElements(
+        this.normalizeApiWithMatchingElementsAndUpdateCards(
           fetchedDataFromApi,
           matchingItemLinksUpperCase
         );
@@ -108,12 +112,9 @@ class SortTemplate {
     };
     const ingredientsDropdown = document.getElementById("ingredientsDropdown");
     ingredientsDropdown.addEventListener("click", (event) => {
-      console.log(event.target);
       const target = event.target;
 
-      // Check if the clicked element has the class "sortIngredients"
       if (target.classList.contains("sortIngredients")) {
-        // Handle the click on a child element with the class "sortIngredients"
         handleTagClick(target);
       }
     });
@@ -140,7 +141,7 @@ class SortTemplate {
 
   creatingTagElements(link) {
     const tagsList = document.querySelector(".tagsList");
-    //Push to array
+    //Push to elementArray
     this.tagsArray.push(link.textContent);
     //Create elements
     const tag = document.createElement("li");
@@ -155,21 +156,23 @@ class SortTemplate {
     tagAnchor.appendChild(tagAnchorClose);
   }
 
-  normalizeApiWithMatchingElements(
+  normalizeApiWithMatchingElementsAndUpdateCards(
     fetchedDataFromApi,
     matchingItemLinksUpperCase
   ) {
+    console.log(fetchedDataFromApi);
+    console.log(matchingItemLinksUpperCase);
     let filteredObjectsFromApiUppercase;
     filteredObjectsFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
-        let ingredientsUppercase = card.ingredients.map((ingredient) => ({
-          ...ingredient,
-          ingredient: String(ingredient.ingredient).toUpperCase(),
+        let ingredientsUppercase = card.ingredients.map((element) => ({
+          ...element,
+          element: String(element.ingredient).toUpperCase(),
         }));
         return matchingItemLinksUpperCase.every((matchingElement) => {
           return ingredientsUppercase.some(
-            (ingredient) =>
-              String(ingredient.ingredient).toUpperCase() ===
+            (element) =>
+              String(element.element).toUpperCase() ===
               matchingElement.toUpperCase()
           );
         });
@@ -177,7 +180,8 @@ class SortTemplate {
       .map((cardCorrespondingToOneWord) => {
         return cardCorrespondingToOneWord;
       });
-
+    console.log("fetchedDataFromApi", fetchedDataFromApi);
+    console.log("matchingItemLinksUpperCase", matchingItemLinksUpperCase);
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
       appInstance.updateCards(filteredObjectsFromApiUppercase);
@@ -187,12 +191,16 @@ class SortTemplate {
     }
   }
 
-  filterDropdownInputHelperIngredients() {
+  // ------------------------
+  // Filter
+  // ------------------------
+
+  filterDropdownInputHelper() {
     let ingredientsDropdownElement;
     let aElement;
     let txtValue;
     var input, filterDropdown, i;
-    input = document.getElementById("myDropdownInputIngredients");
+    input = document.getElementById(sortIngredients);
     filterDropdown = input.value.toUpperCase();
     ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
 
