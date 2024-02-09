@@ -302,9 +302,10 @@ export class App {
       // Log the matching ingredients
       this.sortTemplate.updateDropdownItems(
         itemsArrayIngredient,
-        ".myDropdownInputDiv",
-        ".sortIngredients",
-        matchingIngredients
+        "myDropdownInputIngredients",
+        matchingIngredients,
+        "myDropdownInputDiv",
+        "myDropdownInputIngredients"
       );
       // this.sortTemplate.updateDropdownItems(
       //   itemsArrayAppliance,

@@ -20,11 +20,14 @@ class SortTemplate {
 
   updateDropdownItems(
     elementArray,
-    myDropdownInputDiv,
     sortIngredients,
-    matchingElement
+    matchingElement,
+    myDropdownInputDiv,
+    myDropdownInputElement
   ) {
     if (elementArray) {
+      console.log(myDropdownInputDiv);
+      console.log(sortIngredients);
       // ------------------------
       // Creation of elements
       // ------------------------
@@ -43,7 +46,7 @@ class SortTemplate {
       searchInputDiv.classList.add(myDropdownInputDiv);
 
       const searchInput = document.createElement("input");
-      searchInput.id = sortIngredients;
+      searchInput.id = myDropdownInputElement;
       searchInput.placeholder = "Rechercher";
 
       searchInput.addEventListener("input", () => {
