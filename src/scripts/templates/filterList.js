@@ -16,6 +16,10 @@ class SortTemplate {
     this.ingredientLinks = [];
     this.tagsArray = [];
     this.searchInput = document.querySelector(".mySearchInput");
+    this.myDropdownInputIngredients = document.getElementById(
+      "myDropdownInputIngredients"
+    );
+    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
   }
 
   updateDropdownItems(
@@ -23,11 +27,9 @@ class SortTemplate {
     sortIngredients,
     matchingElement,
     myDropdownInputDiv,
-    myDropdownInputElement
+    ingredientsDropdown
   ) {
     if (elementArray) {
-      console.log(myDropdownInputDiv);
-      console.log(sortIngredients);
       // ------------------------
       // Creation of elements
       // ------------------------
@@ -43,10 +45,10 @@ class SortTemplate {
       // Search input event
       // ------------------------
       const searchInputDiv = document.createElement("div");
-      searchInputDiv.classList.add(myDropdownInputDiv);
+      searchInputDiv.classList.add("myDropdownInputDiv");
 
       const searchInput = document.createElement("input");
-      searchInput.id = myDropdownInputElement;
+      searchInput.id = "myDropdownInputIngredients";
       searchInput.placeholder = "Rechercher";
 
       searchInput.addEventListener("input", () => {
@@ -203,7 +205,7 @@ class SortTemplate {
     let aElement;
     let txtValue;
     var input, filterDropdown, i;
-    input = document.getElementById(sortIngredients);
+    input = document.getElementById("myDropdownInputIngredients");
     filterDropdown = input.value.toUpperCase();
     ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
 
