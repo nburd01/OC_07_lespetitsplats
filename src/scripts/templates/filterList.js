@@ -134,33 +134,46 @@ class SortTemplate {
   // ------------------------
   // Creation of links
   // ------------------------
-  dropdownLinkCreationHelper(
-    identifier,
-    elementArray,
-    matchingElement,
-    dropdown,
-    sortElementClass,
-    elementDropdownClass
-  ) {
+  dropdownLinkCreationHelper(identifier, elementArray, sortElementClass) {
+    // console.log("identifier", identifier);
+    // console.log("elementArray", elementArray);
+    // console.log("sortElementClass", sortElementClass);
+    const links = this.creatingHrefs(
+      elementArray,
+      identifier,
+      sortElementClass
+    );
     elementArray.forEach((element) => {
-      const link = document.createElement("a");
-      link.classList.add(sortElementClass);
-      link.classList.add(identifier);
-      link.href = `#${element}`;
-      link.textContent = element;
       switch (identifier) {
         case "ingredients":
-          this.ingredientsDropdown.appendChild(link);
+          this.creatingHrefs(elementArray, identifier, sortElementClass);
+          links.forEach((link) => {
+            this.ingredientsDropdown.appendChild(link);
+          });
           break;
         case "ustensils":
-          this.ustensilsDropdown.appendChild(link);
+          // this.ustensilsDropdown.appendChild(link);
           break;
         case "appliances":
-          this.appliancesDropdown.appendChild(link);
+          // this.appliancesDropdown.appendChild(link);
           break;
         default:
       }
     });
+  }
+
+  creatingHrefs(elementArray, identifier, sortElementClass) {
+    console.log(identifier);
+    const links = elementArray.map((element) => {
+      const link = document.createElement("a");
+      // link.classList.add(sortElementClass);
+      link.classList.add(sortElementClass, identifier);
+      link.href = `#${element}`;
+      link.textContent = element;
+      return link;
+    });
+
+    return links; // Return an array of link elements
   }
 
   inputCondition(identifier, elementArray, matchingElement, dropdown) {
@@ -172,7 +185,11 @@ class SortTemplate {
       // dropdown.innerHTML = "";
       console.log("not null");
       elementArray = matchingElement;
-      this.dropdownLinkCreationHelper(matchingElement, elementArray);
+      this.dropdownLinkCreationHelper(
+        matchingElement,
+        elementArray,
+        identifier
+      );
     } else {
       this.dropdownLinkCreationHelper(
         identifier,

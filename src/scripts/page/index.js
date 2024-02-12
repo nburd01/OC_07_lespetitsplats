@@ -271,6 +271,22 @@ export class App {
       "sortUstensils",
       "ustensilsDropdown"
     );
+
+    this.sortTemplate.dropdownLinkCreationHelper(
+      "ingredients",
+      itemsArrayIngredient,
+      "sortIngredients"
+    );
+    this.sortTemplate.dropdownLinkCreationHelper(
+      "appliances",
+      itemsArrayAppliance,
+      "sortAppliances"
+    );
+    this.sortTemplate.dropdownLinkCreationHelper(
+      "ustensils",
+      itemsArrayUstensil,
+      "sortUstensils"
+    );
   }
 
   // ------------------------
