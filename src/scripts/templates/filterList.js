@@ -142,30 +142,24 @@ class SortTemplate {
     sortElementClass,
     elementDropdownClass
   ) {
-    switch (identifier) {
-      case "ingredients":
-        this.creatingHrefs();
-        this.ingredientsDropdown.appendChild(link);
-        break;
-      case "ustensils":
-        this.creatingHrefs();
-        this.ustensilsDropdown.appendChild(link);
-        break;
-      case "appliances":
-        this.creatingHrefs();
-        this.appliancesDropdown.appendChild(link);
-        break;
-      default:
-    }
-  }
-
-  creatingHrefs() {
     elementArray.forEach((element) => {
       const link = document.createElement("a");
       link.classList.add(sortElementClass);
       link.classList.add(identifier);
       link.href = `#${element}`;
       link.textContent = element;
+      switch (identifier) {
+        case "ingredients":
+          this.ingredientsDropdown.appendChild(link);
+          break;
+        case "ustensils":
+          this.ustensilsDropdown.appendChild(link);
+          break;
+        case "appliances":
+          this.appliancesDropdown.appendChild(link);
+          break;
+        default:
+      }
     });
   }
 
