@@ -166,7 +166,6 @@ class SortTemplate {
     console.log(identifier);
     const links = elementArray.map((element) => {
       const link = document.createElement("a");
-      // link.classList.add(sortElementClass);
       link.classList.add(sortElementClass, identifier);
       link.href = `#${element}`;
       link.textContent = element;
