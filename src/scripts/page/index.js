@@ -170,10 +170,6 @@ export class App {
       ...itemArrays.arrayOfUstensilNames,
     ];
 
-    this.sortTemplate.centralHelper("appliances", itemsArrayAppliance);
-    this.sortTemplate.centralHelper("ingredients", itemsArrayIngredient);
-    this.sortTemplate.centralHelper("ustensils", itemsArrayUstensil);
-
     // ------------------------
     // Events
     // ------------------------
@@ -250,43 +246,8 @@ export class App {
         }
       }
     }
-    this.sortTemplate.tagClickManagement(
-      fetchedDataFromApi,
-      "ingredients",
-      itemsArrayIngredient,
-      "sortIngredients",
-      "ingredientsDropdown"
-    );
-    this.sortTemplate.tagClickManagement(
-      fetchedDataFromApi,
-      "appliances",
-      itemsArrayAppliance,
-      "sortAppliances",
-      "appliancesDropdown"
-    );
-    this.sortTemplate.tagClickManagement(
-      fetchedDataFromApi,
-      "ustensils",
-      itemsArrayUstensil,
-      "sortUstensils",
-      "ustensilsDropdown"
-    );
-
-    this.sortTemplate.dropdownLinkCreationHelper(
-      "ingredients",
-      itemsArrayIngredient,
-      "sortIngredients"
-    );
-    this.sortTemplate.dropdownLinkCreationHelper(
-      "appliances",
-      itemsArrayAppliance,
-      "sortAppliances"
-    );
-    this.sortTemplate.dropdownLinkCreationHelper(
-      "ustensils",
-      itemsArrayUstensil,
-      "sortUstensils"
-    );
+    this.sortTemplate.updateDropdownItems(itemsArrayIngredient);
+    this.sortTemplate.tagClickManagement(fetchedDataFromApi);
   }
 
   // ------------------------
@@ -294,8 +255,8 @@ export class App {
   // ------------------------
 
   filterDropdownInputHelper(inputId, dropdownElementId) {
-    // console.log(inputId);
-    // console.log(dropdownElementId);
+    console.log(inputId);
+    console.log(dropdownElementId);
     let dropdownElement;
     let aElement;
     let txtValue;
@@ -316,7 +277,7 @@ export class App {
   }
 
   // ------------------------
-  // Main Searchbar
+  // Searchbar
   // ------------------------
 
   handleSearchBarInputChange(
@@ -340,30 +301,23 @@ export class App {
 
       // Log the matching ingredients
       this.sortTemplate.updateDropdownItems(
-        "ingredients",
         itemsArrayIngredient,
+        "myDropdownInputIngredients",
         matchingIngredients,
-        this.ingredientsDropdown,
-        "sortIngredients",
-        "ingredientsDropdown"
+        "myDropdownInputDiv",
+        "myDropdownInputIngredients"
       );
+      // this.sortTemplate.updateDropdownItems(
+      //   itemsArrayAppliance,
+      //   ".sortAppliances",
+      //   matchingAppliances
+      // );
+      // this.sortTemplate.updateDropdownItems(
+      //   itemsArrayUstensil,
+      //   ".sortUstensils",
+      //   matchingUstensils
+      // );
 
-      this.sortTemplate.updateDropdownItems(
-        "appliances",
-        itemsArrayAppliance,
-        matchingAppliances,
-        this.appliancesDropdown,
-        "sortAppliances",
-        "appliancesDropdown"
-      );
-      this.sortTemplate.updateDropdownItems(
-        "ustensils",
-        itemsArrayUstensil,
-        matchingUstensils,
-        this.ustensilsDropdown,
-        "sortUstensils",
-        "ustensilsDropdown"
-      );
       this.faMark.style.display = "block";
     } else {
       this.faMark.style.display = "none";

@@ -4,10 +4,10 @@ import { App } from "../page/index.js";
 class SortTemplate {
   constructor() {
     this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
-    this.appliancesDropdown = document.getElementById("appliancesDropdown");
-    this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
     this.ingredientsDropdownClass =
       document.getElementsByClassName("dropdown-content");
+    this.appliancesDropdown = document.getElementById("appliancesDropdown");
+    this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
     this.tagsArrayDiv = document.getElementsByClassName("tagsArrayDiv");
     this.tagsList = document.getElementsByClassName("tagsList");
     this.itemNames = [];
@@ -19,183 +19,69 @@ class SortTemplate {
     this.myDropdownInputIngredients = document.getElementById(
       "myDropdownInputIngredients"
     );
+    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
   }
-  // ------------------------
-  // Update
-  // ------------------------
+
   updateDropdownItems(
-    identifier,
     elementArray,
+    sortIngredients,
     matchingElement,
-    dropdown,
-    sortElementClass,
-    elementDropdownClass
+    myDropdownInputDiv,
+    ingredientsDropdown
   ) {
-    switch (identifier) {
-      case "ingredients":
-        this.centralHelper(
-          identifier,
-          elementArray,
-          matchingElement,
-          dropdown,
-          sortElementClass,
-          elementDropdownClass,
-          this.ingredientsDropdown
-        );
-        break;
-      case "ustensils":
-        this.centralHelper(
-          identifier,
-          elementArray,
-          matchingElement,
-          dropdown,
-          sortElementClass,
-          elementDropdownClass,
-          this.ustensilsDropdown
-        );
-        break;
-      default:
-    }
-  }
-
-  // ------------------------
-  // Central Function
-  // ------------------------
-  centralHelper(
-    identifier,
-    elementArray,
-    matchingElement,
-    dropdown,
-    sortElementClass,
-    elementDropdownClass
-  ) {
-    switch (identifier) {
-      case "ingredients":
-        this.inputCondition(
-          identifier,
-          elementArray,
-          matchingElement,
-          dropdown,
-          sortElementClass,
-          elementDropdownClass
-        );
-
-        break;
-      case "ustensils":
-        this.inputCondition(
-          identifier,
-          elementArray,
-          matchingElement,
-          dropdown,
-          sortElementClass,
-          elementDropdownClass
-        );
-
-        break;
-      case "appliances":
-        this.inputCondition(
-          identifier,
-          elementArray,
-          matchingElement,
-          dropdown,
-          sortElementClass,
-          elementDropdownClass
-        );
-
-        break;
-      default:
-        console.log("Invalid identifier");
-    }
-
-    // ------------------------
-    // Search input event
-    // ------------------------
-    // const searchInputDiv = document.createElement("div");
-    // searchInputDiv.classList.add("myDropdownInputDiv");
-
-    // const searchInput = document.createElement("input");
-    // searchInput.id = "myDropdownInputIngredients";
-    // searchInput.placeholder = "Rechercher";
-
-    // searchInput.addEventListener("input", () => {
-    //   this.filterDropdownInputHelper();
-    // });
-
-    // dropdown.appendChild(searchInputDiv);
-    // searchInputDiv.appendChild(searchInput);
-    // console.log(elementArray);
-
-    // const tagsArray = [];
-    // const ingredientLinks = document.querySelectorAll(sortElementClass);
-    // //onclick
-    // const tagsList = document.querySelector(".tagsList");
-  }
-
-  // ------------------------
-  // Creation of links
-  // ------------------------
-  dropdownLinkCreationHelper(identifier, elementArray, sortElementClass) {
-    // console.log("identifier", identifier);
-    // console.log("elementArray", elementArray);
-    // console.log("sortElementClass", sortElementClass);
-    const links = this.creatingHrefs(
-      elementArray,
-      identifier,
-      sortElementClass
-    );
-    elementArray.forEach((element) => {
-      switch (identifier) {
-        case "ingredients":
-          this.creatingHrefs(elementArray, identifier, sortElementClass);
-          links.forEach((link) => {
-            this.ingredientsDropdown.appendChild(link);
-          });
-          break;
-        case "ustensils":
-          // this.ustensilsDropdown.appendChild(link);
-          break;
-        case "appliances":
-          // this.appliancesDropdown.appendChild(link);
-          break;
-        default:
+    if (elementArray) {
+      // ------------------------
+      // Creation of elements
+      // ------------------------
+      this.ingredientsDropdown.innerHTML = "";
+      if (matchingElement != null) {
+        elementArray = matchingElement;
+        dropdownLinkCreationHelper(matchingElement);
+      } else {
+        dropdownLinkCreationHelper(elementArray);
       }
-    });
-  }
 
-  creatingHrefs(elementArray, identifier, sortElementClass) {
-    console.log(identifier);
-    const links = elementArray.map((element) => {
-      const link = document.createElement("a");
-      link.classList.add(sortElementClass, identifier);
-      link.href = `#${element}`;
-      link.textContent = element;
-      return link;
-    });
+      // ------------------------
+      // Search input event
+      // ------------------------
+      const searchInputDiv = document.createElement("div");
+      searchInputDiv.classList.add("myDropdownInputDiv");
 
-    return links; // Return an array of link elements
-  }
+      const searchInput = document.createElement("input");
+      searchInput.id = "myDropdownInputIngredients";
+      searchInput.placeholder = "Rechercher";
 
-  inputCondition(identifier, elementArray, matchingElement, dropdown) {
-    if (
-      this.searchInput !== null &&
-      this.searchInput.value !== undefined &&
-      this.searchInput.value !== ""
-    ) {
-      // dropdown.innerHTML = "";
-      console.log("not null");
-      elementArray = matchingElement;
-      this.dropdownLinkCreationHelper(
-        matchingElement,
-        elementArray,
-        identifier
-      );
-    } else {
-      this.dropdownLinkCreationHelper(
-        identifier,
-        elementArray,
-        matchingElement,
-        dropdown
-      );
+      searchInput.addEventListener("input", () => {
+        this.filterDropdownInputHelper();
+      });
+
+      this.ingredientsDropdown.appendChild(searchInputDiv);
+      searchInputDiv.appendChild(searchInput);
+
+      // ------------------------
+      // Creation of links
+      // ------------------------
+      elementArray.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${element}`;
+        link.textContent = element;
+        this.ingredientsDropdown.appendChild(link);
+      });
+
+      const tagsArray = [];
+      const ingredientLinks = document.querySelectorAll(".sortIngredients");
+      //onclick
+      const tagsList = document.querySelector(".tagsList");
+    }
+
+    function dropdownLinkCreationHelper(arrayOfElements) {
+      arrayOfElements.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortElements");
+        link.href = `#${element}`;
+        link.textContent = element;
+      });
     }
   }
 
@@ -203,15 +89,11 @@ class SortTemplate {
   // Events
   // ------------------------
 
-  tagClickManagement(
-    fetchedDataFromApi,
-    identifier,
-    elementArray,
-    sortElementClass,
-    elementDropdownClass
-  ) {
+  tagClickManagement(fetchedDataFromApi) {
     const tagsList = document.querySelector(".tagsList");
+
     const handleTagClick = (link) => {
+      //ici link n'est pas attribué quand il y a le
       this.creatingTagElements(link);
       const matchingItemLinksUpperCase = this.findMatchingElements();
       this.normalizeApiWithMatchingElementsAndUpdateCards(
@@ -233,16 +115,15 @@ class SortTemplate {
         );
       }
     };
-    const elementsDropdown = document.getElementById(elementDropdownClass);
-    elementsDropdown.addEventListener("click", (event) => {
+    const ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    ingredientsDropdown.addEventListener("click", (event) => {
       const target = event.target;
-      console.log(target.classList);
-      console.log(sortElementClass);
-      if (target.classList.contains(identifier)) {
-        console.log(1);
+
+      if (target.classList.contains("sortIngredients")) {
         handleTagClick(target);
       }
     });
+
     tagsList.addEventListener("click", closeTagClick);
   }
 
@@ -319,25 +200,25 @@ class SortTemplate {
   // Filter
   // ------------------------
 
-  // filterDropdownInputHelper() {
-  //   let ingredientsDropdownElement;
-  //   let aElement;
-  //   let txtValue;
-  //   var input, filterDropdown, i;
-  //   input = document.getElementById("myDropdownInputIngredients");
-  //   filterDropdown = input.value.toUpperCase();
-  //   ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
+  filterDropdownInputHelper() {
+    let ingredientsDropdownElement;
+    let aElement;
+    let txtValue;
+    var input, filterDropdown, i;
+    input = document.getElementById("myDropdownInputIngredients");
+    filterDropdown = input.value.toUpperCase();
+    ingredientsDropdownElement = document.getElementById("ingredientsDropdown");
 
-  //   aElement = ingredientsDropdownElement.getElementsByTagName("a");
-  //   for (i = 0; i < aElement.length; i++) {
-  //     txtValue = aElement[i].textContent || aElement[i].innerText;
-  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-  //       aElement[i].style.display = "";
-  //     } else {
-  //       aElement[i].style.display = "none";
-  //     }
-  //   }
-  // }
+    aElement = ingredientsDropdownElement.getElementsByTagName("a");
+    for (i = 0; i < aElement.length; i++) {
+      txtValue = aElement[i].textContent || aElement[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+        aElement[i].style.display = "";
+      } else {
+        aElement[i].style.display = "none";
+      }
+    }
+  }
 }
 
 export { SortTemplate };
