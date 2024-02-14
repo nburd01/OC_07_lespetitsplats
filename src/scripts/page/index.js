@@ -328,16 +328,20 @@ export class App {
         this.myDropdownInputIngredients,
         matchingIngredients
       );
-      // this.sortTemplate.updateDropdownItems(
-      //   itemsArrayAppliance,
-      //   ".sortAppliances",
-      //   matchingAppliances
-      // );
-      // this.sortTemplate.updateDropdownItems(
-      //   itemsArrayUstensil,
-      //   ".sortUstensils",
-      //   matchingUstensils
-      // );
+      this.sortTemplate.updateDropdownItems(
+        "appliances",
+        itemsArrayAppliance,
+        this.appliancesDropdown,
+        this.myDropdownInputAppliances,
+        matchingAppliances
+      );
+      this.sortTemplate.updateDropdownItems(
+        "ustensils",
+        itemsArrayUstensil,
+        this.ustensilsDropdown,
+        this.myDropdownInputUstensils,
+        matchingUstensils
+      );
 
       this.faMark.style.display = "block";
     } else {
