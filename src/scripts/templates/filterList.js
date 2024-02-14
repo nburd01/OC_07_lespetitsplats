@@ -85,7 +85,7 @@ class SortTemplate {
   // Events
   // ------------------------
 
-  tagClickManagement(fetchedDataFromApi) {
+  tagClickManagement(fetchedDataFromApi, dropDownClass, sortClass) {
     const tagsList = document.querySelector(".tagsList");
 
     const handleTagClick = (link) => {
@@ -111,7 +111,7 @@ class SortTemplate {
         );
       }
     };
-    const ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    const ingredientsDropdown = document.getElementById(dropDownClass);
     ingredientsDropdown.addEventListener("click", (event) => {
       const target = event.target;
 
@@ -161,8 +161,8 @@ class SortTemplate {
     fetchedDataFromApi,
     matchingItemLinksUpperCase
   ) {
-    console.log(fetchedDataFromApi);
-    console.log(matchingItemLinksUpperCase);
+    // console.log(fetchedDataFromApi);
+    // console.log(matchingItemLinksUpperCase);
     let filteredObjectsFromApiUppercase;
     filteredObjectsFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
@@ -181,8 +181,8 @@ class SortTemplate {
       .map((cardCorrespondingToOneWord) => {
         return cardCorrespondingToOneWord;
       });
-    console.log("fetchedDataFromApi", fetchedDataFromApi);
-    console.log("matchingItemLinksUpperCase", matchingItemLinksUpperCase);
+    // console.log("fetchedDataFromApi", fetchedDataFromApi);
+    // console.log("matchingItemLinksUpperCase", matchingItemLinksUpperCase);
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
       appInstance.updateCards(filteredObjectsFromApiUppercase);

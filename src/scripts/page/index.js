@@ -268,7 +268,25 @@ export class App {
       this.appliancesDropdown,
       this.myDropdownInputAppliances
     );
-    this.sortTemplate.tagClickManagement(fetchedDataFromApi);
+    this.sortTemplate.tagClickManagement(
+      fetchedDataFromApi,
+      "ingredientsDropdown",
+      "sortIngredients"
+    );
+    this.sortTemplate.tagClickManagement(
+      fetchedDataFromApi,
+      "appliancesDropdown",
+      "sortAppliances"
+    );
+    this.sortTemplate.tagClickManagement(
+      fetchedDataFromApi,
+      "ustensilsDropdown",
+      "sortUstensils"
+    );
+
+    // this.sortTemplate.filterDropdownInputHelper("myDropdownInputIngredients");
+    // this.sortTemplate.filterDropdownInputHelper("myDropdownInputAppliances");
+    // this.sortTemplate.filterDropdownInputHelper("myDropdownInputUstensils");
   }
 
   // ------------------------
