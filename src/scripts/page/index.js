@@ -26,6 +26,9 @@ export class App {
     this.ingredientsDropdown = document.querySelectorAll(".sortIngredients");
     this.appliancesDropdown = document.querySelectorAll(".sortAppliances");
     this.ustensilsDropdown = document.querySelectorAll(".sortUstensils");
+    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    this.appliancesDropdown = document.getElementById("appliancesDropdown");
+    this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
   }
 
   async main() {
@@ -246,7 +249,22 @@ export class App {
         }
       }
     }
-    this.sortTemplate.updateDropdownItems(itemsArrayIngredient);
+
+    this.sortTemplate.updateDropdownItems(
+      "ingredients",
+      itemsArrayIngredient,
+      this.ingredientsDropdown
+    );
+    this.sortTemplate.updateDropdownItems(
+      "ustensils",
+      itemsArrayUstensil,
+      this.ustensilsDropdown
+    );
+    this.sortTemplate.updateDropdownItems(
+      "appliances",
+      itemsArrayAppliance,
+      this.appliancesDropdown
+    );
     this.sortTemplate.tagClickManagement(fetchedDataFromApi);
   }
 

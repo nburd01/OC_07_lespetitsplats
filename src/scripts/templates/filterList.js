@@ -3,11 +3,8 @@
 import { App } from "../page/index.js";
 class SortTemplate {
   constructor() {
-    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
     this.ingredientsDropdownClass =
       document.getElementsByClassName("dropdown-content");
-    this.appliancesDropdown = document.getElementById("appliancesDropdown");
-    this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
     this.tagsArrayDiv = document.getElementsByClassName("tagsArrayDiv");
     this.tagsList = document.getElementsByClassName("tagsList");
     this.itemNames = [];
@@ -16,64 +13,65 @@ class SortTemplate {
     this.ingredientLinks = [];
     this.tagsArray = [];
     this.searchInput = document.querySelector(".mySearchInput");
+    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
+
     this.myDropdownInputIngredients = document.getElementById(
       "myDropdownInputIngredients"
     );
-    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
   }
 
   updateDropdownItems(
+    identifier,
     elementArray,
-    sortIngredients,
+    elementsDropdown,
+    //
+
     matchingElement,
-    myDropdownInputDiv,
-    ingredientsDropdown
+    myDropdownInputDiv
   ) {
-    if (elementArray) {
-      // ------------------------
-      // Creation of elements
-      // ------------------------
-      this.ingredientsDropdown.innerHTML = "";
-      if (matchingElement != null) {
-        elementArray = matchingElement;
-        dropdownLinkCreationHelper(matchingElement);
-      } else {
-        dropdownLinkCreationHelper(elementArray);
-      }
-
-      // ------------------------
-      // Search input event
-      // ------------------------
-      const searchInputDiv = document.createElement("div");
-      searchInputDiv.classList.add("myDropdownInputDiv");
-
-      const searchInput = document.createElement("input");
-      searchInput.id = "myDropdownInputIngredients";
-      searchInput.placeholder = "Rechercher";
-
-      searchInput.addEventListener("input", () => {
-        this.filterDropdownInputHelper();
-      });
-
-      this.ingredientsDropdown.appendChild(searchInputDiv);
-      searchInputDiv.appendChild(searchInput);
-
-      // ------------------------
-      // Creation of links
-      // ------------------------
-      elementArray.forEach((element) => {
-        const link = document.createElement("a");
-        link.classList.add("sortIngredients");
-        link.href = `#${element}`;
-        link.textContent = element;
-        this.ingredientsDropdown.appendChild(link);
-      });
-
-      const tagsArray = [];
-      const ingredientLinks = document.querySelectorAll(".sortIngredients");
-      //onclick
-      const tagsList = document.querySelector(".tagsList");
+    // ------------------------
+    // Creation of elements
+    // ------------------------
+    elementsDropdown.innerHTML = "";
+    if (matchingElement != null) {
+      elementArray = matchingElement;
+      dropdownLinkCreationHelper(matchingElement);
+    } else {
+      dropdownLinkCreationHelper(elementArray);
     }
+
+    // ------------------------
+    // Search input event
+    // ------------------------
+    const searchInputDiv = document.createElement("div");
+    searchInputDiv.classList.add("myDropdownInputDiv");
+
+    const searchInput = document.createElement("input");
+    searchInput.id = "myDropdownInputIngredients";
+    searchInput.placeholder = "Rechercher";
+
+    searchInput.addEventListener("input", () => {
+      this.filterDropdownInputHelper();
+    });
+
+    elementsDropdown.appendChild(searchInputDiv);
+    searchInputDiv.appendChild(searchInput);
+
+    // ------------------------
+    // Creation of links
+    // ------------------------
+    elementArray.forEach((element) => {
+      const link = document.createElement("a");
+      link.classList.add("sortIngredients");
+      link.href = `#${element}`;
+      link.textContent = element;
+      elementsDropdown.appendChild(link);
+    });
+
+    const tagsArray = [];
+    const ingredientLinks = document.querySelectorAll(".sortIngredients");
+    //onclick
+    const tagsList = document.querySelector(".tagsList");
 
     function dropdownLinkCreationHelper(arrayOfElements) {
       arrayOfElements.forEach((element) => {
