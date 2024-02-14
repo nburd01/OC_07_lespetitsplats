@@ -253,17 +253,20 @@ export class App {
     this.sortTemplate.updateDropdownItems(
       "ingredients",
       itemsArrayIngredient,
-      this.ingredientsDropdown
+      this.ingredientsDropdown,
+      this.myDropdownInputIngredients
     );
     this.sortTemplate.updateDropdownItems(
       "ustensils",
       itemsArrayUstensil,
-      this.ustensilsDropdown
+      this.ustensilsDropdown,
+      this.myDropdownInputUstensils
     );
     this.sortTemplate.updateDropdownItems(
       "appliances",
       itemsArrayAppliance,
-      this.appliancesDropdown
+      this.appliancesDropdown,
+      this.myDropdownInputAppliances
     );
     this.sortTemplate.tagClickManagement(fetchedDataFromApi);
   }
@@ -319,11 +322,11 @@ export class App {
 
       // Log the matching ingredients
       this.sortTemplate.updateDropdownItems(
+        "ingredients",
         itemsArrayIngredient,
-        "myDropdownInputIngredients",
-        matchingIngredients,
-        "myDropdownInputDiv",
-        "myDropdownInputIngredients"
+        this.ingredientsDropdown,
+        this.myDropdownInputIngredients,
+        matchingIngredients
       );
       // this.sortTemplate.updateDropdownItems(
       //   itemsArrayAppliance,

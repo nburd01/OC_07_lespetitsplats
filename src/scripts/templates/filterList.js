@@ -24,10 +24,9 @@ class SortTemplate {
     identifier,
     elementArray,
     elementsDropdown,
+    myDropDownInputElements,
     //
-
-    matchingElement,
-    myDropdownInputDiv
+    matchingElement
   ) {
     // ------------------------
     // Creation of elements
@@ -72,7 +71,6 @@ class SortTemplate {
     const ingredientLinks = document.querySelectorAll(".sortIngredients");
     //onclick
     const tagsList = document.querySelector(".tagsList");
-
     function dropdownLinkCreationHelper(arrayOfElements) {
       arrayOfElements.forEach((element) => {
         const link = document.createElement("a");
