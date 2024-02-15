@@ -92,7 +92,7 @@ class SortTemplate {
       //ici link n'est pas attribué quand il y a le
       this.creatingTagElements(link);
       const matchingItemLinksUpperCase = this.findMatchingElements();
-      this.normalizeApiWithMatchingElementsAndUpdateCards(
+      this.normalizeApiWithMatchingElements(
         fetchedDataFromApi,
         matchingItemLinksUpperCase
       );
@@ -105,7 +105,7 @@ class SortTemplate {
         this.tagsArray.splice(index, 1);
         event.target.closest("li").remove();
         const matchingItemLinksUpperCase = this.findMatchingElements();
-        this.normalizeApiWithMatchingElementsAndUpdateCards(
+        this.normalizeApiWithMatchingElements(
           fetchedDataFromApi,
           matchingItemLinksUpperCase
         );
@@ -157,42 +157,38 @@ class SortTemplate {
     tagAnchor.appendChild(tagAnchorClose);
   }
 
-  normalizeApiWithMatchingElementsAndUpdateCards(
+  normalizeApiWithMatchingElements(
     fetchedDataFromApi,
     matchingItemLinksUpperCase
   ) {
-    // console.log(fetchedDataFromApi);
-    // console.log(matchingItemLinksUpperCase);
-    let allMatchingWordsArray = [];
     let filteredObjectsFromApiUppercase;
-    filteredObjectsFromApiUppercase = fetchedDataFromApi
-      .filter((card) => {
-        let ingredientsUppercase = card.ingredients.map((element) => ({
-          ...element,
-          element: String(element.ingredient).toUpperCase(),
-        }));
-        allMatchingWordsArray.push(ingredientsUppercase);
+    filteredObjectsFromApiUppercase = fetchedDataFromApi.filter((card) => {
+      let ingredientsUppercase = card.ingredients.map((element) => ({
+        ...element,
+        element: String(element.ingredient).toUpperCase(),
+      }));
 
-        let appliancesUppercase = card.appliance.toUpperCase();
-        allMatchingWordsArray.push(appliancesUppercase);
-
-        let ustensilsUppercase = card.ustensils.map((element) =>
-          element.toUpperCase()
+      return matchingItemLinksUpperCase.every((matchingElement) => {
+        return ingredientsUppercase.some(
+          (element) =>
+            String(element.element).toUpperCase() ===
+            matchingElement.toUpperCase()
         );
-        allMatchingWordsArray.push(ustensilsUppercase);
-
-        return matchingItemLinksUpperCase.every((matchingElement) => {
-          return allMatchingWordsArray.some(
-            (element) =>
-              String(element.element).toUpperCase() ===
-              matchingElement.toUpperCase()
-          );
-        });
-      })
-      .map((cardCorrespondingToOneWord) => {
-        return cardCorrespondingToOneWord;
       });
+    });
 
+    this.conditionCreateCards(
+      matchingItemLinksUpperCase,
+      filteredObjectsFromApiUppercase,
+      fetchedDataFromApi
+    );
+  }
+
+  conditionCreateCards(
+    matchingItemLinksUpperCase,
+    filteredObjectsFromApiUppercase,
+    fetchedDataFromApi
+  ) {
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
       appInstance.updateCards(filteredObjectsFromApiUppercase);
