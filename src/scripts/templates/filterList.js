@@ -163,16 +163,26 @@ class SortTemplate {
   ) {
     let filteredObjectsFromApiUppercase;
     filteredObjectsFromApiUppercase = fetchedDataFromApi.filter((card) => {
-      let ingredientsUppercase = card.ingredients.map((element) => ({
+      let ApiIngredientsUppercase = card.ingredients.map((element) => ({
         ...element,
         element: String(element.ingredient).toUpperCase(),
       }));
 
+      let ApiApplianceUppercase = card.appliance.toUpperCase();
+
+      let ApiUstensilsUppercase = card.ustensils.map((ustensil) =>
+        ustensil.toUpperCase()
+      );
+
       return matchingItemLinksUpperCase.every((matchingElement) => {
-        return ingredientsUppercase.some(
-          (element) =>
-            String(element.element).toUpperCase() ===
-            matchingElement.toUpperCase()
+        return (
+          ApiIngredientsUppercase.some(
+            (element) =>
+              String(element.element).toUpperCase() ===
+              matchingElement.toUpperCase()
+          ) ||
+          ApiApplianceUppercase === matchingElement.toUpperCase() ||
+          ApiUstensilsUppercase.includes(matchingElement.toUpperCase())
         );
       });
     });
