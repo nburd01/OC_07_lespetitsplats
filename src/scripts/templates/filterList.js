@@ -163,6 +163,7 @@ class SortTemplate {
   ) {
     // console.log(fetchedDataFromApi);
     // console.log(matchingItemLinksUpperCase);
+    let allMatchingWordsArray = [];
     let filteredObjectsFromApiUppercase;
     filteredObjectsFromApiUppercase = fetchedDataFromApi
       .filter((card) => {
@@ -170,8 +171,18 @@ class SortTemplate {
           ...element,
           element: String(element.ingredient).toUpperCase(),
         }));
+        allMatchingWordsArray.push(ingredientsUppercase);
+
+        let appliancesUppercase = card.appliance.toUpperCase();
+        allMatchingWordsArray.push(appliancesUppercase);
+
+        let ustensilsUppercase = card.ustensils.map((element) =>
+          element.toUpperCase()
+        );
+        allMatchingWordsArray.push(ustensilsUppercase);
+
         return matchingItemLinksUpperCase.every((matchingElement) => {
-          return ingredientsUppercase.some(
+          return allMatchingWordsArray.some(
             (element) =>
               String(element.element).toUpperCase() ===
               matchingElement.toUpperCase()
@@ -181,8 +192,7 @@ class SortTemplate {
       .map((cardCorrespondingToOneWord) => {
         return cardCorrespondingToOneWord;
       });
-    // console.log("fetchedDataFromApi", fetchedDataFromApi);
-    // console.log("matchingItemLinksUpperCase", matchingItemLinksUpperCase);
+
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
       appInstance.updateCards(filteredObjectsFromApiUppercase);

@@ -284,9 +284,7 @@ export class App {
       "sortUstensils"
     );
 
-    // this.sortTemplate.filterDropdownInputHelper("myDropdownInputIngredients");
-    // this.sortTemplate.filterDropdownInputHelper("myDropdownInputAppliances");
-    // this.sortTemplate.filterDropdownInputHelper("myDropdownInputUstensils");
+    this.sortTemplate.filterDropdownInputHelper("myDropdownInputIngredients");
   }
 
   // ------------------------
