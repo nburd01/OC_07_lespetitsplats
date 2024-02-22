@@ -317,6 +317,7 @@ export class App {
   // Searchbar
   // ------------------------
 
+  //functional Function
   handleSearchBarInputChange(
     itemsArrayIngredient,
     itemsArrayAppliance,
