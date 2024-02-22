@@ -334,16 +334,16 @@ export class App {
       }
       //
       let matchingAppliances = [];
-      for (let index = 0; index < matchingAppliances.length; index++) {
-        const element = matchingAppliances[index];
+      for (let index = 0; index < itemsArrayAppliance.length; index++) {
+        const element = itemsArrayAppliance[index];
         if (element.toLowerCase().includes(userInput)) {
           matchingAppliances.push(element);
         }
       }
-      //
+
       let matchingUstensils = [];
-      for (let index = 0; index < matchingUstensils.length; index++) {
-        const element = matchingUstensils[index];
+      for (let index = 0; index < itemsArrayUstensil.length; index++) {
+        const element = itemsArrayUstensil[index];
         if (element.toLowerCase().includes(userInput)) {
           matchingUstensils.push(element);
         }
