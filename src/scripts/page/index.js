@@ -331,25 +331,22 @@ export class App {
         if (element.toLowerCase().includes(userInput)) {
           matchingIngredients.push(element);
         }
-        console.log(matchingIngredients);
       }
       //
       let matchingAppliances = [];
-      for (let index = 0; index < itemsArrayIngredient.length; index++) {
-        const element = itemsArrayIngredient[index];
+      for (let index = 0; index < matchingAppliances.length; index++) {
+        const element = matchingAppliances[index];
         if (element.toLowerCase().includes(userInput)) {
           matchingAppliances.push(element);
         }
-        console.log(matchingAppliances);
       }
       //
       let matchingUstensils = [];
-      for (let index = 0; index < itemsArrayIngredient.length; index++) {
-        const element = itemsArrayIngredient[index];
+      for (let index = 0; index < matchingUstensils.length; index++) {
+        const element = matchingUstensils[index];
         if (element.toLowerCase().includes(userInput)) {
           matchingUstensils.push(element);
         }
-        console.log(matchingUstensils);
       }
 
       // Log the matching ingredients
