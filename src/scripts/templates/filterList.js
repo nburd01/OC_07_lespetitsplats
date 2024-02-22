@@ -27,7 +27,7 @@ class SortTemplate {
     myDropDownInputElements,
     matchingElement
   ) {
-    console.log(matchingElement);
+    // console.log(matchingElement);
     // ------------------------
     // Creation of elements
     // ------------------------

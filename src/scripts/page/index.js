@@ -91,6 +91,7 @@ export class App {
 
     // tri by 'id'
     const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
+    console.log("fetchedDataFromApi", fetchedDataFromApi);
 
     // ------------------------
     // Creating
@@ -188,6 +189,7 @@ export class App {
 
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
+      this.updateCards([...fetchedDataFromApi]);
     });
     // show dropdown on btn click
     this.ingredientsDropBtn.addEventListener("click", () => {
@@ -292,8 +294,8 @@ export class App {
   // ------------------------
 
   filterDropdownInputHelper(inputId, dropdownElementId) {
-    console.log(inputId);
-    console.log(dropdownElementId);
+    // console.log(inputId);
+    // console.log(dropdownElementId);
     let dropdownElement;
     let aElement;
     let txtValue;
