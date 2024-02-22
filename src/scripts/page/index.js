@@ -325,16 +325,32 @@ export class App {
     const userInput = this.searchInput.value.toLowerCase();
 
     if (this.searchInput.value !== "") {
-      // Filter itemsArrayIngredient based on the input value
-      const matchingIngredients = itemsArrayIngredient.filter((ingredient) =>
-        ingredient.toLowerCase().includes(userInput)
-      );
-      const matchingAppliances = itemsArrayAppliance.filter((appliance) =>
-        appliance.toLowerCase().includes(userInput)
-      );
-      const matchingUstensils = itemsArrayUstensil.filter((ustensil) =>
-        ustensil.toLowerCase().includes(userInput)
-      );
+      let matchingIngredients = [];
+      for (let index = 0; index < itemsArrayIngredient.length; index++) {
+        const element = itemsArrayIngredient[index];
+        if (element.toLowerCase().includes(userInput)) {
+          matchingIngredients.push(element);
+        }
+        console.log(matchingIngredients);
+      }
+      //
+      let matchingAppliances = [];
+      for (let index = 0; index < itemsArrayIngredient.length; index++) {
+        const element = itemsArrayIngredient[index];
+        if (element.toLowerCase().includes(userInput)) {
+          matchingAppliances.push(element);
+        }
+        console.log(matchingAppliances);
+      }
+      //
+      let matchingUstensils = [];
+      for (let index = 0; index < itemsArrayIngredient.length; index++) {
+        const element = itemsArrayIngredient[index];
+        if (element.toLowerCase().includes(userInput)) {
+          matchingUstensils.push(element);
+        }
+        console.log(matchingUstensils);
+      }
 
       // Log the matching ingredients
       this.sortTemplate.updateDropdownItems(
