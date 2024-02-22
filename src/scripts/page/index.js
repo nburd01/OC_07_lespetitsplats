@@ -394,11 +394,13 @@ export class App {
       let userInput = this.searchInput.value;
       let mainSearchBarInputUpperCase = userInput.toUpperCase();
 
-      let inputMatchingElements;
-
-      inputMatchingElements = arrayOfEverything.filter((element) => {
-        return element.toUpperCase().includes(mainSearchBarInputUpperCase);
-      });
+      let inputMatchingElements = [];
+      for (let index = 0; index < arrayOfEverything.length; index++) {
+        const element = arrayOfEverything[index];
+        if (element.toUpperCase().includes(mainSearchBarInputUpperCase)) {
+          inputMatchingElements.push(element);
+        }
+      }
 
       this.updateCardsOnSearchBarInput(
         inputMatchingElements,
