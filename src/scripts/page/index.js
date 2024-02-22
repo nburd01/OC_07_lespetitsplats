@@ -188,6 +188,7 @@ export class App {
 
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
+      this.updateCards([...fetchedDataFromApi]);
     });
     // show dropdown on btn click
     this.ingredientsDropBtn.addEventListener("click", () => {
