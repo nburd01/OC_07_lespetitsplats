@@ -14,30 +14,30 @@ class SortTemplate {
     this.tagsArray = [];
     this.searchInput = document.querySelector(".mySearchInput");
     this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    this.appliancesDropdown = document.getElementById("appliancesDropdown");
+    this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
 
     this.myDropdownInputIngredients = document.getElementById(
       "myDropdownInputIngredients"
     );
   }
 
-  updateDropdownItems(
-    identifier,
-    elementArray,
-    elementsDropdown,
-    myDropDownInputElements,
-    matchingElement
-  ) {
-    // console.log(matchingElement);
+  updateDropdownItems(cardsData) {
+    const arrayOfIngredientNames = cardsData.flatMap((recipe) =>
+      recipe.ingredients.map((ingredient) => ingredient.ingredient)
+    );
+
+    const arrayOfApplianceNames = cardsData.map((obj) => obj.appliance);
+
+    const arrayOfUstensilNames = cardsData.flatMap((obj) => obj.ustensils);
+    console.log(arrayOfUstensilNames);
+
     // ------------------------
     // Creation of elements
     // ------------------------
-    elementsDropdown.innerHTML = "";
-    if (matchingElement != null) {
-      elementArray = matchingElement;
-      dropdownLinkCreationHelper(matchingElement);
-    } else {
-      dropdownLinkCreationHelper(elementArray);
-    }
+    this.ingredientsDropdown.innerHTML = "";
+    this.appliancesDropdown.innerHTML = "";
+    this.ustensilsDropdown.innerHTML = "";
 
     // ------------------------
     // Search input event
@@ -53,18 +53,37 @@ class SortTemplate {
       this.filterDropdownInputHelper();
     });
 
-    elementsDropdown.appendChild(searchInputDiv);
+    this.ingredientsDropdown.appendChild(searchInputDiv);
     searchInputDiv.appendChild(searchInput);
-
+    //
+    const uniqueIngredients = [...new Set(arrayOfIngredientNames)];
+    const uniqueAppliances = [...new Set(arrayOfApplianceNames)];
+    const uniqueUstensils = [...new Set(arrayOfUstensilNames)];
+    console.log(uniqueUstensils);
     // ------------------------
     // Creation of links
     // ------------------------
-    elementArray.forEach((element) => {
+
+    uniqueIngredients.forEach((element) => {
       const link = document.createElement("a");
       link.classList.add("sortIngredients");
       link.href = `#${element}`;
       link.textContent = element;
-      elementsDropdown.appendChild(link);
+      this.ingredientsDropdown.appendChild(link);
+    });
+    uniqueAppliances.forEach((element) => {
+      const link = document.createElement("a");
+      link.classList.add("sortIngredients");
+      link.href = `#${element}`;
+      link.textContent = element;
+      this.appliancesDropdown.appendChild(link);
+    });
+    uniqueUstensils.forEach((element) => {
+      const link = document.createElement("a");
+      link.classList.add("sortIngredients");
+      link.href = `#${element}`;
+      link.textContent = element;
+      this.ustensilsDropdown.appendChild(link);
     });
 
     const tagsArray = [];

@@ -91,7 +91,6 @@ export class App {
 
     // tri by 'id'
     const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
-    console.log("fetchedDataFromApi", fetchedDataFromApi);
 
     // ------------------------
     // Creating
@@ -111,6 +110,7 @@ export class App {
       arrayOfIngredientNames: [],
       arrayOfUstensilNames: [],
     };
+
     normalizingData(
       arrayOfApplianceNames,
       "appliance",
@@ -177,6 +177,7 @@ export class App {
     // ------------------------
     // Events
     // ------------------------
+    // console.log(itemsArrayIngredient);
 
     this.searchInput.addEventListener("input", () => {
       this.handleSearchBarInputChange(
@@ -190,6 +191,7 @@ export class App {
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
       this.updateCards([...fetchedDataFromApi]);
+      //updateDropdownItems
     });
     // show dropdown on btn click
     this.ingredientsDropBtn.addEventListener("click", () => {
@@ -252,24 +254,21 @@ export class App {
       }
     }
 
-    this.sortTemplate.updateDropdownItems(
-      "ingredients",
-      itemsArrayIngredient,
-      this.ingredientsDropdown,
-      this.myDropdownInputIngredients
-    );
-    this.sortTemplate.updateDropdownItems(
-      "ustensils",
-      itemsArrayUstensil,
-      this.ustensilsDropdown,
-      this.myDropdownInputUstensils
-    );
-    this.sortTemplate.updateDropdownItems(
-      "appliances",
-      itemsArrayAppliance,
-      this.appliancesDropdown,
-      this.myDropdownInputAppliances
-    );
+    // this.sortTemplate.updateDropdownItems(
+    //   itemsArrayIngredient,
+    //   this.ingredientsDropdown,
+    //   this.myDropdownInputIngredients
+    // );
+    // this.sortTemplate.updateDropdownItems(
+    //   itemsArrayUstensil,
+    //   this.ustensilsDropdown,
+    //   this.myDropdownInputUstensils
+    // );
+    // this.sortTemplate.updateDropdownItems(
+    //   itemsArrayAppliance,
+    //   this.appliancesDropdown,
+    //   this.myDropdownInputAppliances
+    // );
     this.sortTemplate.tagClickManagement(
       fetchedDataFromApi,
       "ingredientsDropdown",
@@ -352,27 +351,27 @@ export class App {
       }
 
       // Log the matching ingredients
-      this.sortTemplate.updateDropdownItems(
-        "ingredients",
-        itemsArrayIngredient,
-        this.ingredientsDropdown,
-        this.myDropdownInputIngredients,
-        matchingIngredients
-      );
-      this.sortTemplate.updateDropdownItems(
-        "appliances",
-        itemsArrayAppliance,
-        this.appliancesDropdown,
-        this.myDropdownInputAppliances,
-        matchingAppliances
-      );
-      this.sortTemplate.updateDropdownItems(
-        "ustensils",
-        itemsArrayUstensil,
-        this.ustensilsDropdown,
-        this.myDropdownInputUstensils,
-        matchingUstensils
-      );
+      // this.sortTemplate.updateDropdownItems(
+      //   "ingredients",
+      //   itemsArrayIngredient,
+      //   this.ingredientsDropdown,
+      //   this.myDropdownInputIngredients,
+      //   matchingIngredients
+      // );
+      // this.sortTemplate.updateDropdownItems(
+      //   "appliances",
+      //   itemsArrayAppliance,
+      //   this.appliancesDropdown,
+      //   this.myDropdownInputAppliances,
+      //   matchingAppliances
+      // );
+      // this.sortTemplate.updateDropdownItems(
+      //   "ustensils",
+      //   itemsArrayUstensil,
+      //   this.ustensilsDropdown,
+      //   this.myDropdownInputUstensils,
+      //   matchingUstensils
+      // );
 
       this.faMark.style.display = "block";
     } else {
@@ -451,6 +450,8 @@ export class App {
         const templateCards = new CardTemplate(card);
         cardsSection.appendChild(templateCards.createCard());
       });
+
+    this.sortTemplate.updateDropdownItems(cardsData);
   }
 }
 
