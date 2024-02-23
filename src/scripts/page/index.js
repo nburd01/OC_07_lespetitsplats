@@ -23,7 +23,7 @@ export class App {
     );
     this.mySearchInput = document.querySelector("#mySearchInput");
     this.sortTemplate = new SortTemplate();
-    this.ingredientsDropdown = document.querySelectorAll(".sortIngredients");
+
     this.appliancesDropdown = document.querySelectorAll(".sortAppliances");
     this.ustensilsDropdown = document.querySelectorAll(".sortUstensils");
     this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
@@ -174,10 +174,90 @@ export class App {
       ...itemArrays.arrayOfUstensilNames,
     ];
 
+    initializeDropdownItems(
+      arrayOfIngredientNames,
+      arrayOfUstensilNames,
+      arrayOfApplianceNames
+    );
+    function initializeDropdownItems(
+      arrayOfIngredientNames,
+      arrayOfUstensilNames,
+      arrayOfApplianceNames
+    ) {
+      // const arrayOfIngredientNames = itemsArrayIngredient.flatMap((recipe) =>
+      //   recipe.ingredients.map((ingredient) => ingredient.ingredient)
+      // );
+
+      // const arrayOfApplianceNames = itemsArrayAppliance.map(
+      //   (obj) => obj.appliance
+      // );
+
+      // const arrayOfUstensilNames = itemsArrayUstensil.flatMap(
+      //   (obj) => obj.ustensils
+      // );
+      // console.log(arrayOfIngredientNames);
+
+      // ------------------------
+      // Creation of elements
+      // ------------------------
+      // this.ingredientsDropdown.innerHTML = "";
+      // this.appliancesDropdown.innerHTML = "";
+      // this.ustensilsDropdown.innerHTML = "";
+
+      // // ------------------------
+      // // Search input event
+      // // ------------------------
+      const searchInputDiv = document.createElement("div");
+      searchInputDiv.classList.add("myDropdownInputDiv");
+
+      // const searchInput = document.createElement("input");
+      // searchInput.id = "myDropdownInputIngredients";
+      // searchInput.placeholder = "Rechercher";
+
+      // searchInput.addEventListener("input", () => {
+      //   this.filterDropdownInputHelper();
+      // });
+
+      // this.ingredientsDropdown.appendChild(searchInputDiv);
+      // searchInputDiv.appendChild(searchInput);
+      //
+      // const uniqueIngredients = [...new Set(arrayOfIngredientNames)];
+      // const uniqueAppliances = [...new Set(arrayOfApplianceNames)];
+      // const uniqueUstensils = [...new Set(arrayOfUstensilNames)];
+      // console.log(uniqueUstensils);
+      // // ------------------------
+      // // Creation of links
+      // // ------------------------
+
+      arrayOfIngredientNames.forEach((element) => {
+        console.log(element);
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${element}`;
+        link.textContent = element;
+        ingredientsDropdown.appendChild(link);
+      });
+      arrayOfUstensilNames.forEach((element) => {
+        console.log(element);
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${element}`;
+        link.textContent = element;
+        ustensilsDropdown.appendChild(link);
+      });
+      arrayOfApplianceNames.forEach((element) => {
+        console.log(element);
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${element}`;
+        link.textContent = element;
+        appliancesDropdown.appendChild(link);
+      });
+    }
+
     // ------------------------
     // Events
     // ------------------------
-    // console.log(itemsArrayIngredient);
 
     this.searchInput.addEventListener("input", () => {
       this.handleSearchBarInputChange(

@@ -17,6 +17,12 @@ class SortTemplate {
     this.appliancesDropdown = document.getElementById("appliancesDropdown");
     this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
 
+    this.myDropdownInputUstensils = document.getElementById(
+      "myDropdownInputUstensils"
+    );
+    this.myDropdownInputAppliances = document.getElementById(
+      "myDropdownInputAppliances"
+    );
     this.myDropdownInputIngredients = document.getElementById(
       "myDropdownInputIngredients"
     );
@@ -59,7 +65,6 @@ class SortTemplate {
     const uniqueIngredients = [...new Set(arrayOfIngredientNames)];
     const uniqueAppliances = [...new Set(arrayOfApplianceNames)];
     const uniqueUstensils = [...new Set(arrayOfUstensilNames)];
-    console.log(uniqueUstensils);
     // ------------------------
     // Creation of links
     // ------------------------
