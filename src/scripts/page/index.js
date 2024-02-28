@@ -86,7 +86,7 @@ export class App {
     });
 
     const arrayOfUstensilNames = sortCardsDataByUstensil.flatMap(
-      (recipeData) => recipeData.ustensils
+      (obj) => obj.ustensils
     );
 
     // tri by 'id'
@@ -149,15 +149,16 @@ export class App {
         //convert to strings
         //mise en forme : normalise
         const itemNameFirst = itemValue.charAt(0).toUpperCase();
-        const itemNameRest = itemValue.slice(1);
+        const itemNameRest = itemValue.slice(1).toLowerCase();
         const itemName = itemNameFirst + itemNameRest;
         let pluralItemName = itemName + "s";
         //condition
         if (
-          !arrayOfItems.includes(itemName) &&
+          !arrayOfItems.includes(itemName) ||
           !arrayOfItems.includes(pluralItemName)
         ) {
           arrayOfItems.push(itemName);
+          arrayOfItems.sort();
         }
       });
 
@@ -175,78 +176,53 @@ export class App {
     ];
 
     initializeDropdownItems(
-      arrayOfIngredientNames,
-      arrayOfUstensilNames,
-      arrayOfApplianceNames
+      itemsArrayIngredient,
+      itemsArrayUstensil,
+      itemsArrayAppliance
     );
+
     function initializeDropdownItems(
-      arrayOfIngredientNames,
-      arrayOfUstensilNames,
-      arrayOfApplianceNames
+      itemsArrayIngredient,
+      itemsArrayUstensil,
+      itemsArrayAppliance
     ) {
-      // const arrayOfIngredientNames = itemsArrayIngredient.flatMap((recipe) =>
-      //   recipe.ingredients.map((ingredient) => ingredient.ingredient)
-      // );
-
-      // const arrayOfApplianceNames = itemsArrayAppliance.map(
-      //   (obj) => obj.appliance
-      // );
-
-      // const arrayOfUstensilNames = itemsArrayUstensil.flatMap(
-      //   (obj) => obj.ustensils
-      // );
-      // console.log(arrayOfIngredientNames);
-
       // ------------------------
-      // Creation of elements
+      // Search input event
       // ------------------------
-      // this.ingredientsDropdown.innerHTML = "";
-      // this.appliancesDropdown.innerHTML = "";
-      // this.ustensilsDropdown.innerHTML = "";
 
-      // // ------------------------
-      // // Search input event
-      // // ------------------------
       const searchInputDiv = document.createElement("div");
       searchInputDiv.classList.add("myDropdownInputDiv");
 
-      // const searchInput = document.createElement("input");
-      // searchInput.id = "myDropdownInputIngredients";
-      // searchInput.placeholder = "Rechercher";
-
-      // searchInput.addEventListener("input", () => {
-      //   this.filterDropdownInputHelper();
-      // });
-
-      // this.ingredientsDropdown.appendChild(searchInputDiv);
-      // searchInputDiv.appendChild(searchInput);
-      //
-      // const uniqueIngredients = [...new Set(arrayOfIngredientNames)];
-      // const uniqueAppliances = [...new Set(arrayOfApplianceNames)];
-      // const uniqueUstensils = [...new Set(arrayOfUstensilNames)];
-      // console.log(uniqueUstensils);
-      // // ------------------------
-      // // Creation of links
-      // // ------------------------
-
-      arrayOfIngredientNames.forEach((element) => {
-        console.log(element);
+      // ------------------------
+      // Creation of links
+      // ------------------------
+      itemsArrayIngredient.sort();
+      function removeDuplicates(data) {
+        return data.reduce((unique, value) => {
+          if (!unique.includes(value)) {
+            unique.push(value);
+          }
+          return unique;
+        }, []);
+      }
+      let resultIngredient = removeDuplicates(itemsArrayIngredient);
+      let resultAppliance = removeDuplicates(itemsArrayAppliance);
+      let resultUstensil = removeDuplicates(itemsArrayUstensil);
+      resultIngredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
         link.href = `#${element}`;
         link.textContent = element;
         ingredientsDropdown.appendChild(link);
       });
-      arrayOfUstensilNames.forEach((element) => {
-        console.log(element);
+      resultUstensil.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
         link.href = `#${element}`;
         link.textContent = element;
         ustensilsDropdown.appendChild(link);
       });
-      arrayOfApplianceNames.forEach((element) => {
-        console.log(element);
+      resultAppliance.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
         link.href = `#${element}`;
@@ -271,7 +247,6 @@ export class App {
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
       this.updateCards([...fetchedDataFromApi]);
-      //updateDropdownItems
     });
     // show dropdown on btn click
     this.ingredientsDropBtn.addEventListener("click", () => {
@@ -334,21 +309,6 @@ export class App {
       }
     }
 
-    // this.sortTemplate.updateDropdownItems(
-    //   itemsArrayIngredient,
-    //   this.ingredientsDropdown,
-    //   this.myDropdownInputIngredients
-    // );
-    // this.sortTemplate.updateDropdownItems(
-    //   itemsArrayUstensil,
-    //   this.ustensilsDropdown,
-    //   this.myDropdownInputUstensils
-    // );
-    // this.sortTemplate.updateDropdownItems(
-    //   itemsArrayAppliance,
-    //   this.appliancesDropdown,
-    //   this.myDropdownInputAppliances
-    // );
     this.sortTemplate.tagClickManagement(
       fetchedDataFromApi,
       "ingredientsDropdown",

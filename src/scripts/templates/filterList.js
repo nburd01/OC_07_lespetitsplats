@@ -29,14 +29,18 @@ class SortTemplate {
   }
 
   updateDropdownItems(cardsData) {
-    const arrayOfIngredientNames = cardsData.flatMap((recipe) =>
-      recipe.ingredients.map((ingredient) => ingredient.ingredient)
-    );
+    console.log(cardsData);
+    const arrayOfIngredientNames = cardsData
+      .sort()
+      .flatMap((recipe) =>
+        recipe.ingredients.map((ingredient) => ingredient.ingredient)
+      );
+    arrayOfIngredientNames.sort();
 
     const arrayOfApplianceNames = cardsData.map((obj) => obj.appliance);
-
+    arrayOfApplianceNames.sort();
     const arrayOfUstensilNames = cardsData.flatMap((obj) => obj.ustensils);
-    console.log(arrayOfUstensilNames);
+    arrayOfUstensilNames.sort();
 
     // ------------------------
     // Creation of elements
