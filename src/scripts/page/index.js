@@ -29,6 +29,8 @@ export class App {
     this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
     this.appliancesDropdown = document.getElementById("appliancesDropdown");
     this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
+    this.searchData = {};
+    this.conditionCreateCardsData = {};
   }
 
   async main() {
@@ -333,8 +335,6 @@ export class App {
   // ------------------------
 
   filterDropdownInputHelper(inputId, dropdownElementId) {
-    // console.log(inputId);
-    // console.log(dropdownElementId);
     let dropdownElement;
     let aElement;
     let txtValue;
@@ -389,29 +389,6 @@ export class App {
           matchingUstensils.push(element);
         }
       }
-
-      // Log the matching ingredients
-      // this.sortTemplate.updateDropdownItems(
-      //   "ingredients",
-      //   itemsArrayIngredient,
-      //   this.ingredientsDropdown,
-      //   this.myDropdownInputIngredients,
-      //   matchingIngredients
-      // );
-      // this.sortTemplate.updateDropdownItems(
-      //   "appliances",
-      //   itemsArrayAppliance,
-      //   this.appliancesDropdown,
-      //   this.myDropdownInputAppliances,
-      //   matchingAppliances
-      // );
-      // this.sortTemplate.updateDropdownItems(
-      //   "ustensils",
-      //   itemsArrayUstensil,
-      //   this.ustensilsDropdown,
-      //   this.myDropdownInputUstensils,
-      //   matchingUstensils
-      // );
 
       this.faMark.style.display = "block";
     } else {
@@ -472,26 +449,59 @@ export class App {
       });
       //Retourne les cardUpperCase qui détiennent les inputMatchingElements
     });
-    if (this.searchInput.value.length > 2) {
-      this.updateCards(newMatchingElementsAfterInput);
-    }
-    if (this.searchInput.value.length <= 0) {
-      this.updateCards(newMatchingElementsAfterInput);
+    if (
+      this.searchInput.value.length > 2 ||
+      this.searchInput.value.length <= 0
+    ) {
+      this.updateCards(newMatchingElementsAfterInput, "search");
     }
   }
 
-  updateCards(cardsData) {
+  // updateCards(cardsData) {
+  // const cardsSection = document.querySelector(".cards");
+  // cardsSection.innerHTML = "";
+  // const originalCardsData = cardsData.slice();
+  // console.log(originalCardsData);
+  // console.log(cardsData);
+  // const concatenatedObject = { ...originalCardsData, ...cardsData };
+  // console.log(concatenatedObject);
+  // cardsData
+  //   .map((card) => new Card(card))
+  //   .forEach((card) => {
+  //     const templateCards = new CardTemplate(card);
+  //     cardsSection.appendChild(templateCards.createCard());
+  //   });
+  // this.sortTemplate.updateDropdownItems(cardsData);
+  // }
+
+  updateCards(data, source) {
     const cardsSection = document.querySelector(".cards");
     cardsSection.innerHTML = "";
 
-    cardsData
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const templateCards = new CardTemplate(card);
-        cardsSection.appendChild(templateCards.createCard());
-      });
+    if (source === "search") {
+      this.searchData = { ...this.searchData, ...data };
+    }
 
-    this.sortTemplate.updateDropdownItems(cardsData);
+    if (source === "conditionCreateCards") {
+      this.conditionCreateCardsData = {
+        ...this.conditionCreateCardsData,
+        ...data,
+      };
+    }
+
+    console.log(this.searchData);
+    console.log(this.conditionCreateCardsData);
+
+    // concatenatedData
+    //   .map((card) => new Card(card))
+    //   .forEach((card) => {
+    //     const templateCards = new CardTemplate(card);
+    //     cardsSection.appendChild(templateCards.createCard());
+    //   });
+
+    // this.sortTemplate.updateDropdownItems(concatenatedData);
+
+    // Update cards logic goes here
   }
 }
 

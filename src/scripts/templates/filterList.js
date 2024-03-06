@@ -29,7 +29,6 @@ class SortTemplate {
   }
 
   updateDropdownItems(cardsData) {
-    console.log(cardsData);
     const arrayOfIngredientNames = cardsData
       .sort()
       .flatMap((recipe) =>
@@ -229,10 +228,13 @@ class SortTemplate {
   ) {
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
-      appInstance.updateCards(filteredObjectsFromApiUppercase);
+      appInstance.updateCards(
+        filteredObjectsFromApiUppercase,
+        "conditionCreateCards"
+      );
     } else {
       const appInstance = new App();
-      appInstance.updateCards(fetchedDataFromApi);
+      appInstance.updateCards(fetchedDataFromApi, "conditionCreateCards");
     }
   }
 
