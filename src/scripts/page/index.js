@@ -246,7 +246,7 @@ export class App {
 
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
-      this.updateCards([...fetchedDataFromApi]);
+      this.updateRecipes([...fetchedDataFromApi]);
     });
     // show dropdown on btn click
     this.ingredientsDropBtn.addEventListener("click", () => {
@@ -440,7 +440,7 @@ export class App {
         }
       }
 
-      this.updateCardsOnSearchBarInput(
+      this.updateRecipesOnSearchBarInput(
         inputMatchingElements,
         fetchedDataFromApi
       );
@@ -451,7 +451,7 @@ export class App {
   // Cards manipulation
   // ------------------------
 
-  updateCardsOnSearchBarInput(inputMatchingElements, fetchedDataFromApi) {
+  updateRecipesOnSearchBarInput(inputMatchingElements, fetchedDataFromApi) {
     let matchingElementsUppercase = inputMatchingElements.map((element) =>
       element.toUpperCase()
     );
@@ -473,14 +473,14 @@ export class App {
       //Retourne les cardUpperCase qui détiennent les inputMatchingElements
     });
     if (this.searchInput.value.length > 2) {
-      this.updateCards(newMatchingElementsAfterInput);
+      this.displayRecipes(newMatchingElementsAfterInput);
     }
     if (this.searchInput.value.length <= 0) {
-      this.updateCards(newMatchingElementsAfterInput);
+      this.displayRecipes(newMatchingElementsAfterInput);
     }
   }
-
-  updateCards(cardsData) {
+  //display Recipes
+  displayRecipes(cardsData) {
     const cardsSection = document.querySelector(".cards");
     cardsSection.innerHTML = "";
 

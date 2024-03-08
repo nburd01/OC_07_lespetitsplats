@@ -229,10 +229,10 @@ class SortTemplate {
   ) {
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
-      appInstance.updateCards(filteredObjectsFromApiUppercase);
+      appInstance.updateRecipes(filteredObjectsFromApiUppercase);
     } else {
       const appInstance = new App();
-      appInstance.updateCards(fetchedDataFromApi);
+      appInstance.updateRecipes(fetchedDataFromApi);
     }
   }
 
@@ -262,3 +262,25 @@ class SortTemplate {
 }
 
 export { SortTemplate };
+
+//events
+// ...
+// //dans updateRecipe
+// const querySearch = {
+//   search: document.querySelector('.searchbar').value,
+//   ingredients: document.querySelectorAll(.tag-ingredients'),
+//   appliances: document.querySelectorAll(.tag-ingredients'),
+//   ustensils: document.querySelectorAll(.tag-ingredients'),
+// }
+
+// Array.from(document.querySelectorAll('.tag-ingredients')).map(e => e.textContent)
+
+// const filterRecipes = AllRecipes.filter(recipe => {
+//   recipe.title.includes(query.search) ||
+//   query.ingredients.every(ingr => recipe.ingredients.includes(ingr) ||
+//   ...
+// }
+
+// displayRecipes(filterRecipes){
+//   ...
+// }
