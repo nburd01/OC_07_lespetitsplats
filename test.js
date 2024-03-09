@@ -3,7 +3,7 @@
 //dans updateRecipe
 const filterRecipes = AllRecipes.filter(recipe => {
     recipe.title.includes(query.search) ||
-    query.ingredients.every(ingr => recipe.ingredients.includes(ingr) ||
+    query.ingredients.every(ingr => recipe.ingredients.includes(ingr)) ||
     ...
   })
 

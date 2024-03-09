@@ -1,7 +1,7 @@
 import { CardsApi } from "../api/api.js";
 import { Card } from "../class/cards.js";
 import { CardTemplate } from "../templates/cardList.js";
-import { SortTemplate } from "../templates/filterList.js";
+// import { SortTemplate } from "../templates/filterList.js";
 
 export class App {
   constructor() {
@@ -22,7 +22,7 @@ export class App {
       "#myDropdownInputUstensils"
     );
     this.mySearchInput = document.querySelector("#mySearchInput");
-    this.sortTemplate = new SortTemplate();
+    // this.sortTemplate = new SortTemplate();
 
     this.appliancesDropdown = document.querySelectorAll(".sortAppliances");
     this.ustensilsDropdown = document.querySelectorAll(".sortUstensils");
@@ -235,28 +235,36 @@ export class App {
     this.searchInput.addEventListener("input", () => {
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
-        // ingredients: Array.from(
-        //   document.querySelectorAll(".sortIngredients")
-        // ).map((e) => e.textContent),
-        // appliances: Array.from(
-        //   document.querySelectorAll(".sortAppliances")
-        // ).map((e) => e.textContent),
-        // ustensils: Array.from(document.querySelectorAll(".sortUstensils")).map(
-        //   (e) => e.textContent
-        // ),
+        ingredients: Array.from(
+          document.querySelectorAll(".sortIngredients")
+        ).map((e) => e.textContent),
+        appliances: Array.from(
+          document.querySelectorAll(".sortAppliances")
+        ).map((e) => e.textContent),
+        ustensils: Array.from(document.querySelectorAll(".sortUstensils")).map(
+          (e) => e.textContent
+        ),
       };
-      filterRecipes(AllRecipes, querySearch);
+      const querySearched = querySearch.search;
+      // console.log(querySearched);
+      // console.log(querySearch.ingredients);
+      // console.log(querySearch.appliances);
+      // console.log(querySearch.ustensils);
+      filterRecipes(AllRecipes, querySearch, querySearched);
     });
 
-    function filterRecipes(AllRecipes, querySearch) {
-      // console.log("AllRecipes", AllRecipes);
+    function filterRecipes(AllRecipes, querySearch, querySearched) {
+      console.log("Recieves the tag and input", AllRecipes);
+      console.log("querySearched", querySearched);
+
       const filteredRecipes = AllRecipes.filter((recipe) => {
-        if (recipe.name.includes(querySearch.search)) {
-          return recipe.name;
-        }
-        if (recipe.appliance.includes(querySearch.search)) {
-          return recipe.appliance;
-        }
+        recipe.name.includes(querySearch.search) ||
+          recipe.appliance.includes(querySearch.search) ||
+          recipe.ingredients
+            .filter((ingredient) =>
+              ingredient.ingredient.includes(querySearch.search)
+            )
+            .map((matchingIngredient) => matchingIngredient.ingredient);
 
         const matchingIngredients = recipe.ingredients
           .filter((ingredient) =>
@@ -295,6 +303,7 @@ export class App {
       this.handleClearInput();
       this.updateRecipes([...AllRecipes]);
     });
+    //toggle dropdown hide/show
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
     });
@@ -317,6 +326,7 @@ export class App {
         }
       }
     }
+    //Click outside dropdown to make it disappear
     document.addEventListener("click", function (event) {
       handleDropdownHelper(appliancesDropdown, dropDownAppliances);
     });
@@ -326,6 +336,7 @@ export class App {
     document.addEventListener("click", function (event) {
       handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
     });
+    //Input inside dropdown
     this.myDropdownInputIngredients.addEventListener("input", () => {
       filterDropdownInputHelper(
         myDropdownInputIngredients,
@@ -338,6 +349,7 @@ export class App {
     this.myDropdownInputUstensils.addEventListener("input", () => {
       filterDropdownInputHelper(myDropdownInputUstensils, ustensilsDropdown);
     });
+    //filter le dropdown on search
     function filterDropdownInputHelper(inputId, dropdownElementId) {
       let dropdownElement;
       let aElement;
@@ -461,7 +473,11 @@ export class App {
       ingredientsDropdown.addEventListener("click", (event) => {
         const target = event.target;
 
-        if (target.classList.contains("sortIngredients")) {
+        if (
+          target.classList.contains("sortIngredients") ||
+          target.classList.contains("sortAppliances") ||
+          target.classList.contains("sortUstensils")
+        ) {
           handleTagClick(target);
         }
       });
