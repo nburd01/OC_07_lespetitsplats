@@ -246,49 +246,48 @@ export class App {
         ),
       };
       const querySearched = querySearch.search;
-      // console.log(querySearched);
+      console.log(querySearch.search);
       // console.log(querySearch.ingredients);
       // console.log(querySearch.appliances);
       // console.log(querySearch.ustensils);
-      filterRecipes(AllRecipes, querySearch);
+      filterRecipes(AllRecipes, querySearch, querySearch);
     });
 
     function filterRecipes(AllRecipes, querySearch) {
-      // console.log("All the recipes", AllRecipes);
-      console.log("querySearch", querySearch);
+      console.log("Recieves the tag and input", AllRecipes);
+      // Check if querySearch is defined
+      if (querySearch !== undefined) {
+        const filteredRecipes = AllRecipes.filter((recipe) => {
+          if (recipe.name.includes(querySearch.search)) {
+            return recipe.name;
+          }
+          if (recipe.appliance.includes(querySearch.search)) {
+            return recipe.appliance;
+          }
 
-      //On Main Search Input filter recipes
-      const filteredRecipes = AllRecipes.filter((recipe) => {
-        recipe.name.includes(querySearch.search) ||
-          recipe.appliance.includes(querySearch.search) ||
-          recipe.ingredients
+          const matchingIngredients = recipe.ingredients
             .filter((ingredient) =>
               ingredient.ingredient.includes(querySearch.search)
             )
             .map((matchingIngredient) => matchingIngredient.ingredient);
 
-        const matchingIngredients = recipe.ingredients
-          .filter((ingredient) =>
-            ingredient.ingredient.includes(querySearch.search)
-          )
-          .map((matchingIngredient) => matchingIngredient.ingredient);
+          if (matchingIngredients.length > 0) {
+            return true;
+          }
 
-        if (matchingIngredients.length > 0) {
-          return true;
-        }
+          return false;
+        });
 
-        return false;
-      });
-
-      displayRecipes(filteredRecipes);
+        displayRecipes(filteredRecipes);
+      }
     }
 
-    function displayRecipes(cardsData) {
-      console.log(cardsData);
+    function displayRecipes(filteredRecipes) {
+      console.log(filteredRecipes);
       const cardsSection = document.querySelector(".cards");
       cardsSection.innerHTML = "";
 
-      cardsData
+      filteredRecipes
         .map((card) => new Card(card))
         .forEach((card) => {
           const templateCards = new CardTemplate(card);
@@ -474,11 +473,7 @@ export class App {
       ingredientsDropdown.addEventListener("click", (event) => {
         const target = event.target;
 
-        if (
-          target.classList.contains("sortIngredients") ||
-          target.classList.contains("sortAppliances") ||
-          target.classList.contains("sortUstensils")
-        ) {
+        if (target.classList.contains("sortIngredients")) {
           handleTagClick(target);
         }
       });
