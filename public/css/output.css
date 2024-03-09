@@ -970,6 +970,10 @@ video {
   text-transform: uppercase;
 }
 
+.lowercase {
+  text-transform: lowercase;
+}
+
 .text-blue-300 {
   --tw-text-opacity: 1;
   color: rgb(147 197 253 / var(--tw-text-opacity));
@@ -1151,9 +1155,13 @@ body {
   line-height: normal;
 }
 
-ul li {
+.li-card {
   flex: 0 0 calc(50% - 10px);
   margin: 0 5px;
+}
+
+.tag-li {
+  /* flex: 0; */
 }
 
 .bg-hero {
@@ -1351,6 +1359,7 @@ input:focus::placeholder {
   border-radius: 10px;
   background: #ffd15b;
   margin-bottom: 0.5em;
+  margin: 0.5em;
 }
 
 .tagsList {

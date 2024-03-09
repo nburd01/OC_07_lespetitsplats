@@ -1,7 +1,7 @@
 import { CardsApi } from "../api/api.js";
 import { Card } from "../class/cards.js";
 import { CardTemplate } from "../templates/cardList.js";
-import { SortTemplate } from "../templates/filterList.js";
+// import { SortTemplate } from "../templates/filterList.js";
 
 export class App {
   constructor() {
@@ -22,11 +22,20 @@ export class App {
       "#myDropdownInputUstensils"
     );
     this.mySearchInput = document.querySelector("#mySearchInput");
-    this.sortTemplate = new SortTemplate();
+    // this.sortTemplate = new SortTemplate();
+
+    this.appliancesDropdown = document.querySelectorAll(".sortAppliances");
+    this.ustensilsDropdown = document.querySelectorAll(".sortUstensils");
+    this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    this.appliancesDropdown = document.getElementById("appliancesDropdown");
+    this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
   }
 
   async main() {
     const sortTemplate = this.sortTemplate;
+    let itemsArrayAppliance = [];
+    let itemsArrayIngredient = [];
+    let itemsArrayUstensil = [];
 
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
@@ -36,10 +45,10 @@ export class App {
     // ------------------------
 
     //Fetch data
-    const fetchedDataFromApi = await this.cardsApi.getCards();
+    const AllRecipes = await this.cardsApi.getCards();
 
     // tri a-z by 'name'
-    const sortCardsDataByIngredient = [...fetchedDataFromApi].sort((a, b) => {
+    const sortCardsDataByIngredient = [...AllRecipes].sort((a, b) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -52,7 +61,7 @@ export class App {
       recipe.ingredients.map((ingredient) => ingredient.ingredient)
     );
     // tri a-z by 'appliance'
-    const sortCardsDataByAppliance = [...fetchedDataFromApi].sort((a, b) => {
+    const sortCardsDataByAppliance = [...AllRecipes].sort((a, b) => {
       if (a.appliance < b.appliance) {
         return -1;
       }
@@ -66,7 +75,7 @@ export class App {
       (obj) => obj.appliance
     );
 
-    const sortCardsDataByUstensil = [...fetchedDataFromApi].sort((a, b) => {
+    const sortCardsDataByUstensil = [...AllRecipes].sort((a, b) => {
       if (a.ustensils < b.ustensils) {
         return -1;
       }
@@ -77,13 +86,15 @@ export class App {
     });
 
     const arrayOfUstensilNames = sortCardsDataByUstensil.flatMap(
-      (recipeData) => recipeData.ustensils
+      (obj) => obj.ustensils
     );
 
     // tri by 'id'
-    const createCards = [...fetchedDataFromApi].sort((a, b) => a.id - b.id);
+    const createCards = [...AllRecipes].sort((a, b) => a.id - b.id);
 
-    //this creates cards
+    // ------------------------
+    // Creating
+    // ------------------------
     createCards
       .map((card) => new Card(card))
       .forEach((card) => {
@@ -99,6 +110,7 @@ export class App {
       arrayOfIngredientNames: [],
       arrayOfUstensilNames: [],
     };
+
     normalizingData(
       arrayOfApplianceNames,
       "appliance",
@@ -123,14 +135,6 @@ export class App {
       "arrayOfUstensilNames"
     );
 
-    const arrayOfIngredientsNames = [];
-    const arrayOfAppliancesNames = [];
-    const arrayOfUstensilsNames = [];
-
-    const itemsArrayAppliance = [];
-    const itemsArrayIngredient = [];
-    const itemsArrayUstensil = [];
-
     //ressort une liste
     function normalizingData(
       normalizeCardsData,
@@ -144,49 +148,162 @@ export class App {
         const itemValue = card || "";
         //convert to strings
         //mise en forme : normalise
-        const itemNameFirst = itemValue.charAt(0);
-        const itemNameRest = itemValue.slice(1);
+        const itemNameFirst = itemValue.charAt(0).toUpperCase();
+        const itemNameRest = itemValue.slice(1).toLowerCase();
         const itemName = itemNameFirst + itemNameRest;
         let pluralItemName = itemName + "s";
         //condition
         if (
-          !arrayOfItems.includes(itemName) &&
+          !arrayOfItems.includes(itemName) ||
           !arrayOfItems.includes(pluralItemName)
         ) {
           arrayOfItems.push(itemName);
+          arrayOfItems.sort();
         }
       });
+
       itemArrays[targetArrayName].push(...arrayOfItems);
-      let itemsArrayAppliance = itemArrays.arrayOfApplianceNames;
-      let itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
-      let itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
-      sortTemplate.updateDropdownItems(
-        itemsArrayAppliance,
-        itemsArrayIngredient,
-        itemsArrayUstensil
-      );
+      itemsArrayAppliance = itemArrays.arrayOfApplianceNames;
+      itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
+      itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
     }
 
     //sort everything function
     const arrayOfEverything = [
-      ...itemArrays.arrayOfIngredientNames,
       ...itemArrays.arrayOfApplianceNames,
+      ...itemArrays.arrayOfIngredientNames,
       ...itemArrays.arrayOfUstensilNames,
     ];
+
+    initializeDropdownItems(
+      itemsArrayIngredient,
+      itemsArrayUstensil,
+      itemsArrayAppliance
+    );
+
+    function initializeDropdownItems(
+      itemsArrayIngredient,
+      itemsArrayUstensil,
+      itemsArrayAppliance
+    ) {
+      // ------------------------
+      // Search input event
+      // ------------------------
+
+      const searchInputDiv = document.createElement("div");
+      searchInputDiv.classList.add("myDropdownInputDiv");
+
+      // ------------------------
+      // Creation of links
+      // ------------------------
+      itemsArrayIngredient.sort();
+      function removeDuplicates(data) {
+        return data.reduce((unique, value) => {
+          if (!unique.includes(value)) {
+            unique.push(value);
+          }
+          return unique;
+        }, []);
+      }
+      let resultIngredient = removeDuplicates(itemsArrayIngredient);
+      let resultAppliance = removeDuplicates(itemsArrayAppliance);
+      let resultUstensil = removeDuplicates(itemsArrayUstensil);
+      resultIngredient.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${element}`;
+        link.textContent = element;
+        ingredientsDropdown.appendChild(link);
+      });
+      resultUstensil.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortUstensils");
+        link.href = `#${element}`;
+        link.textContent = element;
+        ustensilsDropdown.appendChild(link);
+      });
+      resultAppliance.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortAppliances");
+        link.href = `#${element}`;
+        link.textContent = element;
+        appliancesDropdown.appendChild(link);
+      });
+    }
+
+    //MAIN INPUT CHANGE
+    this.searchInput.addEventListener("input", () => {
+      const querySearch = {
+        search: document.querySelector(".mySearchInput").value,
+        ingredients: Array.from(
+          document.querySelectorAll(".sortIngredients")
+        ).map((e) => e.textContent),
+        appliances: Array.from(
+          document.querySelectorAll(".sortAppliances")
+        ).map((e) => e.textContent),
+        ustensils: Array.from(document.querySelectorAll(".sortUstensils")).map(
+          (e) => e.textContent
+        ),
+      };
+      const querySearched = querySearch.search;
+      console.log(querySearch.search);
+      // console.log(querySearch.ingredients);
+      // console.log(querySearch.appliances);
+      // console.log(querySearch.ustensils);
+      filterRecipes(AllRecipes, querySearch, querySearch);
+    });
+
+    function filterRecipes(AllRecipes, querySearch) {
+      console.log("Recieves the tag and input", AllRecipes);
+      // Check if querySearch is defined
+      if (querySearch !== undefined) {
+        const filteredRecipes = AllRecipes.filter((recipe) => {
+          if (recipe.name.includes(querySearch.search)) {
+            return recipe.name;
+          }
+          if (recipe.appliance.includes(querySearch.search)) {
+            return recipe.appliance;
+          }
+
+          const matchingIngredients = recipe.ingredients
+            .filter((ingredient) =>
+              ingredient.ingredient.includes(querySearch.search)
+            )
+            .map((matchingIngredient) => matchingIngredient.ingredient);
+
+          if (matchingIngredients.length > 0) {
+            return true;
+          }
+
+          return false;
+        });
+
+        displayRecipes(filteredRecipes);
+      }
+    }
+
+    function displayRecipes(filteredRecipes) {
+      console.log(filteredRecipes);
+      const cardsSection = document.querySelector(".cards");
+      cardsSection.innerHTML = "";
+
+      filteredRecipes
+        .map((card) => new Card(card))
+        .forEach((card) => {
+          const templateCards = new CardTemplate(card);
+          cardsSection.appendChild(templateCards.createCard());
+        });
+    }
 
     // ------------------------
     // Events
     // ------------------------
 
-    this.searchInput.addEventListener("input", () => {
-      this.handleSearchBarInputChange();
-      this.filterSearchbarInputForCards(arrayOfEverything, createCards);
-    });
-
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
+      this.updateRecipes([...AllRecipes]);
     });
-    // show dropdown on btn click
+    //toggle dropdown hide/show
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
     });
@@ -196,43 +313,6 @@ export class App {
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
     });
-
-    //Dropdown clicks
-    document.addEventListener("click", function (event) {
-      handleDropdownHelper(appliancesDropdown, dropDownAppliances);
-    });
-    document.addEventListener("click", function (event) {
-      handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
-    });
-    document.addEventListener("click", function (event) {
-      handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
-    });
-
-    //Dropdown input changes
-    this.myDropdownInputIngredients.addEventListener("input", () => {
-      this.filterDropdownInputHelper(
-        myDropdownInputIngredients,
-        ingredientsDropdown
-      );
-    });
-    this.myDropdownInputAppliances.addEventListener("input", () => {
-      this.filterDropdownInputHelper(
-        myDropdownInputAppliances,
-        appliancesDropdown
-      );
-    });
-    this.myDropdownInputUstensils.addEventListener("input", () => {
-      this.filterDropdownInputHelper(
-        myDropdownInputUstensils,
-        ustensilsDropdown
-      );
-    });
-
-    //Main searchbar input changes
-    this.mySearchInput.addEventListener("input", () => {
-      this.filterSearchbarInputForCards(arrayOfEverything, createCards);
-    });
-
     function handleDropdownHelper(dropdownId, elemId) {
       const dropdown = document.getElementById(dropdownId);
       const elem = document.getElementById(elemId);
@@ -246,123 +326,185 @@ export class App {
         }
       }
     }
+    //Click outside dropdown to make it disappear
+    document.addEventListener("click", function (event) {
+      handleDropdownHelper(appliancesDropdown, dropDownAppliances);
+    });
+    document.addEventListener("click", function (event) {
+      handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
+    });
+    document.addEventListener("click", function (event) {
+      handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
+    });
+    //Input inside dropdown
+    this.myDropdownInputIngredients.addEventListener("input", () => {
+      filterDropdownInputHelper(
+        myDropdownInputIngredients,
+        ingredientsDropdown
+      );
+    });
+    this.myDropdownInputAppliances.addEventListener("input", () => {
+      filterDropdownInputHelper(myDropdownInputAppliances, appliancesDropdown);
+    });
+    this.myDropdownInputUstensils.addEventListener("input", () => {
+      filterDropdownInputHelper(myDropdownInputUstensils, ustensilsDropdown);
+    });
+    //filter le dropdown on search
+    function filterDropdownInputHelper(inputId, dropdownElementId) {
+      let dropdownElement;
+      let aElement;
+      let txtValue;
+      var input, filterDropdown, i;
+      input = document.getElementById(inputId);
+      filterDropdown = inputId.value.toUpperCase();
+      dropdownElement = document.getElementById(dropdownElementId);
 
-    // Access sortTemplate as this.sortTemplate
-    // this.sortTemplate.appendIngredientsName();
-    this.sortTemplate.updateDropdownItems();
-    this.sortTemplate.handleTagClick(fetchedDataFromApi);
-  }
-
-  // ------------------------
-  // Helpers
-  // ------------------------
-
-  filterDropdownInputHelper(inputId, dropdownElementId) {
-    console.log(inputId, dropdownElementId);
-    let dropdownElement;
-    let aElement;
-    let txtValue;
-    var input, filterDropdown, i;
-    input = document.getElementById(inputId);
-    filterDropdown = inputId.value.toUpperCase();
-    dropdownElement = document.getElementById(dropdownElementId);
-
-    aElement = dropdownElementId.getElementsByTagName("a");
-    for (i = 0; i < aElement.length; i++) {
-      txtValue = aElement[i].textContent || aElement[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-        aElement[i].style.display = "";
-      } else {
-        aElement[i].style.display = "none";
+      aElement = dropdownElementId.getElementsByTagName("a");
+      for (i = 0; i < aElement.length; i++) {
+        txtValue = aElement[i].textContent || aElement[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+          aElement[i].style.display = "";
+        } else {
+          aElement[i].style.display = "none";
+        }
       }
     }
-  }
+    const tagsArray = [];
 
-  // ------------------------
-  // Searchbar
-  // ------------------------
+    function creatingTagElements(link) {
+      const tagsList = document.querySelector(".tagsList");
+      //Push to elementArray
+      tagsArray.push(link.textContent);
+      //Create elements
+      const tag = document.createElement("li");
+      tag.classList.add("tag-li");
+      const tagAnchor = document.createElement("a");
+      tagAnchor.classList.add("tag-anchor");
+      tagAnchor.textContent = link.textContent;
+      tagsList.appendChild(tag);
+      tag.appendChild(tagAnchor);
+      const tagAnchorClose = document.createElement("i");
+      tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
+      tagAnchor.appendChild(tagAnchorClose);
+    }
+    function findMatchingElements() {
+      let matchingItemLinksUpperCase = [];
+      tagsArray.forEach((element) => {
+        let upperCaseTag = element.toUpperCase();
+        matchingItemLinksUpperCase.push(upperCaseTag);
+      });
+      return matchingItemLinksUpperCase;
+    }
+    function normalizeApiWithMatchingElements(
+      AllRecipes,
+      matchingItemLinksUpperCase
+    ) {
+      let filteredObjectsFromApiUppercase;
+      filteredObjectsFromApiUppercase = AllRecipes.filter((card) => {
+        let ApiIngredientsUppercase = card.ingredients.map((element) => ({
+          ...element,
+          element: String(element.ingredient).toUpperCase(),
+        }));
 
-  handleSearchBarInputChange() {
-    if (this.searchInput.value !== "") {
-      this.faMark.style.display = "block";
-    } else {
+        let ApiApplianceUppercase = card.appliance.toUpperCase();
+
+        let ApiUstensilsUppercase = card.ustensils.map((ustensil) =>
+          ustensil.toUpperCase()
+        );
+
+        return matchingItemLinksUpperCase.every((matchingElement) => {
+          return (
+            ApiIngredientsUppercase.some(
+              (element) =>
+                String(element.element).toUpperCase() ===
+                matchingElement.toUpperCase()
+            ) ||
+            ApiApplianceUppercase === matchingElement.toUpperCase() ||
+            ApiUstensilsUppercase.includes(matchingElement.toUpperCase())
+          );
+        });
+      });
+
+      function conditionCreateCards(
+        matchingItemLinksUpperCase,
+        filteredObjectsFromApiUppercase,
+        AllRecipes
+      ) {
+        if (matchingItemLinksUpperCase.length > 0) {
+          const appInstance = new App();
+          filterRecipes(filteredObjectsFromApiUppercase);
+        } else {
+          const appInstance = new App();
+          filterRecipes(AllRecipes);
+        }
+      }
+      conditionCreateCards(
+        matchingItemLinksUpperCase,
+        filteredObjectsFromApiUppercase,
+        AllRecipes
+      );
+    }
+    function tagClickManagement(AllRecipes, dropDownClass, sortClass) {
+      const tagsList = document.querySelector(".tagsList");
+
+      const handleTagClick = (link) => {
+        creatingTagElements(link);
+        const matchingItemLinksUpperCase = findMatchingElements();
+        normalizeApiWithMatchingElements(
+          AllRecipes,
+          matchingItemLinksUpperCase
+        );
+      };
+      // mettre event sur ingredientsDropdown
+      const closeTagClick = (event) => {
+        if (event.target.classList.contains("closeTag")) {
+          const clickedTagText = event.target.previousSibling.textContent;
+          const index = this.tagsArray.indexOf(clickedTagText);
+          this.tagsArray.splice(index, 1);
+          event.target.closest("li").remove();
+          const matchingItemLinksUpperCase = this.findMatchingElements();
+          this.normalizeApiWithMatchingElements(
+            AllRecipes,
+            matchingItemLinksUpperCase
+          );
+        }
+      };
+      const ingredientsDropdown = document.getElementById(dropDownClass);
+      ingredientsDropdown.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (
+          target.classList.contains("sortIngredients") ||
+          target.classList.contains("sortAppliances") ||
+          target.classList.contains("sortUstensils")
+        ) {
+          handleTagClick(target);
+        }
+      });
+
+      tagsList.addEventListener("click", closeTagClick);
+    }
+    tagClickManagement(AllRecipes, "ingredientsDropdown", "sortIngredients");
+    tagClickManagement(AllRecipes, "appliancesDropdown", "sortAppliances");
+    tagClickManagement(AllRecipes, "ustensilsDropdown", "sortUstensils");
+    function handleClearInput() {
+      this.searchInput.value = "";
       this.faMark.style.display = "none";
       this.searchInput.placeholder =
         "Rechercher une recette, un ingrédient, ...";
     }
-  }
-  handleClearInput() {
-    this.searchInput.value = "";
-    this.faMark.style.display = "none";
-    this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
-  }
-
-  filterSearchbarInputForCards(arrayOfEverything, fetchedDataFromApi) {
-    console.log("arrayOfEverything", arrayOfEverything);
-    console.log("fetchedDataFromApi", fetchedDataFromApi);
-    this.searchInput.addEventListener("input", () => {
-      let input = this.searchInput.value;
-      let mainSearchBarInputUpperCase = input.toUpperCase();
-
-      let inputMatchingElements;
-
-      inputMatchingElements = arrayOfEverything.filter((element) => {
-        return element.toUpperCase().includes(mainSearchBarInputUpperCase);
-      });
-      // console.log(inputMatchingElements);
-      this.updateCardsOnSearchBarInput(
-        inputMatchingElements,
-        fetchedDataFromApi
-      );
-    });
-  }
-
-  // ------------------------
-  // Cards manipulation
-  // ------------------------
-
-  updateCardsOnSearchBarInput(inputMatchingElements, fetchedDataFromApi) {
-    let matchingElementsUppercase = inputMatchingElements.map((element) =>
-      element.toUpperCase()
-    );
-    //Trouve les inputMatchingElements en Uppercase
-
-    let newMatchingElementsAfterInput = fetchedDataFromApi.filter((card) => {
-      let cardUppercase = Object.fromEntries(
-        Object.entries(card).map(([key, value]) => [
-          key,
-          String(value).toUpperCase(),
-        ])
-      );
-      //Enregistre les éléments de cards en uppercase : cardUppercase
-
-      return matchingElementsUppercase.some((matchingElement) => {
-        return Object.values(cardUppercase).some((property) =>
-          property.includes(matchingElement)
-        );
-      });
-      //Retourne les cardUpperCase qui détiennent les inputMatchingElements
-    });
-    this.updateCards(newMatchingElementsAfterInput);
-  }
-
-  updateCards(cardsData) {
-    const cardsSection = document.querySelector(".cards");
-    cardsSection.innerHTML = "";
-
-    cardsData
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const templateCards = new CardTemplate(card);
-        cardsSection.appendChild(templateCards.createCard());
-      });
+    const ingredientLinks = document.querySelectorAll(".sortIngredients");
+    // document
+    //   .querySelectorAll(".sortIngredients")
+    //   .addEventListener("click", () => {
+    //     console.log(1);
+    //   });
   }
 }
 
 const initApp = async () => {
   const app = new App();
   app.main();
-  app.sortTemplate.updateDropdownItems();
 };
 
 initApp();
