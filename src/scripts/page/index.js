@@ -217,37 +217,31 @@ export class App {
       });
       resultUstensil.forEach((element) => {
         const link = document.createElement("a");
-        link.classList.add("sortIngredients");
+        link.classList.add("sortUstensils");
         link.href = `#${element}`;
         link.textContent = element;
         ustensilsDropdown.appendChild(link);
       });
       resultAppliance.forEach((element) => {
         const link = document.createElement("a");
-        link.classList.add("sortIngredients");
+        link.classList.add("sortAppliances");
         link.href = `#${element}`;
         link.textContent = element;
         appliancesDropdown.appendChild(link);
       });
     }
 
-    // ------------------------
-    // Events
-    // ------------------------
-
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", () => {
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
         // ingredients: Array.from(
-        //   document.querySelectorAll(".tag-ingredients")
+        //   document.querySelectorAll(".sortIngredients")
         // ).map((e) => e.textContent),
         // appliances: Array.from(
-        //   document.querySelectorAll(".tag-appliances")
+        //   document.querySelectorAll(".sortAppliances")
         // ).map((e) => e.textContent),
-        // ustensils: Array.from(
-        //   document.querySelectorAll(".tag-ustensils"))
-        //   .map(
+        // ustensils: Array.from(document.querySelectorAll(".sortUstensils")).map(
         //   (e) => e.textContent
         // ),
       };
@@ -258,11 +252,9 @@ export class App {
       // console.log("AllRecipes", AllRecipes);
       const filteredRecipes = AllRecipes.filter((recipe) => {
         if (recipe.name.includes(querySearch.search)) {
-          console.log(recipe.name);
           return recipe.name;
         }
         if (recipe.appliance.includes(querySearch.search)) {
-          console.log(recipe.appliance);
           return recipe.appliance;
         }
 
@@ -273,8 +265,6 @@ export class App {
           .map((matchingIngredient) => matchingIngredient.ingredient);
 
         if (matchingIngredients.length > 0) {
-          console.log("Recipe: ", recipe.name);
-          console.log("Matching Ingredients:", matchingIngredients);
           return true;
         }
 
@@ -297,220 +287,203 @@ export class App {
         });
     }
 
+    // ------------------------
+    // Events
+    // ------------------------
+
     this.faMark.addEventListener("click", () => {
       this.handleClearInput();
       this.updateRecipes([...AllRecipes]);
     });
+    this.ingredientsDropBtn.addEventListener("click", () => {
+      document.getElementById("ingredientsDropdown").classList.toggle("show");
+    });
+    this.ustensilsDropBtn.addEventListener("click", () => {
+      document.getElementById("ustensilsDropdown").classList.toggle("show");
+    });
+    this.appliancesDropBtn.addEventListener("click", () => {
+      document.getElementById("appliancesDropdown").classList.toggle("show");
+    });
+    function handleDropdownHelper(dropdownId, elemId) {
+      const dropdown = document.getElementById(dropdownId);
+      const elem = document.getElementById(elemId);
+      if (dropdownId.classList.contains("show")) {
+        const outsideClick = !elemId.contains(event.target);
+
+        if (outsideClick) {
+          dropdownId.classList.remove("show");
+        } else {
+          dropdownId.classList.add("show");
+        }
+      }
+    }
+    document.addEventListener("click", function (event) {
+      handleDropdownHelper(appliancesDropdown, dropDownAppliances);
+    });
+    document.addEventListener("click", function (event) {
+      handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
+    });
+    document.addEventListener("click", function (event) {
+      handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
+    });
+    this.myDropdownInputIngredients.addEventListener("input", () => {
+      filterDropdownInputHelper(
+        myDropdownInputIngredients,
+        ingredientsDropdown
+      );
+    });
+    this.myDropdownInputAppliances.addEventListener("input", () => {
+      filterDropdownInputHelper(myDropdownInputAppliances, appliancesDropdown);
+    });
+    this.myDropdownInputUstensils.addEventListener("input", () => {
+      filterDropdownInputHelper(myDropdownInputUstensils, ustensilsDropdown);
+    });
+    function filterDropdownInputHelper(inputId, dropdownElementId) {
+      let dropdownElement;
+      let aElement;
+      let txtValue;
+      var input, filterDropdown, i;
+      input = document.getElementById(inputId);
+      filterDropdown = inputId.value.toUpperCase();
+      dropdownElement = document.getElementById(dropdownElementId);
+
+      aElement = dropdownElementId.getElementsByTagName("a");
+      for (i = 0; i < aElement.length; i++) {
+        txtValue = aElement[i].textContent || aElement[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
+          aElement[i].style.display = "";
+        } else {
+          aElement[i].style.display = "none";
+        }
+      }
+    }
+    const tagsArray = [];
+
+    function creatingTagElements(link) {
+      const tagsList = document.querySelector(".tagsList");
+      //Push to elementArray
+      tagsArray.push(link.textContent);
+      //Create elements
+      const tag = document.createElement("li");
+      tag.classList.add("tag-li");
+      const tagAnchor = document.createElement("a");
+      tagAnchor.classList.add("tag-anchor");
+      tagAnchor.textContent = link.textContent;
+      tagsList.appendChild(tag);
+      tag.appendChild(tagAnchor);
+      const tagAnchorClose = document.createElement("i");
+      tagAnchorClose.classList.add("fa-solid", "fa-xmark", "closeTag");
+      tagAnchor.appendChild(tagAnchorClose);
+    }
+    function findMatchingElements() {
+      let matchingItemLinksUpperCase = [];
+      tagsArray.forEach((element) => {
+        let upperCaseTag = element.toUpperCase();
+        matchingItemLinksUpperCase.push(upperCaseTag);
+      });
+      return matchingItemLinksUpperCase;
+    }
+    function normalizeApiWithMatchingElements(
+      AllRecipes,
+      matchingItemLinksUpperCase
+    ) {
+      let filteredObjectsFromApiUppercase;
+      filteredObjectsFromApiUppercase = AllRecipes.filter((card) => {
+        let ApiIngredientsUppercase = card.ingredients.map((element) => ({
+          ...element,
+          element: String(element.ingredient).toUpperCase(),
+        }));
+
+        let ApiApplianceUppercase = card.appliance.toUpperCase();
+
+        let ApiUstensilsUppercase = card.ustensils.map((ustensil) =>
+          ustensil.toUpperCase()
+        );
+
+        return matchingItemLinksUpperCase.every((matchingElement) => {
+          return (
+            ApiIngredientsUppercase.some(
+              (element) =>
+                String(element.element).toUpperCase() ===
+                matchingElement.toUpperCase()
+            ) ||
+            ApiApplianceUppercase === matchingElement.toUpperCase() ||
+            ApiUstensilsUppercase.includes(matchingElement.toUpperCase())
+          );
+        });
+      });
+
+      function conditionCreateCards(
+        matchingItemLinksUpperCase,
+        filteredObjectsFromApiUppercase,
+        AllRecipes
+      ) {
+        if (matchingItemLinksUpperCase.length > 0) {
+          const appInstance = new App();
+          filterRecipes(filteredObjectsFromApiUppercase);
+        } else {
+          const appInstance = new App();
+          filterRecipes(AllRecipes);
+        }
+      }
+      conditionCreateCards(
+        matchingItemLinksUpperCase,
+        filteredObjectsFromApiUppercase,
+        AllRecipes
+      );
+    }
+    function tagClickManagement(AllRecipes, dropDownClass, sortClass) {
+      const tagsList = document.querySelector(".tagsList");
+
+      const handleTagClick = (link) => {
+        creatingTagElements(link);
+        const matchingItemLinksUpperCase = findMatchingElements();
+        normalizeApiWithMatchingElements(
+          AllRecipes,
+          matchingItemLinksUpperCase
+        );
+      };
+      // mettre event sur ingredientsDropdown
+      const closeTagClick = (event) => {
+        if (event.target.classList.contains("closeTag")) {
+          const clickedTagText = event.target.previousSibling.textContent;
+          const index = this.tagsArray.indexOf(clickedTagText);
+          this.tagsArray.splice(index, 1);
+          event.target.closest("li").remove();
+          const matchingItemLinksUpperCase = this.findMatchingElements();
+          this.normalizeApiWithMatchingElements(
+            AllRecipes,
+            matchingItemLinksUpperCase
+          );
+        }
+      };
+      const ingredientsDropdown = document.getElementById(dropDownClass);
+      ingredientsDropdown.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (target.classList.contains("sortIngredients")) {
+          handleTagClick(target);
+        }
+      });
+
+      tagsList.addEventListener("click", closeTagClick);
+    }
+    tagClickManagement(AllRecipes, "ingredientsDropdown", "sortIngredients");
+    tagClickManagement(AllRecipes, "appliancesDropdown", "sortAppliances");
+    tagClickManagement(AllRecipes, "ustensilsDropdown", "sortUstensils");
+    function handleClearInput() {
+      this.searchInput.value = "";
+      this.faMark.style.display = "none";
+      this.searchInput.placeholder =
+        "Rechercher une recette, un ingrédient, ...";
+    }
+    const ingredientLinks = document.querySelectorAll(".sortIngredients");
+    // document
+    //   .querySelectorAll(".sortIngredients")
+    //   .addEventListener("click", () => {
+    //     console.log(1);
+    //   });
   }
-  // show dropdown on btn click
-  // this.ingredientsDropBtn.addEventListener("click", () => {
-  //   document.getElementById("ingredientsDropdown").classList.toggle("show");
-  // });
-  // this.ustensilsDropBtn.addEventListener("click", () => {
-  //   document.getElementById("ustensilsDropdown").classList.toggle("show");
-  // });
-  // this.appliancesDropBtn.addEventListener("click", () => {
-  //   document.getElementById("appliancesDropdown").classList.toggle("show");
-  // });
-
-  //Dropdown clicks
-  // document.addEventListener("click", function (event) {
-  //   handleDropdownHelper(appliancesDropdown, dropDownAppliances);
-  // });
-  // document.addEventListener("click", function (event) {
-  //   handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
-  // });
-  // document.addEventListener("click", function (event) {
-  //   handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
-  // });
-
-  //Dropdown input changes
-  // this.myDropdownInputIngredients.addEventListener("input", () => {
-  //   this.filterDropdownInputHelper(
-  //     myDropdownInputIngredients,
-  //     ingredientsDropdown
-  //   );
-  // });
-  // this.myDropdownInputAppliances.addEventListener("input", () => {
-  //   this.filterDropdownInputHelper(
-  //     myDropdownInputAppliances,
-  //     appliancesDropdown
-  //   );
-  // });
-  // this.myDropdownInputUstensils.addEventListener("input", () => {
-  //   this.filterDropdownInputHelper(
-  //     myDropdownInputUstensils,
-  //     ustensilsDropdown
-  //   );
-  // });
-
-  //Main searchbar input changes
-  // this.mySearchInput.addEventListener("input", () => {
-  //   this.filterSearchbarInputForCards(arrayOfEverything, createCards);
-  // });
-
-  // function handleDropdownHelper(dropdownId, elemId) {
-  //   const dropdown = document.getElementById(dropdownId);
-  //   const elem = document.getElementById(elemId);
-  //   if (dropdownId.classList.contains("show")) {
-  //     const outsideClick = !elemId.contains(event.target);
-
-  //     if (outsideClick) {
-  //       dropdownId.classList.remove("show");
-  //     } else {
-  //       dropdownId.classList.add("show");
-  //     }
-  //   }
-  // }
-
-  // this.sortTemplate.tagClickManagement(
-  //   AllRecipes,
-  //   "ingredientsDropdown",
-  //   "sortIngredients"
-  // );
-  // this.sortTemplate.tagClickManagement(
-  //   AllRecipes,
-  //   "appliancesDropdown",
-  //   "sortAppliances"
-  // );
-  // this.sortTemplate.tagClickManagement(
-  //   AllRecipes,
-  //   "ustensilsDropdown",
-  //   "sortUstensils"
-  // );
-
-  // this.sortTemplate.filterDropdownInputHelper("myDropdownInputIngredients");
-
-  // ------------------------
-  // Helpers
-  // ------------------------
-
-  // filterDropdownInputHelper(inputId, dropdownElementId) {
-  //   let dropdownElement;
-  //   let aElement;
-  //   let txtValue;
-  //   var input, filterDropdown, i;
-  //   input = document.getElementById(inputId);
-  //   filterDropdown = inputId.value.toUpperCase();
-  //   dropdownElement = document.getElementById(dropdownElementId);
-
-  //   aElement = dropdownElementId.getElementsByTagName("a");
-  //   for (i = 0; i < aElement.length; i++) {
-  //     txtValue = aElement[i].textContent || aElement[i].innerText;
-  //     if (txtValue.toUpperCase().indexOf(filterDropdown) > -1) {
-  //       aElement[i].style.display = "";
-  //     } else {
-  //       aElement[i].style.display = "none";
-  //     }
-  //   }
-  // }
-
-  // ------------------------
-  // Searchbar
-  // ------------------------
-
-  // handleSearchBarInputChange(
-  //   itemsArrayIngredient,
-  //   itemsArrayAppliance,
-  //   itemsArrayUstensil
-  // ) {
-  //   const userInput = this.searchInput.value.toLowerCase();
-
-  //   if (this.searchInput.value !== "") {
-  //     let matchingIngredients = [];
-  //     for (let index = 0; index < itemsArrayIngredient.length; index++) {
-  //       const element = itemsArrayIngredient[index];
-  //       if (element.toLowerCase().includes(userInput)) {
-  //         matchingIngredients.push(element);
-  //       }
-  //     }
-  //     //
-  //     let matchingAppliances = [];
-  //     for (let index = 0; index < itemsArrayAppliance.length; index++) {
-  //       const element = itemsArrayAppliance[index];
-  //       if (element.toLowerCase().includes(userInput)) {
-  //         matchingAppliances.push(element);
-  //       }
-  //     }
-
-  //     let matchingUstensils = [];
-  //     for (let index = 0; index < itemsArrayUstensil.length; index++) {
-  //       const element = itemsArrayUstensil[index];
-  //       if (element.toLowerCase().includes(userInput)) {
-  //         matchingUstensils.push(element);
-  //       }
-  //     }
-
-  //     this.faMark.style.display = "block";
-  //   } else {
-  //     this.faMark.style.display = "none";
-  //     this.searchInput.placeholder =
-  //       "Rechercher une recette, un ingrédient, ...";
-  //   }
-  // }
-
-  // handleClearInput() {
-  //   this.searchInput.value = "";
-  //   this.faMark.style.display = "none";
-  //   this.searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
-  // }
-
-  // filterSearchbarInputForCards(arrayOfEverything, AllRecipes) {
-  //   this.searchInput.addEventListener("input", () => {
-  //     let userInput = this.searchInput.value;
-  //     let mainSearchBarInputUpperCase = userInput.toUpperCase();
-
-  //     let inputMatchingElements = [];
-  //     for (let index = 0; index < arrayOfEverything.length; index++) {
-  //       const element = arrayOfEverything[index];
-  //       if (element.toUpperCase().includes(mainSearchBarInputUpperCase)) {
-  //         inputMatchingElements.push(element);
-  //       }
-  //     }
-
-  //     this.updateRecipes(inputMatchingElements, AllRecipes);
-  //   });
-  // }
-
-  // ------------------------
-  // Cards manipulation
-  // ------------------------
-
-  // filterRecipes = AllRecipes.filter((recipe) => {
-  //   return (
-  //     recipe.title.includes(query.search) ||
-  //     query.ingredients.every((ingr) => recipe.ingredients.includes(ingr))
-  //   );
-  // });
-
-  // updateRecipes(inputMatchingElements, AllRecipes) {
-  //   let matchingElementsUppercase = inputMatchingElements.map((element) =>
-  //     element.toUpperCase()
-  //   );
-  //   //Trouve les inputMatchingElements en Uppercase
-  //   let newMatchingElementsAfterInput = AllRecipes.filter((card) => {
-  //     let cardUppercase = Object.fromEntries(
-  //       Object.entries(card).map(([key, value]) => [
-  //         key,
-  //         String(value).toUpperCase(),
-  //       ])
-  //     );
-  //     //Enregistre les éléments de cards en uppercase : cardUppercase
-
-  //     return matchingElementsUppercase.some((matchingElement) => {
-  //       return Object.values(cardUppercase).some((property) =>
-  //         property.includes(matchingElement)
-  //       );
-  //     });
-  //     //Retourne les cardUpperCase qui détiennent les inputMatchingElements
-  //   });
-  //   if (this.searchInput.value.length > 2) {
-  //     this.displayRecipes(newMatchingElementsAfterInput);
-  //   }
-  //   if (this.searchInput.value.length <= 0) {
-  //     this.displayRecipes(newMatchingElementsAfterInput);
-  //   }
-  // }
 }
 
 const initApp = async () => {

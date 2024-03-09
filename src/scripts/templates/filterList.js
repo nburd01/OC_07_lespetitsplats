@@ -113,43 +113,42 @@ class SortTemplate {
   // Events
   // ------------------------
 
-  tagClickManagement(AllRecipes, dropDownClass, sortClass) {
-    const tagsList = document.querySelector(".tagsList");
+  // tagClickManagement(AllRecipes, dropDownClass, sortClass) {
+  //   const tagsList = document.querySelector(".tagsList");
 
-    const handleTagClick = (link) => {
-      //ici link n'est pas attribué quand il y a le
-      this.creatingTagElements(link);
-      const matchingItemLinksUpperCase = this.findMatchingElements();
-      this.normalizeApiWithMatchingElements(
-        AllRecipes,
-        matchingItemLinksUpperCase
-      );
-    };
-    // mettre event sur ingredientsDropdown
-    const closeTagClick = (event) => {
-      if (event.target.classList.contains("closeTag")) {
-        const clickedTagText = event.target.previousSibling.textContent;
-        const index = this.tagsArray.indexOf(clickedTagText);
-        this.tagsArray.splice(index, 1);
-        event.target.closest("li").remove();
-        const matchingItemLinksUpperCase = this.findMatchingElements();
-        this.normalizeApiWithMatchingElements(
-          AllRecipes,
-          matchingItemLinksUpperCase
-        );
-      }
-    };
-    const ingredientsDropdown = document.getElementById(dropDownClass);
-    ingredientsDropdown.addEventListener("click", (event) => {
-      const target = event.target;
+  //   const handleTagClick = (link) => {
+  //     this.creatingTagElements(link);
+  //     const matchingItemLinksUpperCase = this.findMatchingElements();
+  //     this.normalizeApiWithMatchingElements(
+  //       AllRecipes,
+  //       matchingItemLinksUpperCase
+  //     );
+  //   };
+  //   // mettre event sur ingredientsDropdown
+  //   const closeTagClick = (event) => {
+  //     if (event.target.classList.contains("closeTag")) {
+  //       const clickedTagText = event.target.previousSibling.textContent;
+  //       const index = this.tagsArray.indexOf(clickedTagText);
+  //       this.tagsArray.splice(index, 1);
+  //       event.target.closest("li").remove();
+  //       const matchingItemLinksUpperCase = this.findMatchingElements();
+  //       this.normalizeApiWithMatchingElements(
+  //         AllRecipes,
+  //         matchingItemLinksUpperCase
+  //       );
+  //     }
+  //   };
+  //   const ingredientsDropdown = document.getElementById(dropDownClass);
+  //   ingredientsDropdown.addEventListener("click", (event) => {
+  //     const target = event.target;
 
-      if (target.classList.contains("sortIngredients")) {
-        handleTagClick(target);
-      }
-    });
+  //     if (target.classList.contains("sortIngredients")) {
+  //       handleTagClick(target);
+  //     }
+  //   });
 
-    tagsList.addEventListener("click", closeTagClick);
-  }
+  //   tagsList.addEventListener("click", closeTagClick);
+  // }
 
   // ------------------------
   // Logic
@@ -226,10 +225,10 @@ class SortTemplate {
   ) {
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
-      appInstance.updateRecipes(filteredObjectsFromApiUppercase);
+      appInstance.filterRecipes(filteredObjectsFromApiUppercase);
     } else {
       const appInstance = new App();
-      appInstance.updateRecipes(AllRecipes);
+      appInstance.filterRecipes(AllRecipes);
     }
   }
 
@@ -259,25 +258,3 @@ class SortTemplate {
 }
 
 export { SortTemplate };
-
-//events
-// ...
-// //dans updateRecipe
-// const querySearch = {
-//   search: document.querySelector('.searchbar').value,
-//   ingredients: document.querySelectorAll(.tag-ingredients'),
-//   appliances: document.querySelectorAll(.tag-ingredients'),
-//   ustensils: document.querySelectorAll(.tag-ingredients'),
-// }
-
-// Array.from(document.querySelectorAll('.tag-ingredients')).map(e => e.textContent)
-
-// const filterRecipes = AllRecipes.filter(recipe => {
-//   recipe.title.includes(query.search) ||
-//   query.ingredients.every(ingr => recipe.ingredients.includes(ingr) ||
-//   ...
-// }
-
-// displayRecipes(filterRecipes){
-//   ...
-// }
