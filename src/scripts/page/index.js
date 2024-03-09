@@ -250,13 +250,14 @@ export class App {
       // console.log(querySearch.ingredients);
       // console.log(querySearch.appliances);
       // console.log(querySearch.ustensils);
-      filterRecipes(AllRecipes, querySearch, querySearched);
+      filterRecipes(AllRecipes, querySearch);
     });
 
-    function filterRecipes(AllRecipes, querySearch, querySearched) {
-      console.log("Recieves the tag and input", AllRecipes);
-      console.log("querySearched", querySearched);
+    function filterRecipes(AllRecipes, querySearch) {
+      // console.log("All the recipes", AllRecipes);
+      console.log("querySearch", querySearch);
 
+      //On Main Search Input filter recipes
       const filteredRecipes = AllRecipes.filter((recipe) => {
         recipe.name.includes(querySearch.search) ||
           recipe.appliance.includes(querySearch.search) ||
