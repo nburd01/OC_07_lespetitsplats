@@ -473,7 +473,11 @@ export class App {
       ingredientsDropdown.addEventListener("click", (event) => {
         const target = event.target;
 
-        if (target.classList.contains("sortIngredients")) {
+        if (
+          target.classList.contains("sortIngredients") ||
+          target.classList.contains("sortAppliances") ||
+          target.classList.contains("sortUstensils")
+        ) {
           handleTagClick(target);
         }
       });
