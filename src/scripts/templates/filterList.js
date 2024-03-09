@@ -113,7 +113,7 @@ class SortTemplate {
   // Events
   // ------------------------
 
-  tagClickManagement(fetchedDataFromApi, dropDownClass, sortClass) {
+  tagClickManagement(AllRecipes, dropDownClass, sortClass) {
     const tagsList = document.querySelector(".tagsList");
 
     const handleTagClick = (link) => {
@@ -121,7 +121,7 @@ class SortTemplate {
       this.creatingTagElements(link);
       const matchingItemLinksUpperCase = this.findMatchingElements();
       this.normalizeApiWithMatchingElements(
-        fetchedDataFromApi,
+        AllRecipes,
         matchingItemLinksUpperCase
       );
     };
@@ -134,7 +134,7 @@ class SortTemplate {
         event.target.closest("li").remove();
         const matchingItemLinksUpperCase = this.findMatchingElements();
         this.normalizeApiWithMatchingElements(
-          fetchedDataFromApi,
+          AllRecipes,
           matchingItemLinksUpperCase
         );
       }
@@ -185,12 +185,9 @@ class SortTemplate {
     tagAnchor.appendChild(tagAnchorClose);
   }
 
-  normalizeApiWithMatchingElements(
-    fetchedDataFromApi,
-    matchingItemLinksUpperCase
-  ) {
+  normalizeApiWithMatchingElements(AllRecipes, matchingItemLinksUpperCase) {
     let filteredObjectsFromApiUppercase;
-    filteredObjectsFromApiUppercase = fetchedDataFromApi.filter((card) => {
+    filteredObjectsFromApiUppercase = AllRecipes.filter((card) => {
       let ApiIngredientsUppercase = card.ingredients.map((element) => ({
         ...element,
         element: String(element.ingredient).toUpperCase(),
@@ -218,21 +215,21 @@ class SortTemplate {
     this.conditionCreateCards(
       matchingItemLinksUpperCase,
       filteredObjectsFromApiUppercase,
-      fetchedDataFromApi
+      AllRecipes
     );
   }
 
   conditionCreateCards(
     matchingItemLinksUpperCase,
     filteredObjectsFromApiUppercase,
-    fetchedDataFromApi
+    AllRecipes
   ) {
     if (matchingItemLinksUpperCase.length > 0) {
       const appInstance = new App();
       appInstance.updateRecipes(filteredObjectsFromApiUppercase);
     } else {
       const appInstance = new App();
-      appInstance.updateRecipes(fetchedDataFromApi);
+      appInstance.updateRecipes(AllRecipes);
     }
   }
 
