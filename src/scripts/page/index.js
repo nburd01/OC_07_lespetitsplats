@@ -233,6 +233,10 @@ export class App {
 
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", () => {
+      filterRecipes(AllRecipes);
+    });
+
+    function filterRecipes(AllRecipes) {
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
         ingredients: Array.from(
@@ -245,41 +249,29 @@ export class App {
           (e) => e.textContent
         ),
       };
-      const querySearched = querySearch.search;
-      console.log(querySearch.search);
-      // console.log(querySearch.ingredients);
-      // console.log(querySearch.appliances);
-      // console.log(querySearch.ustensils);
-      filterRecipes(AllRecipes, querySearch, querySearch);
-    });
+      let arrayTag = Array.from(document.querySelectorAll(".tag-anchor")).map(
+        (e) => e.textContent
+      );
 
-    function filterRecipes(AllRecipes, querySearch) {
-      console.log("Recieves the tag and input", AllRecipes);
-      // Check if querySearch is defined
-      if (querySearch !== undefined) {
-        const filteredRecipes = AllRecipes.filter((recipe) => {
-          if (recipe.name.includes(querySearch.search)) {
-            return recipe.name;
-          }
-          if (recipe.appliance.includes(querySearch.search)) {
-            return recipe.appliance;
-          }
-
-          const matchingIngredients = recipe.ingredients
-            .filter((ingredient) =>
-              ingredient.ingredient.includes(querySearch.search)
-            )
-            .map((matchingIngredient) => matchingIngredient.ingredient);
-
-          if (matchingIngredients.length > 0) {
-            return true;
-          }
-
-          return false;
-        });
-
-        displayRecipes(filteredRecipes);
-      }
+      console.log(arrayTag);
+      const filteredRecipes = AllRecipes.filter((recipe) => {
+        return (
+          // recipe.name.includes(querySearch.search) ||
+          // recipe.appliance.includes(querySearch.search) ||
+          // recipe.ustensils.some((ustensil) =>
+          //   ustensil.includes(querySearch.search)
+          // ) ||
+          // recipe.ingredients.some((ingredient) =>
+          //   ingredient.ingredient.includes(querySearch.search)
+          // ) ||
+          recipe.ingredients.some((ingredient) =>
+            arrayTag.some((tag) => ingredient.ingredient.includes(tag))
+          )
+        );
+      });
+      // console.log(filteredRecipes);
+      displayRecipes(filteredRecipes);
+      // }
     }
 
     function displayRecipes(filteredRecipes) {
@@ -393,80 +385,27 @@ export class App {
         let upperCaseTag = element.toUpperCase();
         matchingItemLinksUpperCase.push(upperCaseTag);
       });
+      // console.log(matchingItemLinksUpperCase);
       return matchingItemLinksUpperCase;
     }
-    function normalizeApiWithMatchingElements(
-      AllRecipes,
-      matchingItemLinksUpperCase
-    ) {
-      let filteredObjectsFromApiUppercase;
-      filteredObjectsFromApiUppercase = AllRecipes.filter((card) => {
-        let ApiIngredientsUppercase = card.ingredients.map((element) => ({
-          ...element,
-          element: String(element.ingredient).toUpperCase(),
-        }));
 
-        let ApiApplianceUppercase = card.appliance.toUpperCase();
-
-        let ApiUstensilsUppercase = card.ustensils.map((ustensil) =>
-          ustensil.toUpperCase()
-        );
-
-        return matchingItemLinksUpperCase.every((matchingElement) => {
-          return (
-            ApiIngredientsUppercase.some(
-              (element) =>
-                String(element.element).toUpperCase() ===
-                matchingElement.toUpperCase()
-            ) ||
-            ApiApplianceUppercase === matchingElement.toUpperCase() ||
-            ApiUstensilsUppercase.includes(matchingElement.toUpperCase())
-          );
-        });
-      });
-
-      function conditionCreateCards(
-        matchingItemLinksUpperCase,
-        filteredObjectsFromApiUppercase,
-        AllRecipes
-      ) {
-        if (matchingItemLinksUpperCase.length > 0) {
-          const appInstance = new App();
-          filterRecipes(filteredObjectsFromApiUppercase);
-        } else {
-          const appInstance = new App();
-          filterRecipes(AllRecipes);
-        }
-      }
-      conditionCreateCards(
-        matchingItemLinksUpperCase,
-        filteredObjectsFromApiUppercase,
-        AllRecipes
-      );
-    }
-    function tagClickManagement(AllRecipes, dropDownClass, sortClass) {
+    function tagClickManagement(AllRecipes, dropDownClass) {
       const tagsList = document.querySelector(".tagsList");
 
       const handleTagClick = (link) => {
         creatingTagElements(link);
         const matchingItemLinksUpperCase = findMatchingElements();
-        normalizeApiWithMatchingElements(
-          AllRecipes,
-          matchingItemLinksUpperCase
-        );
+        filterRecipes(AllRecipes);
       };
       // mettre event sur ingredientsDropdown
       const closeTagClick = (event) => {
         if (event.target.classList.contains("closeTag")) {
           const clickedTagText = event.target.previousSibling.textContent;
-          const index = this.tagsArray.indexOf(clickedTagText);
-          this.tagsArray.splice(index, 1);
+          const index = tagsArray.indexOf(clickedTagText);
+          tagsArray.splice(index, 1);
           event.target.closest("li").remove();
-          const matchingItemLinksUpperCase = this.findMatchingElements();
-          this.normalizeApiWithMatchingElements(
-            AllRecipes,
-            matchingItemLinksUpperCase
-          );
+          const matchingItemLinksUpperCase = findMatchingElements();
+          // filterRecipes(AllRecipes);
         }
       };
       const ingredientsDropdown = document.getElementById(dropDownClass);
@@ -493,12 +432,6 @@ export class App {
       this.searchInput.placeholder =
         "Rechercher une recette, un ingrédient, ...";
     }
-    const ingredientLinks = document.querySelectorAll(".sortIngredients");
-    // document
-    //   .querySelectorAll(".sortIngredients")
-    //   .addEventListener("click", () => {
-    //     console.log(1);
-    //   });
   }
 }
 
