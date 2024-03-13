@@ -1,29 +1,27 @@
-class dropDownTemplateIngredients {
+class dropDownTemplateUstensils {
   constructor(card) {
     this._card = card;
   }
 
   createDropDown() {
-    const sortIngredients = document.getElementById("ingredientsGo");
-    const ingredientsList = document.createElement("ul");
-    ingredientsList.classList.add("flex", "flex-wrap");
+    const sortUstensils = document.getElementById("ustensilsGo");
 
-    this._card._ingredients.forEach((ingredient) => {
+    this._card._ustensils.forEach((ustensil) => {
+      console.log(ustensil);
       //li
-      const ingredientItem = document.createElement("a");
-      ingredientItem.classList.add("sortIngredients");
+      const ustensilItem = document.createElement("a");
+      ustensilItem.classList.add("sortUstensils");
 
       //innerHTML
-      ingredientItem.innerHTML = `${ingredient.ingredient}`;
+      ustensilItem.innerHTML = ustensil;
 
       //append
-      ingredientsList.appendChild(ingredientItem);
+      // ustensilsList.appendChild(ustensilItem);
+      sortUstensils.appendChild(ustensilItem);
     });
 
-    sortIngredients.appendChild(ingredientsList);
-
-    return sortIngredients;
+    return sortUstensils;
   }
 }
 
-export { dropDownTemplateIngredients };
+export { dropDownTemplateUstensils };

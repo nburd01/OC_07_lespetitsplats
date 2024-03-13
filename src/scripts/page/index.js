@@ -4,7 +4,7 @@ import { Card } from "../class/cards.js";
 import { CardTemplate } from "../templates/cardList.js";
 import { dropDownTemplateAppliances } from "../templates/dropDownTemplateAppliances.js";
 import { dropDownTemplateIngredients } from "../templates/dropDownTemplateIngredients.js";
-// import { dropDownTemplateUstensils } from "../templates/dropDownTemplateUstensils.js";
+import { dropDownTemplateUstensils } from "../templates/dropDownTemplateUstensils.js";
 
 export class App {
   constructor() {
@@ -292,7 +292,7 @@ export class App {
         });
     }
     function displayFilterList(filteredRecipes) {
-      console.log(filteredRecipes);
+      // console.log(filteredRecipes);
 
       const sortIngredients = document.getElementById("ingredientsGo");
       const sortAppliances = document.getElementById("appliancesGo");
@@ -301,7 +301,7 @@ export class App {
         "ingredientsDropdown"
       );
       const appliancesDropdown = document.getElementById("appliancesDropdown");
-      // const ustensilDropdown = document.getElementById("ustensilsDropdown");
+      const ustensilDropdown = document.getElementById("ustensilsDropdown");
 
       sortIngredients.innerHTML = "";
       sortAppliances.innerHTML = "";
@@ -317,10 +317,10 @@ export class App {
             templateDropDownIngredient.createDropDown()
           );
           //
-          // const templateDropDownUstensil = new dropDownTemplateUstensils(card);
-          // ingredientsDropdown.appendChild(
-          //   templateDropDownUstensil.createDropDown()
-          // );
+          const templateDropDownUstensil = new dropDownTemplateUstensils(card);
+          ustensilDropdown.appendChild(
+            templateDropDownUstensil.createDropDown()
+          );
           //
           const templateDropDownAppliance = new dropDownTemplateAppliances(
             card
