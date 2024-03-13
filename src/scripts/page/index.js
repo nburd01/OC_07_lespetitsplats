@@ -289,9 +289,14 @@ export class App {
         });
     }
     function displayFilterList(filteredRecipes) {
+      console.log(filteredRecipes);
+
       const sortIngredients = document.getElementById("ingredientsGo");
       const sortAppliances = document.getElementById("appliancesGo");
       const sortUstensils = document.getElementById("ustensilsGo");
+      const ingredientsDropdown = document.getElementById(
+        "ingredientsDropdown"
+      );
 
       sortIngredients.innerHTML = "";
       sortAppliances.innerHTML = "";
