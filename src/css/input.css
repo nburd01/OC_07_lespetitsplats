@@ -309,6 +309,8 @@ input:focus::placeholder {
 .sort {
   width: 86em;
   margin-bottom: 2em;
+  flex-direction: column;
+  display: block;
 }
 
 .formContainer {

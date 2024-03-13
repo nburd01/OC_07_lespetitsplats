@@ -1,7 +1,7 @@
 import { CardsApi } from "../api/api.js";
 import { Card } from "../class/cards.js";
+import { DropDownTemplate } from "../templates/dropDownTemplate.js";
 import { CardTemplate } from "../templates/cardList.js";
-// import { SortTemplate } from "../templates/filterList.js";
 
 export class App {
   constructor() {
@@ -27,6 +27,9 @@ export class App {
     this.appliancesDropdown = document.querySelectorAll(".sortAppliances");
     this.ustensilsDropdown = document.querySelectorAll(".sortUstensils");
     this.ingredientsDropdown = document.getElementById("ingredientsDropdown");
+    this.ingredientsGo = document.getElementById("ingredientsGo");
+    this.appliancesGo = document.getElementById("appliancesGo");
+    this.ustensilsGo = document.getElementById("ustensilsGo");
     this.appliancesDropdown = document.getElementById("appliancesDropdown");
     this.ustensilsDropdown = document.getElementById("ustensilsDropdown");
   }
@@ -213,7 +216,8 @@ export class App {
         link.classList.add("sortIngredients");
         link.href = `#${element}`;
         link.textContent = element;
-        ingredientsDropdown.appendChild(link);
+        ingredientsGo.appendChild(link);
+        // ingredientsDropdown.appendChild(link);
       });
       resultUstensil.forEach((element) => {
         const link = document.createElement("a");
@@ -253,29 +257,27 @@ export class App {
         (e) => e.textContent
       );
 
-      console.log(arrayTag);
+      // console.log(arrayTag);
       const filteredRecipes = AllRecipes.filter((recipe) => {
         return (
-          // recipe.name.includes(querySearch.search) ||
-          // recipe.appliance.includes(querySearch.search) ||
-          // recipe.ustensils.some((ustensil) =>
-          //   ustensil.includes(querySearch.search)
-          // ) ||
-          // recipe.ingredients.some((ingredient) =>
-          //   ingredient.ingredient.includes(querySearch.search)
-          // ) ||
+          recipe.name.includes(querySearch.search) ||
+          recipe.appliance.includes(querySearch.search) ||
+          recipe.ustensils.some((ustensil) =>
+            ustensil.includes(querySearch.search)
+          ) ||
+          recipe.ingredients.some((ingredient) =>
+            ingredient.ingredient.includes(querySearch.search)
+          ) ||
           recipe.ingredients.some((ingredient) =>
             arrayTag.some((tag) => ingredient.ingredient.includes(tag))
           )
         );
       });
-      // console.log(filteredRecipes);
       displayRecipes(filteredRecipes);
-      // }
+      displayFilterList(filteredRecipes);
     }
 
     function displayRecipes(filteredRecipes) {
-      console.log(filteredRecipes);
       const cardsSection = document.querySelector(".cards");
       cardsSection.innerHTML = "";
 
@@ -284,6 +286,22 @@ export class App {
         .forEach((card) => {
           const templateCards = new CardTemplate(card);
           cardsSection.appendChild(templateCards.createCard());
+        });
+    }
+    function displayFilterList(filteredRecipes) {
+      const sortIngredients = document.getElementById("ingredientsGo");
+      const sortAppliances = document.getElementById("appliancesGo");
+      const sortUstensils = document.getElementById("ustensilsGo");
+
+      sortIngredients.innerHTML = "";
+      sortAppliances.innerHTML = "";
+      sortUstensils.innerHTML = "";
+
+      filteredRecipes
+        .map((card) => new Card(card))
+        .forEach((card) => {
+          const templateDropDown = new DropDownTemplate(card);
+          ingredientsDropdown.appendChild(templateDropDown.createDropDown());
         });
     }
 
