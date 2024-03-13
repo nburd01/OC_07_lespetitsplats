@@ -15,7 +15,6 @@ class DropDownTemplate {
 
       //innerHTML
       ingredientItem.innerHTML = `${ingredient.ingredient}`;
-      // ingredientItem.classList.add("sortIngredients");
 
       //append
       ingredientsList.appendChild(ingredientItem);
