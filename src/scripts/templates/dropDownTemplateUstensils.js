@@ -16,7 +16,6 @@ class dropDownTemplateUstensils {
       ustensilItem.innerHTML = ustensil;
 
       //append
-      // ustensilsList.appendChild(ustensilItem);
       sortUstensils.appendChild(ustensilItem);
     });
 
