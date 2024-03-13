@@ -248,7 +248,12 @@ export class App {
     }
     document.querySelector(".fa-xmark").addEventListener("click", () => {
       handleClearInput();
-      // this.updateCards([...fetchedDataFromApi]);
+      createCards
+        .map((card) => new Card(card))
+        .forEach((card) => {
+          const templateCards = new CardTemplate(card);
+          cardsSection.appendChild(templateCards.createCard());
+        });
     });
     function handleClearInput() {
       this.searchInput.value = "";
