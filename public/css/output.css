@@ -1204,6 +1204,13 @@ input:focus::placeholder {
   line-height: normal;
 }
 
+.fa-chevron-up::before {
+  display: flex;
+  position: absolute;
+  left: -75px;
+  top: 8px;
+}
+
 .tags {
   color: var(--Black, #1b1b1b);
   font-family: Manrope;
