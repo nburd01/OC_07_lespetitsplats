@@ -246,7 +246,10 @@ export class App {
           "Rechercher une recette, un ingrédient, ...";
       }
     }
-
+    document.querySelector(".fa-xmark").addEventListener("click", () => {
+      handleClearInput();
+      // this.updateCards([...fetchedDataFromApi]);
+    });
     function handleClearInput() {
       this.searchInput.value = "";
       this.faMark.style.display = "none";
@@ -353,8 +356,8 @@ export class App {
     // ------------------------
 
     this.faMark.addEventListener("click", () => {
-      this.handleClearInput();
-      this.updateRecipes([...AllRecipes]);
+      handleClearInput();
+      // updateRecipes([...AllRecipes]);
     });
     //toggle dropdown hide/show
     this.ingredientsDropBtn.addEventListener("click", () => {
@@ -488,9 +491,9 @@ export class App {
     tagClickManagement(AllRecipes, "appliancesDropdown", "sortAppliances");
     tagClickManagement(AllRecipes, "ustensilsDropdown", "sortUstensils");
     function handleClearInput() {
-      this.searchInput.value = "";
-      this.faMark.style.display = "none";
-      this.searchInput.placeholder =
+      document.querySelector(".mySearchInput").value = "";
+      document.querySelector(".fa-xmark").style.display = "none";
+      document.querySelector("#mySearchInput").placeholder =
         "Rechercher une recette, un ingrédient, ...";
     }
   }
