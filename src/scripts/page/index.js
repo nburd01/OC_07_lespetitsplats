@@ -237,10 +237,27 @@ export class App {
         appliancesGo.appendChild(link);
       });
     }
+    function handleSearchBarInputChange() {
+      if (document.querySelector(".mySearchInput").value !== "") {
+        document.querySelector(".fa-xmark").style.display = "block";
+      } else {
+        this.faMark.style.display = "none";
+        this.searchInput.placeholder =
+          "Rechercher une recette, un ingrédient, ...";
+      }
+    }
+
+    function handleClearInput() {
+      this.searchInput.value = "";
+      this.faMark.style.display = "none";
+      this.searchInput.placeholder =
+        "Rechercher une recette, un ingrédient, ...";
+    }
 
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", () => {
       filterRecipes(AllRecipes);
+      handleSearchBarInputChange();
     });
 
     function filterRecipes(AllRecipes) {
