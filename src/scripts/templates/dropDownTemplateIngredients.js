@@ -9,7 +9,7 @@ class dropDownTemplateIngredients {
     const ingrArray = [];
     this._card._ingredients.forEach((ingredient) => {
       ingrArray.push(ingredient.ingredient);
-      console.log("ingredient", ingredient.ingredient);
+      // console.log("ingredient", ingredient.ingredient);
       if (!appendedIngredients.has(ingredient.ingredient)) {
         // console.log(1);
         //li

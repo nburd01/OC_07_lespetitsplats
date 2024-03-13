@@ -7,7 +7,7 @@ class dropDownTemplateUstensils {
     const sortUstensils = document.getElementById("ustensilsGo");
 
     this._card._ustensils.forEach((ustensil) => {
-      console.log(ustensil);
+      // console.log(ustensil);
       //li
       const ustensilItem = document.createElement("a");
       ustensilItem.classList.add("sortUstensils");

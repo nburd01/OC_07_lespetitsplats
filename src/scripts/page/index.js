@@ -254,13 +254,40 @@ export class App {
           const templateCards = new CardTemplate(card);
           cardsSection.appendChild(templateCards.createCard());
         });
+      function removeDuplicates(data) {
+        return data.reduce((unique, value) => {
+          if (!unique.includes(value)) {
+            unique.push(value);
+          }
+          return unique;
+        }, []);
+      }
+      let resultIngredient = removeDuplicates(itemsArrayIngredient);
+      let resultAppliance = removeDuplicates(itemsArrayAppliance);
+      let resultUstensil = removeDuplicates(itemsArrayUstensil);
+      resultIngredient.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortIngredients");
+        link.href = `#${element}`;
+        link.textContent = element;
+        ingredientsGo.appendChild(link);
+        // ingredientsDropdown.appendChild(link);
+      });
+      resultUstensil.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortUstensils");
+        link.href = `#${element}`;
+        link.textContent = element;
+        ustensilsGo.appendChild(link);
+      });
+      resultAppliance.forEach((element) => {
+        const link = document.createElement("a");
+        link.classList.add("sortAppliances");
+        link.href = `#${element}`;
+        link.textContent = element;
+        appliancesGo.appendChild(link);
+      });
     });
-    function handleClearInput() {
-      this.searchInput.value = "";
-      this.faMark.style.display = "none";
-      this.searchInput.placeholder =
-        "Rechercher une recette, un ingrédient, ...";
-    }
 
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", () => {
@@ -360,10 +387,6 @@ export class App {
     // Events
     // ------------------------
 
-    this.faMark.addEventListener("click", () => {
-      handleClearInput();
-      // updateRecipes([...AllRecipes]);
-    });
     //toggle dropdown hide/show
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
