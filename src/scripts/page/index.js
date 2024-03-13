@@ -227,14 +227,14 @@ export class App {
         link.classList.add("sortUstensils");
         link.href = `#${element}`;
         link.textContent = element;
-        ustensilsDropdown.appendChild(link);
+        ustensilsGo.appendChild(link);
       });
       resultAppliance.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortAppliances");
         link.href = `#${element}`;
         link.textContent = element;
-        appliancesDropdown.appendChild(link);
+        appliancesGo.appendChild(link);
       });
     }
 
@@ -301,7 +301,7 @@ export class App {
         "ingredientsDropdown"
       );
       const appliancesDropdown = document.getElementById("appliancesDropdown");
-      const ustensilDropdown = document.getElementById("ustensilsDropdown");
+      // const ustensilDropdown = document.getElementById("ustensilsDropdown");
 
       sortIngredients.innerHTML = "";
       sortAppliances.innerHTML = "";
