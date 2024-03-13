@@ -1,7 +1,10 @@
 import { CardsApi } from "../api/api.js";
 import { Card } from "../class/cards.js";
-import { DropDownTemplate } from "../templates/dropDownTemplate.js";
+
 import { CardTemplate } from "../templates/cardList.js";
+import { dropDownTemplateAppliances } from "../templates/dropDownTemplateAppliances.js";
+import { dropDownTemplateIngredients } from "../templates/dropDownTemplateIngredients.js";
+// import { dropDownTemplateUstensils } from "../templates/dropDownTemplateUstensils.js";
 
 export class App {
   constructor() {
@@ -297,6 +300,8 @@ export class App {
       const ingredientsDropdown = document.getElementById(
         "ingredientsDropdown"
       );
+      const appliancesDropdown = document.getElementById("appliancesDropdown");
+      const ustensilDropdown = document.getElementById("ustensilsDropdown");
 
       sortIngredients.innerHTML = "";
       sortAppliances.innerHTML = "";
@@ -305,8 +310,24 @@ export class App {
       filteredRecipes
         .map((card) => new Card(card))
         .forEach((card) => {
-          const templateDropDown = new DropDownTemplate(card);
-          ingredientsDropdown.appendChild(templateDropDown.createDropDown());
+          const templateDropDownIngredient = new dropDownTemplateIngredients(
+            card
+          );
+          ingredientsDropdown.appendChild(
+            templateDropDownIngredient.createDropDown()
+          );
+          //
+          // const templateDropDownUstensil = new dropDownTemplateUstensils(card);
+          // ingredientsDropdown.appendChild(
+          //   templateDropDownUstensil.createDropDown()
+          // );
+          //
+          const templateDropDownAppliance = new dropDownTemplateAppliances(
+            card
+          );
+          appliancesDropdown.appendChild(
+            templateDropDownAppliance.createDropDown()
+          );
         });
     }
 

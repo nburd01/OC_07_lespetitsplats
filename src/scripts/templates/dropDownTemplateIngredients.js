@@ -1,4 +1,4 @@
-class DropDownTemplate {
+class dropDownTemplateIngredients {
   constructor(card) {
     this._card = card;
   }
@@ -26,4 +26,4 @@ class DropDownTemplate {
   }
 }
 
-export { DropDownTemplate };
+export { dropDownTemplateIngredients };
