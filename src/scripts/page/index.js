@@ -344,8 +344,6 @@ export class App {
         });
     }
     function displayFilterList(filteredRecipes) {
-      // console.log(filteredRecipes);
-
       const sortIngredients = document.getElementById("ingredientsGo");
       const sortAppliances = document.getElementById("appliancesGo");
       const sortUstensils = document.getElementById("ustensilsGo");
@@ -387,6 +385,12 @@ export class App {
     // Events
     // ------------------------
 
+    function initializeChevrons() {
+      const chevronDown = document.querySelectorAll(".fa-chevron-down");
+      chevronDown.forEach((chevron) => {
+        chevron.classList.add("hide");
+      });
+    }
     //toggle dropdown hide/show
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
@@ -409,6 +413,7 @@ export class App {
       const chevronUp = document.querySelector(".appliancesChevronDown");
       chevronUp.classList.toggle("hide");
     });
+    //
     function handleDropdownHelper(dropdownId, elemId) {
       const dropdown = document.getElementById(dropdownId);
       const elem = document.getElementById(elemId);
@@ -425,13 +430,10 @@ export class App {
     //Click outside dropdown to make it disappear
     document.addEventListener("click", function (event) {
       handleDropdownHelper(appliancesDropdown, dropDownAppliances);
-    });
-    document.addEventListener("click", function (event) {
       handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
-    });
-    document.addEventListener("click", function (event) {
       handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
     });
+
     //Input inside dropdown
     this.myDropdownInputIngredients.addEventListener("input", () => {
       filterDropdownInputHelper(
