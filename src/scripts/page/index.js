@@ -390,12 +390,24 @@ export class App {
     //toggle dropdown hide/show
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
+      const chevronDown = document.querySelector(".ingredientsChevronUp");
+      chevronDown.classList.toggle("hide");
+      const chevronUp = document.querySelector(".ingredientsChevronDown");
+      chevronUp.classList.toggle("hide");
     });
     this.ustensilsDropBtn.addEventListener("click", () => {
       document.getElementById("ustensilsDropdown").classList.toggle("show");
+      const chevronDown = document.querySelector(".ustensilsChevronUp");
+      chevronDown.classList.toggle("hide");
+      const chevronUp = document.querySelector(".ustensilsChevronDown");
+      chevronUp.classList.toggle("hide");
     });
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
+      const chevronDown = document.querySelector(".appliancesChevronUp");
+      chevronDown.classList.toggle("hide");
+      const chevronUp = document.querySelector(".appliancesChevronDown");
+      chevronUp.classList.toggle("hide");
     });
     function handleDropdownHelper(dropdownId, elemId) {
       const dropdown = document.getElementById(dropdownId);

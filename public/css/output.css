@@ -1211,6 +1211,21 @@ input:focus::placeholder {
   top: 8px;
 }
 
+.fa-chevron-down::before {
+  display: none;
+  position: absolute;
+  left: -75px;
+  top: 8px;
+}
+
+.fa-chevron-down.hide::before {
+  display: flex;
+}
+
+.fa-chevron-up.hide::before {
+  display: none;
+}
+
 .tags {
   color: var(--Black, #1b1b1b);
   font-family: Manrope;
@@ -1220,13 +1235,6 @@ input:focus::placeholder {
   line-height: normal;
 }
 
-/* Dropdown button on hover & focus */
-
-/* .dropbtn:hover,
-.dropbtn:focus {
-  background-color: #3e8e41;
-} */
-
 /* The search field */
 
 #myDropdownInputIngredients,
@@ -1234,7 +1242,6 @@ input:focus::placeholder {
 #myDropdownInputUstensils,
 #myDropdownInput {
   box-sizing: border-box;
-  /* background-image: url("../../src/assets/images/searchicon.png"); */
   background-position: 14px 12px;
   background-repeat: no-repeat;
   padding: 14px 20px 12px 1em;
