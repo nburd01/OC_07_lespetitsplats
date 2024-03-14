@@ -271,7 +271,6 @@ export class App {
         link.href = `#${element}`;
         link.textContent = element;
         ingredientsGo.appendChild(link);
-        // ingredientsDropdown.appendChild(link);
       });
       resultUstensil.forEach((element) => {
         const link = document.createElement("a");
@@ -427,11 +426,46 @@ export class App {
         }
       }
     }
+    function toggleChevronsOutsideDropdown(event) {
+      const dropdowns = document.querySelectorAll(".dropdown");
+
+      let isInsideDropdown = false;
+
+      dropdowns.forEach(function (dropdown) {
+        // Get all dropdown elements
+        const dropdowns = document.querySelectorAll(".dropdown");
+
+        // Check if the click target is inside any dropdown
+        let isInsideDropdown = false;
+        dropdowns.forEach(function (dropdown) {
+          if (dropdown.contains(event.target)) {
+            isInsideDropdown = true;
+          }
+        });
+
+        // Toggle chevron visibility based on whether click is inside or outside dropdown
+        if (!isInsideDropdown) {
+          const chevronUpElements = document.querySelectorAll(".fa-chevron-up");
+          const chevronDownElements =
+            document.querySelectorAll(".fa-chevron-down");
+
+          chevronUpElements.forEach(function (chevronUp) {
+            chevronUp.classList.add("hide");
+          });
+
+          chevronDownElements.forEach(function (chevronDown) {
+            chevronDown.classList.add("hide");
+          });
+        }
+      });
+    }
+
     //Click outside dropdown to make it disappear
     document.addEventListener("click", function (event) {
       handleDropdownHelper(appliancesDropdown, dropDownAppliances);
       handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
       handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
+      toggleChevronsOutsideDropdown(event);
     });
 
     //Input inside dropdown
