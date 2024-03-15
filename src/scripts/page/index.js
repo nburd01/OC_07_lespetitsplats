@@ -312,20 +312,29 @@ export class App {
 
       // console.log(arrayTag);
       const filteredRecipes = AllRecipes.filter((recipe) => {
-        return (
-          // recipe.name.includes(querySearch.search) ||
-          // recipe.appliance.includes(querySearch.search) ||
-          // recipe.ustensils.some((ustensil) =>
-          //   ustensil.includes(querySearch.search)
-          // ) ||
-          // recipe.ingredients.some((ingredient) =>
-          //   ingredient.ingredient.includes(querySearch.search)
-          // ) ||
-          recipe.ingredients.some((ingredient) =>
+        console.log(querySearch);
+        if (querySearch.search.trim() === "") {
+          return recipe.ingredients.some((ingredient) =>
             arrayTag.some((tag) => ingredient.ingredient.includes(tag))
-          )
-        );
+          );
+        } else {
+          return (
+            recipe.name.includes(querySearch.search) ||
+            recipe.appliance.includes(querySearch.search) ||
+            recipe.ustensils.some((ustensil) =>
+              ustensil.includes(querySearch.search)
+            ) ||
+            recipe.ingredients.some((ingredient) =>
+              ingredient.ingredient.includes(querySearch.search)
+            ) ||
+            recipe.ingredients.some((ingredient) =>
+              arrayTag.some((tag) => ingredient.ingredient.includes(tag))
+            )
+          );
+        }
       });
+      console.log(arrayTag);
+      console.log(filteredRecipes);
       displayRecipes(filteredRecipes);
       displayFilterList(filteredRecipes);
     }
