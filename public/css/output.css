@@ -1205,25 +1205,25 @@ input:focus::placeholder {
 }
 
 .fa-chevron-up::before {
-  display: flex;
+  display: none;
   position: absolute;
   left: -75px;
   top: 8px;
 }
 
 .fa-chevron-down::before {
-  display: none;
+  display: flex;
   position: absolute;
   left: -75px;
   top: 8px;
 }
 
 .fa-chevron-down.hide::before {
-  display: flex;
+  display: none;
 }
 
 .fa-chevron-up.hide::before {
-  display: none;
+  display: flex;
 }
 
 .tags {

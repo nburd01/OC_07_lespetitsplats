@@ -101,12 +101,16 @@ export class App {
     // ------------------------
     // Creating
     // ------------------------
-    createCards
-      .map((card) => new Card(card))
-      .forEach((card) => {
-        const templateCards = new CardTemplate(card);
-        cardsSection.appendChild(templateCards.createCard());
-      });
+    function creatingCards() {
+      createCards
+        .map((card) => new Card(card))
+        .forEach((card) => {
+          // console.log(card);
+          const templateCards = new CardTemplate(card);
+          cardsSection.appendChild(templateCards.createCard());
+        });
+    }
+    creatingCards();
 
     // ------------------------
     // Normalizing
@@ -248,12 +252,7 @@ export class App {
     }
     document.querySelector(".fa-xmark").addEventListener("click", () => {
       handleClearInput();
-      createCards
-        .map((card) => new Card(card))
-        .forEach((card) => {
-          const templateCards = new CardTemplate(card);
-          cardsSection.appendChild(templateCards.createCard());
-        });
+      creatingCards();
       function removeDuplicates(data) {
         return data.reduce((unique, value) => {
           if (!unique.includes(value)) {
@@ -314,14 +313,14 @@ export class App {
       // console.log(arrayTag);
       const filteredRecipes = AllRecipes.filter((recipe) => {
         return (
-          recipe.name.includes(querySearch.search) ||
-          recipe.appliance.includes(querySearch.search) ||
-          recipe.ustensils.some((ustensil) =>
-            ustensil.includes(querySearch.search)
-          ) ||
-          recipe.ingredients.some((ingredient) =>
-            ingredient.ingredient.includes(querySearch.search)
-          ) ||
+          // recipe.name.includes(querySearch.search) ||
+          // recipe.appliance.includes(querySearch.search) ||
+          // recipe.ustensils.some((ustensil) =>
+          //   ustensil.includes(querySearch.search)
+          // ) ||
+          // recipe.ingredients.some((ingredient) =>
+          //   ingredient.ingredient.includes(querySearch.search)
+          // ) ||
           recipe.ingredients.some((ingredient) =>
             arrayTag.some((tag) => ingredient.ingredient.includes(tag))
           )
@@ -384,32 +383,29 @@ export class App {
     // Events
     // ------------------------
 
-    function initializeChevrons() {
-      const chevronDown = document.querySelectorAll(".fa-chevron-down");
-      chevronDown.forEach((chevron) => {
-        chevron.classList.add("hide");
-      });
-    }
     //toggle dropdown hide/show
     this.ingredientsDropBtn.addEventListener("click", () => {
       document.getElementById("ingredientsDropdown").classList.toggle("show");
-      const chevronDown = document.querySelector(".ingredientsChevronUp");
+      const chevronDown = document.querySelector(".ingredientsChevronDown");
       chevronDown.classList.toggle("hide");
-      const chevronUp = document.querySelector(".ingredientsChevronDown");
+      const chevronUp = document.querySelector(".ingredientsChevronUp");
       chevronUp.classList.toggle("hide");
     });
+
+    // Similar logic for other dropdowns
+
     this.ustensilsDropBtn.addEventListener("click", () => {
       document.getElementById("ustensilsDropdown").classList.toggle("show");
-      const chevronDown = document.querySelector(".ustensilsChevronUp");
+      const chevronDown = document.querySelector(".ustensilsChevronDown");
       chevronDown.classList.toggle("hide");
-      const chevronUp = document.querySelector(".ustensilsChevronDown");
+      const chevronUp = document.querySelector(".ustensilsChevronUp");
       chevronUp.classList.toggle("hide");
     });
     this.appliancesDropBtn.addEventListener("click", () => {
       document.getElementById("appliancesDropdown").classList.toggle("show");
-      const chevronDown = document.querySelector(".appliancesChevronUp");
+      const chevronDown = document.querySelector(".appliancesChevronDown");
       chevronDown.classList.toggle("hide");
-      const chevronUp = document.querySelector(".appliancesChevronDown");
+      const chevronUp = document.querySelector(".appliancesChevronUp");
       chevronUp.classList.toggle("hide");
     });
     //
@@ -421,6 +417,7 @@ export class App {
 
         if (outsideClick) {
           dropdownId.classList.remove("show");
+          toggleChevronsOutsideDropdown(event);
         } else {
           dropdownId.classList.add("show");
         }
@@ -428,8 +425,6 @@ export class App {
     }
     function toggleChevronsOutsideDropdown(event) {
       const dropdowns = document.querySelectorAll(".dropdown");
-
-      let isInsideDropdown = false;
 
       dropdowns.forEach(function (dropdown) {
         // Get all dropdown elements
@@ -465,7 +460,6 @@ export class App {
       handleDropdownHelper(appliancesDropdown, dropDownAppliances);
       handleDropdownHelper(ustensilsDropdown, dropDownUstensils);
       handleDropdownHelper(ingredientsDropdown, dropDownIngredients);
-      toggleChevronsOutsideDropdown(event);
     });
 
     //Input inside dropdown
@@ -525,7 +519,6 @@ export class App {
         let upperCaseTag = element.toUpperCase();
         matchingItemLinksUpperCase.push(upperCaseTag);
       });
-      // console.log(matchingItemLinksUpperCase);
       return matchingItemLinksUpperCase;
     }
 
@@ -540,12 +533,13 @@ export class App {
       // mettre event sur ingredientsDropdown
       const closeTagClick = (event) => {
         if (event.target.classList.contains("closeTag")) {
-          const clickedTagText = event.target.previousSibling.textContent;
+          const clickedTagText = event.target.parentElement.textContent.trim();
           const index = tagsArray.indexOf(clickedTagText);
           tagsArray.splice(index, 1);
           event.target.closest("li").remove();
           const matchingItemLinksUpperCase = findMatchingElements();
-          // filterRecipes(AllRecipes);
+          console.log(tagsArray);
+          filterRecipes(AllRecipes);
         }
       };
       const ingredientsDropdown = document.getElementById(dropDownClass);
