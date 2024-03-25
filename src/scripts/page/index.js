@@ -66,6 +66,7 @@ export class App {
     const arrayOfIngredientNames = sortCardsDataByIngredient.flatMap((recipe) =>
       recipe.ingredients.map((ingredient) => ingredient.ingredient)
     );
+
     // tri a-z by 'appliance'
     const sortCardsDataByAppliance = [...AllRecipes].sort((a, b) => {
       if (a.appliance < b.appliance) {
@@ -178,13 +179,6 @@ export class App {
       itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
     }
 
-    //sort everything function
-    const arrayOfEverything = [
-      ...itemArrays.arrayOfApplianceNames,
-      ...itemArrays.arrayOfIngredientNames,
-      ...itemArrays.arrayOfUstensilNames,
-    ];
-
     initializeDropdownItems(
       itemsArrayIngredient,
       itemsArrayUstensil,
@@ -288,8 +282,10 @@ export class App {
     });
 
     //MAIN INPUT CHANGE
-    this.searchInput.addEventListener("input", () => {
+    this.searchInput.addEventListener("input", (event) => {
+      // if (event.target.value > 2) {
       filterRecipes(AllRecipes);
+      // }
       handleSearchBarInputChange();
     });
 
@@ -297,44 +293,31 @@ export class App {
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
         ingredients: Array.from(
-          document.querySelectorAll(".sortIngredients")
+          document.querySelectorAll(".tag-anchor.ingredientsGo")
         ).map((e) => e.textContent),
         appliances: Array.from(
-          document.querySelectorAll(".sortAppliances")
+          document.querySelectorAll(".tag-anchor.appliancesGo")
         ).map((e) => e.textContent),
-        ustensils: Array.from(document.querySelectorAll(".sortUstensils")).map(
-          (e) => e.textContent
-        ),
+        ustensils: Array.from(
+          document.querySelectorAll(".tag-anchor.ustensilsGo")
+        ).map((e) => e.textContent),
       };
-      let arrayTag = Array.from(document.querySelectorAll(".tag-anchor")).map(
-        (e) => e.textContent
-      );
 
-      // console.log(arrayTag);
+      console.log(querySearch);
       const filteredRecipes = AllRecipes.filter((recipe) => {
-        console.log(querySearch);
-        if (querySearch.search.trim() === "") {
-          return recipe.ingredients.some((ingredient) =>
-            arrayTag.some((tag) => ingredient.ingredient.includes(tag))
-          );
-        } else {
-          return (
-            recipe.name.includes(querySearch.search) ||
-            recipe.appliance.includes(querySearch.search) ||
-            recipe.ustensils.some((ustensil) =>
-              ustensil.includes(querySearch.search)
-            ) ||
-            recipe.ingredients.some((ingredient) =>
-              ingredient.ingredient.includes(querySearch.search)
-            ) ||
-            recipe.ingredients.some((ingredient) =>
-              arrayTag.some((tag) => ingredient.ingredient.includes(tag))
-            )
+        const hasInName = recipe.name.includes(querySearch.search);
+
+        let hasAllIngredients = true;
+        if (querySearch.ingredients.length > 0) {
+          hasAllIngredients = querySearch.ingredients.every((i) =>
+            recipe.ingredients.includes(i)
           );
         }
+        return hasInName && hasAllIngredients;
       });
-      console.log(arrayTag);
-      console.log(filteredRecipes);
+      console.log(filteredRecipes.length);
+      // console.log(arrayTag);
+      // console.log(filteredRecipes);
       displayRecipes(filteredRecipes);
       displayFilterList(filteredRecipes);
     }
@@ -402,7 +385,6 @@ export class App {
     });
 
     // Similar logic for other dropdowns
-
     this.ustensilsDropBtn.addEventListener("click", () => {
       document.getElementById("ustensilsDropdown").classList.toggle("show");
       const chevronDown = document.querySelector(".ustensilsChevronDown");
@@ -514,7 +496,10 @@ export class App {
       const tag = document.createElement("li");
       tag.classList.add("tag-li");
       const tagAnchor = document.createElement("a");
-      tagAnchor.classList.add("tag-anchor");
+      tagAnchor.classList.add(
+        "tag-anchor",
+        `${link.parentNode.getAttribute("id")}`
+      );
       tagAnchor.textContent = link.textContent;
       tagsList.appendChild(tag);
       tag.appendChild(tagAnchor);

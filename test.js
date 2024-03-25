@@ -69,3 +69,10 @@ function filterRecipes(AllRecipes) {
   displayRecipes(filteredRecipes);
   // }
 }
+
+
+let hasAllIngredients = true
+
+if (querySearch.ingredients.length > 0) {
+  hasAllIngredients = ....
+)
