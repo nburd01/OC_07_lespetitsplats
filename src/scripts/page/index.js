@@ -313,7 +313,9 @@ export class App {
 
         if (querySearch.ingredients.length > 0) {
           hasAllIngredients = querySearch.ingredients.every((i) =>
-            recipe.ingredients.includes(i)
+            recipe.ingredients.some((ingredient) =>
+              ingredient.ingredient.includes(i)
+            )
           );
         }
 
@@ -321,7 +323,6 @@ export class App {
           hasAllAppliances = querySearch.appliances.every((i) =>
             recipe.appliance.includes(i)
           );
-          console.log(hasAllAppliances);
         }
 
         if (querySearch.ustensils.length > 0) {
@@ -333,10 +334,9 @@ export class App {
           hasInName && hasAllIngredients && hasAllAppliances && hasAllUstensils
         );
       });
-      // console.log(filteredRecipes.length);
-      // console.log(arrayTag);
-      console.log(filteredRecipes);
-      displayRecipes(filteredRecipes);
+      console.log(querySearch);
+      console.log("filteredRecipes", filteredRecipes);
+      displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
 
