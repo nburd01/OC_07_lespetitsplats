@@ -290,6 +290,7 @@ export class App {
     });
 
     function filterRecipes(AllRecipes) {
+      //Prends en compte la searchInput et les tags choisis
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
         ingredients: Array.from(
@@ -303,21 +304,38 @@ export class App {
         ).map((e) => e.textContent),
       };
 
-      console.log(querySearch);
       const filteredRecipes = AllRecipes.filter((recipe) => {
         const hasInName = recipe.name.includes(querySearch.search);
 
         let hasAllIngredients = true;
+        let hasAllAppliances = true;
+        let hasAllUstensils = true;
+
         if (querySearch.ingredients.length > 0) {
           hasAllIngredients = querySearch.ingredients.every((i) =>
             recipe.ingredients.includes(i)
           );
         }
-        return hasInName && hasAllIngredients;
+
+        if (querySearch.appliances.length > 0) {
+          hasAllAppliances = querySearch.appliances.every((i) =>
+            recipe.appliance.includes(i)
+          );
+          console.log(hasAllAppliances);
+        }
+
+        if (querySearch.ustensils.length > 0) {
+          hasAllUstensils = querySearch.ustensils.every((i) =>
+            recipe.ustensils.includes(i)
+          );
+        }
+        return (
+          hasInName && hasAllIngredients && hasAllAppliances && hasAllUstensils
+        );
       });
-      console.log(filteredRecipes.length);
+      // console.log(filteredRecipes.length);
       // console.log(arrayTag);
-      // console.log(filteredRecipes);
+      console.log(filteredRecipes);
       displayRecipes(filteredRecipes);
       displayFilterList(filteredRecipes);
     }
@@ -532,7 +550,7 @@ export class App {
           tagsArray.splice(index, 1);
           event.target.closest("li").remove();
           const matchingItemLinksUpperCase = findMatchingElements();
-          console.log(tagsArray);
+
           filterRecipes(AllRecipes);
         }
       };
