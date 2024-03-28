@@ -5,6 +5,8 @@ class dropDownTemplateIngredients {
 
   createDropDown() {
     const sortIngredients = document.getElementById("ingredientsGo");
+    sortIngredients.innerHTML = "";
+
     this._card.forEach((ingredient) => {
       const ingredientItem = document.createElement("a");
       ingredientItem.classList.add("sortIngredients");

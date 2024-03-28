@@ -6,23 +6,14 @@ class dropDownTemplateUstensils {
 
   createDropDown() {
     const sortUstensils = document.getElementById("ustensilsGo");
+    sortUstensils.innerHTML = "";
 
-    this._card._ustensils.forEach((ustensil) => {
-      if (!this.ustensilArray.has(ustensil)) {
-        this.ustensilArray.add(ustensil);
-        //li
-        const ustensilItem = document.createElement("a");
-        ustensilItem.classList.add("sortUstensils");
-
-        //innerHTML
-        ustensilItem.innerHTML = ustensil;
-
-        //append
-        sortUstensils.appendChild(ustensilItem);
-      }
+    this._card.forEach((ustensil) => {
+      const ustensilItem = document.createElement("a");
+      ustensilItem.classList.add("sortUstensils");
+      ustensilItem.innerHTML = ustensil;
+      sortUstensils.appendChild(ustensilItem);
     });
-    // console.log(this.ustensilArray);
-    // console.log(this._card);
 
     return sortUstensils;
   }

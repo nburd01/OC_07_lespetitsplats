@@ -381,8 +381,6 @@ export class App {
       filteredRecipes.forEach((recipe) =>
         ingredientList.add(...recipe._ingredients)
       );
-      // console.log("ingredientList", ingredientList);
-      // console.log("filteredRecipes", filteredRecipes);
 
       //Appliances
       filteredRecipes.forEach((recipe) => recipe.appliance);
@@ -391,8 +389,19 @@ export class App {
 
       filteredRecipes.forEach((recipe) => applianceList.add(recipe.appliance));
 
+      //Ustensils
+      filteredRecipes.forEach((recipe) =>
+        recipe.ustensils.map((ustensil) => ustensil)
+      );
+
+      const ustensilList = new Set();
+
+      filteredRecipes.forEach((recipe) =>
+        ustensilList.add(...recipe.ustensils)
+      );
+
       // console.log("ingredientList", ingredientList);
-      console.log("applianceList", applianceList);
+      console.log("ustensilList", ustensilList);
       // console.log("filteredRecipes", filteredRecipes);
 
       filteredRecipes
@@ -405,7 +414,9 @@ export class App {
             templateDropDownIngredient.createDropDown()
           );
           //
-          const templateDropDownUstensil = new dropDownTemplateUstensils(card);
+          const templateDropDownUstensil = new dropDownTemplateUstensils(
+            ustensilList
+          );
           ustensilDropdown.appendChild(
             templateDropDownUstensil.createDropDown()
           );
