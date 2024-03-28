@@ -6,14 +6,16 @@ class dropDownTemplateAppliances {
   createDropDown() {
     const sortAppliances = document.getElementById("appliancesGo");
 
-    const appliance = this._card._appliance;
+    // Clear existing items before adding new ones
+    sortAppliances.innerHTML = "";
 
-    const applianceItem = document.createElement("a");
-    applianceItem.classList.add("sortAppliances");
-
-    applianceItem.innerHTML = appliance;
-
-    sortAppliances.appendChild(applianceItem);
+    // Loop through each appliance in the list
+    this._card.forEach((appliance) => {
+      const applianceItem = document.createElement("a");
+      applianceItem.classList.add("sortAppliances");
+      applianceItem.innerHTML = appliance;
+      sortAppliances.appendChild(applianceItem);
+    });
 
     return sortAppliances;
   }

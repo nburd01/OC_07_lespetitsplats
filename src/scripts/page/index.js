@@ -212,6 +212,7 @@ export class App {
       let resultIngredient = removeDuplicates(itemsArrayIngredient);
       let resultAppliance = removeDuplicates(itemsArrayAppliance);
       let resultUstensil = removeDuplicates(itemsArrayUstensil);
+      //Initial dropdown render
       resultIngredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
@@ -270,6 +271,7 @@ export class App {
         link.classList.add("sortUstensils");
         link.href = `#${element}`;
         link.textContent = element;
+        console.log(link.textContent);
         ustensilsGo.appendChild(link);
       });
       resultAppliance.forEach((element) => {
@@ -334,8 +336,8 @@ export class App {
           hasInName && hasAllIngredients && hasAllAppliances && hasAllUstensils
         );
       });
-      console.log(querySearch);
-      console.log("filteredRecipes", filteredRecipes);
+      // console.log(querySearch);
+      // console.log("filteredRecipes", filteredRecipes);
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
@@ -351,6 +353,7 @@ export class App {
           cardsSection.appendChild(templateCards.createCard());
         });
     }
+
     function displayFilterList(filteredRecipes) {
       const sortIngredients = document.getElementById("ingredientsGo");
       const sortAppliances = document.getElementById("appliancesGo");
@@ -365,11 +368,38 @@ export class App {
       sortAppliances.innerHTML = "";
       sortUstensils.innerHTML = "";
 
+      //Ingredients
+      filteredRecipes.forEach(
+        (recipe) =>
+          (recipe._ingredients = recipe.ingredients.map(
+            (ingredient) => ingredient.ingredient
+          ))
+      );
+
+      const ingredientList = new Set();
+
+      filteredRecipes.forEach((recipe) =>
+        ingredientList.add(...recipe._ingredients)
+      );
+      // console.log("ingredientList", ingredientList);
+      // console.log("filteredRecipes", filteredRecipes);
+
+      //Appliances
+      filteredRecipes.forEach((recipe) => recipe.appliance);
+
+      const applianceList = new Set();
+
+      filteredRecipes.forEach((recipe) => applianceList.add(recipe.appliance));
+
+      // console.log("ingredientList", ingredientList);
+      console.log("applianceList", applianceList);
+      // console.log("filteredRecipes", filteredRecipes);
+
       filteredRecipes
         .map((card) => new Card(card))
         .forEach((card) => {
           const templateDropDownIngredient = new dropDownTemplateIngredients(
-            card
+            ingredientList
           );
           ingredientsDropdown.appendChild(
             templateDropDownIngredient.createDropDown()
@@ -381,7 +411,7 @@ export class App {
           );
           //
           const templateDropDownAppliance = new dropDownTemplateAppliances(
-            card
+            applianceList
           );
           appliancesDropdown.appendChild(
             templateDropDownAppliance.createDropDown()
@@ -573,6 +603,18 @@ export class App {
     tagClickManagement(AllRecipes, "appliancesDropdown", "sortAppliances");
     tagClickManagement(AllRecipes, "ustensilsDropdown", "sortUstensils");
     function handleClearInput() {
+      var ustensilsGoDropdown = document.getElementById("ustensilsGo");
+      while (ustensilsGoDropdown.firstChild) {
+        ustensilsGoDropdown.removeChild(ustensilsGoDropdown.firstChild);
+      }
+      var appliancesGoDropdown = document.getElementById("appliancesGo");
+      while (appliancesGoDropdown.firstChild) {
+        appliancesGoDropdown.removeChild(appliancesGoDropdown.firstChild);
+      }
+      var ingredientsGoDropdown = document.getElementById("ingredientsGo");
+      while (ingredientsGoDropdown.firstChild) {
+        ingredientsGoDropdown.removeChild(ingredientsGoDropdown.firstChild);
+      }
       document.querySelector(".mySearchInput").value = "";
       document.querySelector(".fa-xmark").style.display = "none";
       document.querySelector("#mySearchInput").placeholder =
