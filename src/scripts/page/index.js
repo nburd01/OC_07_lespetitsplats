@@ -400,9 +400,6 @@ export class App {
         ustensilList.add(...recipe.ustensils)
       );
 
-      // console.log("ingredientList", ingredientList);
-      console.log("ustensilList", ustensilList);
-      // console.log("filteredRecipes", filteredRecipes);
 
       filteredRecipes
         .map((card) => new Card(card))
