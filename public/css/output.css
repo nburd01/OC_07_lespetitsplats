@@ -1204,6 +1204,28 @@ input:focus::placeholder {
   line-height: normal;
 }
 
+.fa-chevron-up::before {
+  display: none;
+  position: absolute;
+  left: -75px;
+  top: 8px;
+}
+
+.fa-chevron-down::before {
+  display: flex;
+  position: absolute;
+  left: -75px;
+  top: 8px;
+}
+
+.fa-chevron-down.hide::before {
+  display: none;
+}
+
+.fa-chevron-up.hide::before {
+  display: flex;
+}
+
 .tags {
   color: var(--Black, #1b1b1b);
   font-family: Manrope;
@@ -1213,13 +1235,6 @@ input:focus::placeholder {
   line-height: normal;
 }
 
-/* Dropdown button on hover & focus */
-
-/* .dropbtn:hover,
-.dropbtn:focus {
-  background-color: #3e8e41;
-} */
-
 /* The search field */
 
 #myDropdownInputIngredients,
@@ -1227,7 +1242,6 @@ input:focus::placeholder {
 #myDropdownInputUstensils,
 #myDropdownInput {
   box-sizing: border-box;
-  /* background-image: url("../../src/assets/images/searchicon.png"); */
   background-position: 14px 12px;
   background-repeat: no-repeat;
   padding: 14px 20px 12px 1em;
@@ -1253,7 +1267,9 @@ input:focus::placeholder {
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -1331,6 +1347,11 @@ input:focus::placeholder {
 .sort {
   width: 86em;
   margin-bottom: 2em;
+  .flex {
+    .dropdown {
+      display: flex;
+    }
+  }
 }
 
 .formContainer {
