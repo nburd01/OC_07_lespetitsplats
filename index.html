@@ -36,7 +36,7 @@
       class="header flex flex-col items-center bg-hero object-contain h-[70vh]"
     >
       <div class="mx-auto px-16 flex h-24 w-full items-center">
-        <!-- <span class="fa-solid fa-user"></span> -->
+        <!-- <span class="fa-solid fa-chevron-up"></span> -->
         <img src="./src/assets/images/logo-lpp.svg" alt="" />
         <img src="./src/assets/images/logoCircle.svg" alt="" />
       </div>
@@ -95,6 +95,8 @@
           <button class="ingredientsDropBtn boxSort mt-5 p-4 rounded-lg">
             Ingrédients
           </button>
+          <span class="fa-solid fa-chevron-up ingredientsChevronUp"></span>
+          <span class="fa-solid fa-chevron-down ingredientsChevronDown"></span>
           <div id="ingredientsDropdown" class="dropdown-content">
             <div class="myDropdownInputDiv">
               <input
@@ -116,6 +118,7 @@
                 ></path>
               </svg>
             </div>
+            <div id="ingredientsGo"></div>
           </div>
         </div>
         <!--  -->
@@ -123,6 +126,9 @@
           <button class="appliancesDropBtn boxSort mt-5 p-4 rounded-lg">
             Appareils
           </button>
+          <span class="fa-solid fa-chevron-up appliancesChevronUp"></span>
+          <span class="fa-solid fa-chevron-down appliancesChevronDown"></span>
+
           <div id="appliancesDropdown" class="dropdown-content">
             <div class="myDropdownInputDiv">
               <input
@@ -144,6 +150,7 @@
                 ></path>
               </svg>
             </div>
+            <div id="appliancesGo"></div>
           </div>
         </div>
         <!--  -->
@@ -151,6 +158,9 @@
           <button class="ustensilsDropBtn boxSort mt-5 p-4 rounded-lg">
             Ustensiles
           </button>
+          <span class="fa-solid fa-chevron-up ustensilsChevronUp"></span>
+          <span class="fa-solid fa-chevron-down ustensilsChevronDown"></span>
+
           <div id="ustensilsDropdown" class="dropdown-content">
             <div class="myDropdownInputDiv">
               <input
@@ -172,6 +182,7 @@
                 ></path>
               </svg>
             </div>
+            <div id="ustensilsGo"></div>
           </div>
         </div>
       </div>
