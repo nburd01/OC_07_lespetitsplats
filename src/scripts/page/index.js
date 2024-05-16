@@ -77,7 +77,6 @@ export class App {
     const uniq_Ingredient = Array.from(new Set(ingredientArray));
     const uniq_Appliance = Array.from(new Set(applianceArray));
     const uniq_Ustensil = Array.from(new Set(ustensilArray));
-    console.log(uniq_Ingredient);
     // ------------------------
 
     // tri by 'id'
@@ -111,9 +110,9 @@ export class App {
     initializeDropdownItems(uniq_Ingredient, uniq_Ustensil, uniq_Appliance);
 
     function initializeDropdownItems(
-      uniq_Appliance,
       uniq_Ingredient,
-      uniq_Ustensil
+      uniq_Ustensil,
+      uniq_Appliance
     ) {
       const searchInputDiv = document.createElement("div");
       searchInputDiv.classList.add("myDropdownInputDiv");
