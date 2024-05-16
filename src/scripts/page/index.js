@@ -77,13 +77,14 @@ export class App {
     const uniq_Ingredient = Array.from(new Set(ingredientArray));
     const uniq_Appliance = Array.from(new Set(applianceArray));
     const uniq_Ustensil = Array.from(new Set(ustensilArray));
+    console.log(uniq_Ingredient);
     // ------------------------
 
     // tri by 'id'
     const createCards = [...AllRecipes].sort((a, b) => a.id - b.id);
 
     // ------------------------
-    // Creating
+    // Initializing cards
     // ------------------------
     function creatingCards() {
       createCards
@@ -96,76 +97,18 @@ export class App {
     creatingCards();
 
     // ------------------------
-    // Normalizing
+    // Initializing dropdowns
     // ------------------------
-    const itemArrays = {
-      arrayOfApplianceNames: [],
-      arrayOfIngredientNames: [],
-      arrayOfUstensilNames: [],
-    };
+    normalizingData(uniq_Appliance, "appliance");
 
-    normalizingData(
-      uniq_Appliance,
-      "appliance",
-      sortTemplate,
-      itemArrays,
-      "arrayOfApplianceNames"
-    );
+    normalizingData(uniq_Ingredient, "ingredients");
 
-    normalizingData(
-      uniq_Ingredient,
-      "ingredients",
-      sortTemplate,
-      itemArrays,
-      "arrayOfIngredientNames"
-    );
-
-    normalizingData(
-      uniq_Ustensil,
-      "ustensils",
-      sortTemplate,
-      itemArrays,
-      "arrayOfUstensilNames"
-    );
+    normalizingData(uniq_Ustensil, "ustensils");
 
     //ressort une liste
-    function normalizingData(
-      normalizeCardsData,
-      item,
-      sortTemplate,
-      itemArrays,
-      targetArrayName
-    ) {
-      let arrayOfItems = [];
-      normalizeCardsData.forEach((card, index) => {
-        const itemValue = card || "";
-        //convert to strings
-        //mise en forme : normalise
-        const itemNameFirst = itemValue.charAt(0).toUpperCase();
-        const itemNameRest = itemValue.slice(1).toLowerCase();
-        const itemName = itemNameFirst + itemNameRest;
-        let pluralItemName = itemName + "s";
-        //condition
-        if (
-          !arrayOfItems.includes(itemName) ||
-          !arrayOfItems.includes(pluralItemName)
-        ) {
-          arrayOfItems.push(itemName);
-          arrayOfItems.sort();
-        }
-      });
+    function normalizingData(normalizeCardsData, item) {}
 
-      itemArrays[targetArrayName].push(...arrayOfItems);
-      itemsArrayAppliance = itemArrays.arrayOfApplianceNames;
-      itemsArrayIngredient = itemArrays.arrayOfIngredientNames;
-      itemsArrayUstensil = itemArrays.arrayOfUstensilNames;
-    }
-
-    initializeDropdownItems(
-      itemsArrayIngredient,
-      itemsArrayUstensil,
-      itemsArrayAppliance
-    );
+    initializeDropdownItems(uniq_Ingredient, uniq_Ustensil, uniq_Appliance);
 
     function initializeDropdownItems(
       itemsArrayIngredient,
@@ -218,6 +161,11 @@ export class App {
         appliancesGo.appendChild(link);
       });
     }
+
+    // ------------------------
+    // Events
+    // ------------------------
+
     function handleSearchBarInputChange() {
       if (document.querySelector(".mySearchInput").value !== "") {
         document.querySelector(".fa-xmark").style.display = "block";
