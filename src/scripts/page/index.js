@@ -159,17 +159,7 @@ export class App {
     document.querySelector(".fa-xmark").addEventListener("click", () => {
       handleClearInput();
       creatingCards();
-      function removeDuplicates(data) {
-        return data.reduce((unique, value) => {
-          if (!unique.includes(value)) {
-            unique.push(value);
-          }
-          return unique;
-        }, []);
-      }
-      let resultIngredient = removeDuplicates(itemsArrayIngredient);
-      let resultAppliance = removeDuplicates(itemsArrayAppliance);
-      let resultUstensil = removeDuplicates(itemsArrayUstensil);
+
       uniq_Ingredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
@@ -177,15 +167,14 @@ export class App {
         link.textContent = element;
         ingredientsGo.appendChild(link);
       });
-      resultUstensil.forEach((element) => {
+      uniq_Ustensil.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortUstensils");
         link.href = `#${element}`;
         link.textContent = element;
-        console.log(link.textContent);
         ustensilsGo.appendChild(link);
       });
-      resultAppliance.forEach((element) => {
+      uniq_Appliance.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortAppliances");
         link.href = `#${element}`;
@@ -255,14 +244,13 @@ export class App {
         }
         return (
           hasInName ||
-          hasInDescription ||
-          (hasInIngredient &&
+          (hasInDescription &&
             hasAllIngredients &&
             hasAllAppliances &&
             hasAllUstensils)
         );
       });
-      // console.log(querySearch);
+      console.log(querySearch);
       console.log("filteredRecipes", filteredRecipes);
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
