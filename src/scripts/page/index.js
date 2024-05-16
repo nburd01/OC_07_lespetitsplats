@@ -153,9 +153,8 @@ export class App {
       if (document.querySelector(".mySearchInput").value !== "") {
         document.querySelector(".fa-xmark").style.display = "block";
       } else {
-        this.faMark.style.display = "none";
-        this.searchInput.placeholder =
-          "Rechercher une recette, un ingrédient, ...";
+        faMark.style.display = "none";
+        searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
       }
     }
     document.querySelector(".fa-xmark").addEventListener("click", () => {
@@ -172,7 +171,7 @@ export class App {
       let resultIngredient = removeDuplicates(itemsArrayIngredient);
       let resultAppliance = removeDuplicates(itemsArrayAppliance);
       let resultUstensil = removeDuplicates(itemsArrayUstensil);
-      resultIngredient.forEach((element) => {
+      uniq_Ingredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
         link.href = `#${element}`;
@@ -204,6 +203,9 @@ export class App {
       handleSearchBarInputChange();
     });
 
+    // ------------------------
+    // MAIN FILTER FUNCTION
+    // ------------------------
     function filterRecipes(fetchData) {
       //Prends en compte la searchInput et les tags choisis
       const querySearch = {
@@ -221,6 +223,13 @@ export class App {
 
       const filteredRecipes = fetchData.filter((recipe) => {
         const hasInName = recipe.name.includes(querySearch.search);
+        const hasInDescription = recipe.description.includes(
+          querySearch.search
+        );
+
+        const hasInIngredient = recipe.ingredients.some((ingredient) =>
+          ingredient.ingredient.includes(querySearch.search)
+        );
 
         let hasAllIngredients = true;
         let hasAllAppliances = true;
@@ -246,11 +255,16 @@ export class App {
           );
         }
         return (
-          hasInName && hasAllIngredients && hasAllAppliances && hasAllUstensils
+          hasInName ||
+          hasInDescription ||
+          (hasInIngredient &&
+            hasAllIngredients &&
+            hasAllAppliances &&
+            hasAllUstensils)
         );
       });
       // console.log(querySearch);
-      // console.log("filteredRecipes", filteredRecipes);
+      console.log("filteredRecipes", filteredRecipes);
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
