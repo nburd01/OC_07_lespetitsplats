@@ -111,49 +111,32 @@ export class App {
     initializeDropdownItems(uniq_Ingredient, uniq_Ustensil, uniq_Appliance);
 
     function initializeDropdownItems(
-      itemsArrayIngredient,
-      itemsArrayUstensil,
-      itemsArrayAppliance
+      uniq_Appliance,
+      uniq_Ingredient,
+      uniq_Ustensil
     ) {
-      // ------------------------
-      // Search input event
-      // ------------------------
-
       const searchInputDiv = document.createElement("div");
       searchInputDiv.classList.add("myDropdownInputDiv");
 
       // ------------------------
       // Creation of links
       // ------------------------
-      itemsArrayIngredient.sort();
-      function removeDuplicates(data) {
-        return data.reduce((unique, value) => {
-          if (!unique.includes(value)) {
-            unique.push(value);
-          }
-          return unique;
-        }, []);
-      }
-      let resultIngredient = removeDuplicates(itemsArrayIngredient);
-      let resultAppliance = removeDuplicates(itemsArrayAppliance);
-      let resultUstensil = removeDuplicates(itemsArrayUstensil);
       //Initial dropdown render
-      resultIngredient.forEach((element) => {
+      uniq_Ingredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
         link.href = `#${element}`;
         link.textContent = element;
         ingredientsGo.appendChild(link);
-        // ingredientsDropdown.appendChild(link);
       });
-      resultUstensil.forEach((element) => {
+      uniq_Ustensil.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortUstensils");
         link.href = `#${element}`;
         link.textContent = element;
         ustensilsGo.appendChild(link);
       });
-      resultAppliance.forEach((element) => {
+      uniq_Appliance.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortAppliances");
         link.href = `#${element}`;
