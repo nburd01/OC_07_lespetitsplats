@@ -209,7 +209,7 @@ export class App {
     function filterRecipes(fetchData) {
       //Prends en compte la searchInput et les tags choisis
       const querySearch = {
-        search: document.querySelector(".mySearchInput").value,
+        search: document.querySelector(".mySearchInput").value.toLowerCase(),
         ingredients: Array.from(
           document.querySelectorAll(".tag-anchor.ingredientsGo")
         ).map((e) => e.textContent),
