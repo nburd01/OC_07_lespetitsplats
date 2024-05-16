@@ -47,54 +47,37 @@ export class App {
     const cardsSection = document.querySelector(".cards");
 
     // ------------------------
-    // Fetching
+    // Fetch
     // ------------------------
 
     //Fetch data
-    const AllRecipes = await this.cardsApi.getCards();
+    const fetchData = await this.cardsApi.getCards();
 
-    // tri a-z by 'name'
-    const sortCardsDataByIngredient = [...AllRecipes].sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
+    const AllRecipes = new Set(fetchData);
+
+    // ------------------------
+    // Normalize
+    // ------------------------
+    const applianceArray = [];
+    const ustensilArray = [];
+    const ingredientArray = [];
+    AllRecipes.forEach((recipe) => {
+      //ingredients
+      const _ingredients = recipe.ingredients.map((i) =>
+        ingredientArray.push(i.ingredient.toLowerCase())
+      );
+      //appliance
+      const _appliance = recipe.appliance.toLowerCase();
+      applianceArray.push(_appliance);
+      //ustensils
+      const _ustensils = recipe.ustensils.map((i) =>
+        ustensilArray.push(i.toLowerCase())
+      );
     });
-    const arrayOfIngredientNames = sortCardsDataByIngredient.flatMap((recipe) =>
-      recipe.ingredients.map((ingredient) => ingredient.ingredient)
-    );
-
-    // tri a-z by 'appliance'
-    const sortCardsDataByAppliance = [...AllRecipes].sort((a, b) => {
-      if (a.appliance < b.appliance) {
-        return -1;
-      }
-      if (a.appliance > b.appliance) {
-        return 1;
-      }
-      return 0;
-    });
-
-    const arrayOfApplianceNames = sortCardsDataByAppliance.map(
-      (obj) => obj.appliance
-    );
-
-    const sortCardsDataByUstensil = [...AllRecipes].sort((a, b) => {
-      if (a.ustensils < b.ustensils) {
-        return -1;
-      }
-      if (a.ustensils > b.ustensils) {
-        return 1;
-      }
-      return 0;
-    });
-
-    const arrayOfUstensilNames = sortCardsDataByUstensil.flatMap(
-      (obj) => obj.ustensils
-    );
+    const uniq_Ingredient = Array.from(new Set(ingredientArray));
+    const uniq_Appliance = Array.from(new Set(applianceArray));
+    const uniq_Ustensil = Array.from(new Set(ustensilArray));
+    // ------------------------
 
     // tri by 'id'
     const createCards = [...AllRecipes].sort((a, b) => a.id - b.id);
@@ -106,7 +89,6 @@ export class App {
       createCards
         .map((card) => new Card(card))
         .forEach((card) => {
-          // console.log(card);
           const templateCards = new CardTemplate(card);
           cardsSection.appendChild(templateCards.createCard());
         });
@@ -123,7 +105,7 @@ export class App {
     };
 
     normalizingData(
-      arrayOfApplianceNames,
+      uniq_Appliance,
       "appliance",
       sortTemplate,
       itemArrays,
@@ -131,7 +113,7 @@ export class App {
     );
 
     normalizingData(
-      arrayOfIngredientNames,
+      uniq_Ingredient,
       "ingredients",
       sortTemplate,
       itemArrays,
@@ -139,7 +121,7 @@ export class App {
     );
 
     normalizingData(
-      arrayOfUstensilNames,
+      uniq_Ustensil,
       "ustensils",
       sortTemplate,
       itemArrays,
@@ -286,12 +268,12 @@ export class App {
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", (event) => {
       // if (event.target.value > 2) {
-      filterRecipes(AllRecipes);
+      filterRecipes(fetchData);
       // }
       handleSearchBarInputChange();
     });
 
-    function filterRecipes(AllRecipes) {
+    function filterRecipes(fetchData) {
       //Prends en compte la searchInput et les tags choisis
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
@@ -306,7 +288,7 @@ export class App {
         ).map((e) => e.textContent),
       };
 
-      const filteredRecipes = AllRecipes.filter((recipe) => {
+      const filteredRecipes = fetchData.filter((recipe) => {
         const hasInName = recipe.name.includes(querySearch.search);
 
         let hasAllIngredients = true;
@@ -571,13 +553,13 @@ export class App {
       return matchingItemLinksUpperCase;
     }
 
-    function tagClickManagement(AllRecipes, dropDownClass) {
+    function tagClickManagement(fetchData, dropDownClass) {
       const tagsList = document.querySelector(".tagsList");
 
       const handleTagClick = (link) => {
         creatingTagElements(link);
         const matchingItemLinksUpperCase = findMatchingElements();
-        filterRecipes(AllRecipes);
+        filterRecipes(fetchData);
       };
       // mettre event sur ingredientsDropdown
       const closeTagClick = (event) => {
@@ -588,7 +570,7 @@ export class App {
           event.target.closest("li").remove();
           const matchingItemLinksUpperCase = findMatchingElements();
 
-          filterRecipes(AllRecipes);
+          filterRecipes(fetchData);
         }
       };
       const ingredientsDropdown = document.getElementById(dropDownClass);
@@ -606,9 +588,9 @@ export class App {
 
       tagsList.addEventListener("click", closeTagClick);
     }
-    tagClickManagement(AllRecipes, "ingredientsDropdown", "sortIngredients");
-    tagClickManagement(AllRecipes, "appliancesDropdown", "sortAppliances");
-    tagClickManagement(AllRecipes, "ustensilsDropdown", "sortUstensils");
+    tagClickManagement(fetchData, "ingredientsDropdown", "sortIngredients");
+    tagClickManagement(fetchData, "appliancesDropdown", "sortAppliances");
+    tagClickManagement(fetchData, "ustensilsDropdown", "sortUstensils");
     function handleClearInput() {
       var ustensilsGoDropdown = document.getElementById("ustensilsGo");
       while (ustensilsGoDropdown.firstChild) {

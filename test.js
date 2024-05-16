@@ -1,7 +1,7 @@
 //events
 // on doit analyser le dom à chaque fois qu'il y a nu input change
 //dans updateRecipe
-const filterRecipes = AllRecipes.filter(recipe => {
+const filterRecipes = fetchData.filter(recipe => {
     recipe.title.includes(query.search) ||
     query.ingredients.every(ingr => recipe.ingredients.includes(ingr)) ||
 
@@ -27,7 +27,7 @@ displayRecipes(filterRecipes){
 }
 
 
-function filterRecipes(AllRecipes) {
+function filterRecipes(fetchData) {
   const querySearch = {
     search: document.querySelector(".mySearchInput").value,
     ingredients: Array.from(
@@ -45,7 +45,7 @@ function filterRecipes(AllRecipes) {
   console.log(querySearch.ustensils);
   // console.log(document.querySelectorAll(".tag-anchor")[0].innerText);
   // if (querySearch !== undefined) {
-  const filteredRecipes = AllRecipes.filter((recipe) => {
+  const filteredRecipes = fetchData.filter((recipe) => {
     if (recipe.name.includes(querySearch.search)) {
       return recipe.name;
     }
@@ -76,3 +76,5 @@ let hasAllIngredients = true
 if (querySearch.ingredients.length > 0) {
   hasAllIngredients = ....
 )
+
+const
