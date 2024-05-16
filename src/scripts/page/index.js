@@ -77,6 +77,7 @@ export class App {
     const uniq_Ingredient = Array.from(new Set(ingredientArray));
     const uniq_Appliance = Array.from(new Set(applianceArray));
     const uniq_Ustensil = Array.from(new Set(ustensilArray));
+    console.log(uniq_Ingredient);
     // ------------------------
 
     // tri by 'id'
@@ -110,9 +111,9 @@ export class App {
     initializeDropdownItems(uniq_Ingredient, uniq_Ustensil, uniq_Appliance);
 
     function initializeDropdownItems(
+      uniq_Appliance,
       uniq_Ingredient,
-      uniq_Ustensil,
-      uniq_Appliance
+      uniq_Ustensil
     ) {
       const searchInputDiv = document.createElement("div");
       searchInputDiv.classList.add("myDropdownInputDiv");
@@ -159,7 +160,17 @@ export class App {
     document.querySelector(".fa-xmark").addEventListener("click", () => {
       handleClearInput();
       creatingCards();
-
+      function removeDuplicates(data) {
+        return data.reduce((unique, value) => {
+          if (!unique.includes(value)) {
+            unique.push(value);
+          }
+          return unique;
+        }, []);
+      }
+      let resultIngredient = removeDuplicates(itemsArrayIngredient);
+      let resultAppliance = removeDuplicates(itemsArrayAppliance);
+      let resultUstensil = removeDuplicates(itemsArrayUstensil);
       uniq_Ingredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
@@ -167,14 +178,15 @@ export class App {
         link.textContent = element;
         ingredientsGo.appendChild(link);
       });
-      uniq_Ustensil.forEach((element) => {
+      resultUstensil.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortUstensils");
         link.href = `#${element}`;
         link.textContent = element;
+        console.log(link.textContent);
         ustensilsGo.appendChild(link);
       });
-      uniq_Appliance.forEach((element) => {
+      resultAppliance.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortAppliances");
         link.href = `#${element}`;
@@ -197,7 +209,7 @@ export class App {
     function filterRecipes(fetchData) {
       //Prends en compte la searchInput et les tags choisis
       const querySearch = {
-        search: document.querySelector(".mySearchInput").value.toLowerCase(),
+        search: document.querySelector(".mySearchInput").value,
         ingredients: Array.from(
           document.querySelectorAll(".tag-anchor.ingredientsGo")
         ).map((e) => e.textContent),
@@ -243,14 +255,13 @@ export class App {
           );
         }
         return (
-          hasInName ||
-          (hasInDescription &&
-            hasAllIngredients &&
-            hasAllAppliances &&
-            hasAllUstensils)
+          (hasInName || hasInDescription || hasInIngredient) &&
+          hasAllIngredients &&
+          hasAllAppliances &&
+          hasAllUstensils
         );
       });
-      console.log(querySearch);
+      // console.log(querySearch);
       console.log("filteredRecipes", filteredRecipes);
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
