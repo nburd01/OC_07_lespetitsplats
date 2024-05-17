@@ -186,9 +186,9 @@ export class App {
 
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", (event) => {
-      // if (event.target.value > 2) {
-      filterRecipes(fetchData);
-      // }
+      if (event.target.value.length > 2) {
+        filterRecipes(fetchData);
+      }
       handleSearchBarInputChange();
     });
 
