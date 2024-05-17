@@ -74,7 +74,7 @@ export class App {
     const uniq_Ingredient = Array.from(new Set(ingredientArray));
     const uniq_Appliance = Array.from(new Set(applianceArray));
     const uniq_Ustensil = Array.from(new Set(ustensilArray));
-    console.log(uniq_Ingredient);
+
     // ------------------------
 
     // tri by 'id'
@@ -172,7 +172,6 @@ export class App {
         link.classList.add("sortUstensils");
         link.href = `#${element}`;
         link.textContent = element;
-        console.log(link.textContent);
         ustensilsGo.appendChild(link);
       });
       uniq_Appliance.forEach((element) => {
@@ -186,7 +185,7 @@ export class App {
 
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", (event) => {
-      if (event.target.value.length > 2) {
+      if (event.target.value.length > 3) {
         filterRecipes(fetchData);
       }
       handleSearchBarInputChange();
@@ -250,8 +249,6 @@ export class App {
           hasAllUstensils
         );
       });
-      console.log(querySearch);
-      console.log("filteredRecipes", filteredRecipes);
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
