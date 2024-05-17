@@ -39,9 +39,6 @@ export class App {
 
   async main() {
     const sortTemplate = this.sortTemplate;
-    let itemsArrayAppliance = [];
-    let itemsArrayIngredient = [];
-    let itemsArrayUstensil = [];
 
     this.faMark.style.display = "none";
     const cardsSection = document.querySelector(".cards");
@@ -125,22 +122,25 @@ export class App {
       uniq_Ingredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
-        link.href = `#${element}`;
-        link.textContent = element;
+
+        link.textContent =
+          element.toLowerCase().charAt(0).toUpperCase() + element.slice(1);
         ingredientsGo.appendChild(link);
       });
       uniq_Ustensil.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortUstensils");
-        link.href = `#${element}`;
-        link.textContent = element;
+
+        link.textContent =
+          element.toLowerCase().charAt(0).toUpperCase() + element.slice(1);
         ustensilsGo.appendChild(link);
       });
       uniq_Appliance.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortAppliances");
-        link.href = `#${element}`;
-        link.textContent = element;
+
+        link.textContent =
+          element.toLowerCase().charAt(0).toUpperCase() + element.slice(1);
         appliancesGo.appendChild(link);
       });
     }
@@ -160,17 +160,6 @@ export class App {
     document.querySelector(".fa-xmark").addEventListener("click", () => {
       handleClearInput();
       creatingCards();
-      function removeDuplicates(data) {
-        return data.reduce((unique, value) => {
-          if (!unique.includes(value)) {
-            unique.push(value);
-          }
-          return unique;
-        }, []);
-      }
-      let resultIngredient = removeDuplicates(itemsArrayIngredient);
-      let resultAppliance = removeDuplicates(itemsArrayAppliance);
-      let resultUstensil = removeDuplicates(itemsArrayUstensil);
       uniq_Ingredient.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortIngredients");
@@ -178,7 +167,7 @@ export class App {
         link.textContent = element;
         ingredientsGo.appendChild(link);
       });
-      resultUstensil.forEach((element) => {
+      uniq_Ustensil.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortUstensils");
         link.href = `#${element}`;
@@ -186,7 +175,7 @@ export class App {
         console.log(link.textContent);
         ustensilsGo.appendChild(link);
       });
-      resultAppliance.forEach((element) => {
+      uniq_Appliance.forEach((element) => {
         const link = document.createElement("a");
         link.classList.add("sortAppliances");
         link.href = `#${element}`;
@@ -261,11 +250,12 @@ export class App {
           hasAllUstensils
         );
       });
-      // console.log(querySearch);
+      console.log(querySearch);
       console.log("filteredRecipes", filteredRecipes);
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
+    filterRecipes(fetchData);
 
     function displayRecipes(filteredRecipes) {
       const cardsSection = document.querySelector(".cards");
@@ -488,12 +478,11 @@ export class App {
       tagAnchor.appendChild(tagAnchorClose);
     }
     function findMatchingElements() {
-      let matchingItemLinksUpperCase = [];
+      let matchingItemLinks = [];
       tagsArray.forEach((element) => {
-        let upperCaseTag = element.toUpperCase();
-        matchingItemLinksUpperCase.push(upperCaseTag);
+        matchingItemLinks.push(element);
       });
-      return matchingItemLinksUpperCase;
+      return matchingItemLinks;
     }
 
     function tagClickManagement(fetchData, dropDownClass) {
@@ -501,7 +490,7 @@ export class App {
 
       const handleTagClick = (link) => {
         creatingTagElements(link);
-        const matchingItemLinksUpperCase = findMatchingElements();
+        const matchingItemLinks = findMatchingElements();
         filterRecipes(fetchData);
       };
       // mettre event sur ingredientsDropdown
@@ -511,7 +500,7 @@ export class App {
           const index = tagsArray.indexOf(clickedTagText);
           tagsArray.splice(index, 1);
           event.target.closest("li").remove();
-          const matchingItemLinksUpperCase = findMatchingElements();
+          const matchingItemLinks = findMatchingElements();
 
           filterRecipes(fetchData);
         }
