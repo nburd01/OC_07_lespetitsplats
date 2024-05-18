@@ -209,46 +209,57 @@ export class App {
         ).map((e) => e.textContent),
       };
 
-      const filteredRecipes = fetchData.filter((recipe) => {
-        const hasInName = recipe.name.includes(querySearch.search);
-        const hasInDescription = recipe.description.includes(
-          querySearch.search
-        );
-
-        const hasInIngredient = recipe.ingredients.some((ingredient) =>
-          ingredient.ingredient.includes(querySearch.search)
-        );
-
-        let hasAllIngredients = true;
-        let hasAllAppliances = true;
-        let hasAllUstensils = true;
-
-        if (querySearch.ingredients.length > 0) {
-          hasAllIngredients = querySearch.ingredients.every((i) =>
-            recipe.ingredients.some((ingredient) =>
-              ingredient.ingredient.includes(i)
-            )
+      const filteredRecipes = (() => {
+        const results = [];
+        for (const recipe of fetchData) {
+          const hasInName = recipe.name.includes(querySearch.search);
+          const hasInDescription = recipe.description.includes(
+            querySearch.search
           );
-        }
-
-        if (querySearch.appliances.length > 0) {
-          hasAllAppliances = querySearch.appliances.every((i) =>
-            recipe.appliance.includes(i)
+          const hasInIngredient = recipe.ingredients.some((ingredient) =>
+            ingredient.ingredient.includes(querySearch.search)
           );
-        }
 
-        if (querySearch.ustensils.length > 0) {
-          hasAllUstensils = querySearch.ustensils.every((i) =>
-            recipe.ustensils.includes(i)
-          );
+          let hasAllIngredients = true;
+          let hasAllAppliances = true;
+          let hasAllUstensils = true;
+
+          if (querySearch.ingredients.length > 0) {
+            hasAllIngredients = querySearch.ingredients.every((i) =>
+              recipe.ingredients.some((ingredient) =>
+                ingredient.ingredient.includes(i)
+              )
+            );
+          }
+
+          if (querySearch.appliances.length > 0) {
+            hasAllAppliances = querySearch.appliances.every((i) =>
+              recipe.appliance.includes(i)
+            );
+          }
+
+          if (querySearch.ustensils.length > 0) {
+            hasAllUstensils = querySearch.ustensils.every((i) =>
+              recipe.ustensils.includes(i)
+            );
+          }
+
+          if (
+            (hasInName || hasInDescription || hasInIngredient) &&
+            hasAllIngredients &&
+            hasAllAppliances &&
+            hasAllUstensils
+          ) {
+            results.push(recipe);
+          }
         }
-        return (
-          (hasInName || hasInDescription || hasInIngredient) &&
-          hasAllIngredients &&
-          hasAllAppliances &&
-          hasAllUstensils
-        );
-      });
+        return results;
+      })();
+
+      // Now you can call `filteredRecipes` elsewhere in your code
+      console.log(filteredRecipes);
+      console.log(filteredRecipes);
+
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
