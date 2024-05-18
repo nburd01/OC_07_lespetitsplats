@@ -1,199 +1,136 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <!-- <link href="css/style.css" rel="stylesheet" type="text/css" /> -->
-    <link href="./public/css/output.css" rel="stylesheet" />
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link
-      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap"
-      rel="stylesheet"
-    />
-    <title>Les petits plats</title>
-  </head>
-  <body>
-    <!-- header wrapper -->
-    <div
-      class="header flex flex-col items-center bg-hero object-contain h-[70vh]"
-    >
-      <div class="mx-auto px-16 flex h-24 w-full items-center">
-        <!-- <span class="fa-solid fa-chevron-up"></span> -->
-        <img src="./src/assets/images/logo-lpp.svg" alt="" />
-        <img src="./src/assets/images/logoCircle.svg" alt="" />
-      </div>
 
-      <div
-        class="container flex items-center justify-center mx-auto px-16 h-48 w-auto"
-      >
-        <h1 class="titleHome mt-6 w-4/6">
-          Cherchez parmi plus de 1500 recettes du quotidien, simples et
-          délicieuses
-        </h1>
-      </div>
+<head>
+  <!-- <link href="css/style.css" rel="stylesheet" type="text/css" /> -->
+  <link href="./public/css/output.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap" rel="stylesheet">
+  <title>Les petits plats</title>
+</head>
 
-      <div
-        class="container formContainer flex mx-auto px-16 h-48 items-center justify-center"
-      >
-        <form class="w-full">
-          <label class="relative block">
-            <input
-              class="mySearchInput w-full h-20 bg-white placeholder:font-italitc border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
-              id="mySearchInput"
-              placeholder="Rechercher une recette, un ingrédient, ..."
-              type="text"
-            />
-            <span
-              class="absolute m-2 rounded-lg inset-y-0 right-0 flex items-center p-3 bg-black"
-            >
-              <svg
-                class="h-5 w-5 fill-white"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="50"
-                height="50"
-                viewBox="0 0 30 30"
-              >
-                <path
-                  d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
-                ></path>
-              </svg>
-            </span>
-            <i class="fa-solid fa-xmark"></i>
-          </label>
-        </form>
-        <div class="tagsArrayDiv">
-          <ul class="tagsList"></ul>
+<body>
+  <!-- header wrapper -->
+  <div class="header flex flex-col items-center bg-hero object-contain h-[70vh]">
+    <div class="mx-auto px-16 flex h-24 w-full items-center">
+      <!-- <span class="fa-solid fa-chevron-up"></span> -->
+      <img src="./src/assets/images/logo-lpp.svg" alt="">
+      <img src="./src/assets/images/logoCircle.svg" alt="">
+    </div>
+
+    <div class="container flex items-center justify-center mx-auto px-16 h-48 w-auto">
+      <h1 class="titleHome mt-6 w-4/6">
+        Cherchez parmi plus de 1500 recettes du quotidien, simples et
+        délicieuses
+      </h1>
+    </div>
+
+    <div class="container formContainer flex mx-auto px-16 h-48 items-center justify-center">
+      <form class="w-full">
+        <label class="relative block">
+          <input
+            class="mySearchInput w-full h-20 bg-white placeholder:font-italitc border border-slate-400 drop-shadow-md rounded-md py-2 pl-3 pr-10 focus:outline-none"
+            id="mySearchInput" placeholder="Rechercher une recette, un ingrédient, ..." type="text">
+          <span class="absolute m-2 rounded-lg inset-y-0 right-0 flex items-center p-3 bg-black">
+            <svg class="h-5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50"
+              viewBox="0 0 30 30">
+              <path
+                d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+              </path>
+            </svg>
+          </span>
+          <i class="fa-solid fa-xmark"></i>
+        </label>
+      </form>
+      <div class="tagsArrayDiv">
+        <ul class="tagsList"></ul>
+      </div>
+    </div>
+  </div>
+  <!-- sort wrapper -->
+  <div class="sort container flex space-x-12 mx-auto items-center w-full h-[10vh]">
+    <div class="flex">
+      <div class="dropdown" id="dropDownIngredients">
+        <button class="ingredientsDropBtn boxSort mt-5 p-4 rounded-lg">
+          Ingrédients
+        </button>
+        <span class="fa-solid fa-chevron-up ingredientsChevronUp"></span>
+        <span class="fa-solid fa-chevron-down ingredientsChevronDown"></span>
+        <div id="ingredientsDropdown" class="dropdown-content">
+          <div class="myDropdownInputDiv">
+            <input type="text" placeholder="Rechercher.." id="myDropdownInputIngredients">
+            <svg class="searchicon h-5 w-5 fill-black" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50"
+              height="50" viewBox="0 0 30 30">
+              <path
+                d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+              </path>
+            </svg>
+          </div>
+          <div id="ingredientsGo"></div>
+        </div>
+      </div>
+      <!--  -->
+      <div class="dropdown" id="dropDownAppliances">
+        <button class="appliancesDropBtn boxSort mt-5 p-4 rounded-lg">
+          Appareils
+        </button>
+        <span class="fa-solid fa-chevron-up appliancesChevronUp"></span>
+        <span class="fa-solid fa-chevron-down appliancesChevronDown"></span>
+
+        <div id="appliancesDropdown" class="dropdown-content">
+          <div class="myDropdownInputDiv">
+            <input type="text" placeholder="Rechercher.." id="myDropdownInputAppliances">
+            <svg class="searchicon h-5 w-5 fill-black" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50"
+              height="50" viewBox="0 0 30 30">
+              <path
+                d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+              </path>
+            </svg>
+          </div>
+          <div id="appliancesGo"></div>
+        </div>
+      </div>
+      <!--  -->
+      <div class="dropdown" id="dropDownUstensils">
+        <button class="ustensilsDropBtn boxSort mt-5 p-4 rounded-lg">
+          Ustensiles
+        </button>
+        <span class="fa-solid fa-chevron-up ustensilsChevronUp"></span>
+        <span class="fa-solid fa-chevron-down ustensilsChevronDown"></span>
+
+        <div id="ustensilsDropdown" class="dropdown-content">
+          <div class="myDropdownInputDiv">
+            <input type="text" placeholder="Rechercher.." id="myDropdownInputUstensils">
+            <svg class="searchicon h-5 w-5 fill-black" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50"
+              height="50" viewBox="0 0 30 30">
+              <path
+                d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+              </path>
+            </svg>
+          </div>
+          <div id="ustensilsGo"></div>
         </div>
       </div>
     </div>
-    <!-- sort wrapper -->
-    <div
-      class="sort container flex space-x-12 mx-auto items-center w-full h-[10vh]"
-    >
-      <div class="flex">
-        <div class="dropdown" id="dropDownIngredients">
-          <button class="ingredientsDropBtn boxSort mt-5 p-4 rounded-lg">
-            Ingrédients
-          </button>
-          <span class="fa-solid fa-chevron-up ingredientsChevronUp"></span>
-          <span class="fa-solid fa-chevron-down ingredientsChevronDown"></span>
-          <div id="ingredientsDropdown" class="dropdown-content">
-            <div class="myDropdownInputDiv">
-              <input
-                type="text"
-                placeholder="Rechercher.."
-                id="myDropdownInputIngredients"
-              />
-              <svg
-                class="searchicon h-5 w-5 fill-black"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="50"
-                height="50"
-                viewBox="0 0 30 30"
-              >
-                <path
-                  d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
-                ></path>
-              </svg>
-            </div>
-            <div id="ingredientsGo"></div>
-          </div>
-        </div>
-        <!--  -->
-        <div class="dropdown" id="dropDownAppliances">
-          <button class="appliancesDropBtn boxSort mt-5 p-4 rounded-lg">
-            Appareils
-          </button>
-          <span class="fa-solid fa-chevron-up appliancesChevronUp"></span>
-          <span class="fa-solid fa-chevron-down appliancesChevronDown"></span>
+    <div class="titleSort w-3/6 text-right">1500 recettes</div>
+    <div class="numberRecipes"></div>
+  </div>
+  <!-- main wrapper -->
+  <div class="cards container flex flex-wrap mx-auto px-16 h-[100vh]"></div>
+  <!-- dynamic wrapper -->
+  <div class="cards-section"></div>
+  <script type="module" src="./src/scripts/page/index.js"></script>
+  <script type="module" src="./src/scripts/templates/cardList.js"></script>
+</body>
 
-          <div id="appliancesDropdown" class="dropdown-content">
-            <div class="myDropdownInputDiv">
-              <input
-                type="text"
-                placeholder="Rechercher.."
-                id="myDropdownInputAppliances"
-              />
-              <svg
-                class="searchicon h-5 w-5 fill-black"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="50"
-                height="50"
-                viewBox="0 0 30 30"
-              >
-                <path
-                  d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
-                ></path>
-              </svg>
-            </div>
-            <div id="appliancesGo"></div>
-          </div>
-        </div>
-        <!--  -->
-        <div class="dropdown" id="dropDownUstensils">
-          <button class="ustensilsDropBtn boxSort mt-5 p-4 rounded-lg">
-            Ustensiles
-          </button>
-          <span class="fa-solid fa-chevron-up ustensilsChevronUp"></span>
-          <span class="fa-solid fa-chevron-down ustensilsChevronDown"></span>
-
-          <div id="ustensilsDropdown" class="dropdown-content">
-            <div class="myDropdownInputDiv">
-              <input
-                type="text"
-                placeholder="Rechercher.."
-                id="myDropdownInputUstensils"
-              />
-              <svg
-                class="searchicon h-5 w-5 fill-black"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="50"
-                height="50"
-                viewBox="0 0 30 30"
-              >
-                <path
-                  d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
-                ></path>
-              </svg>
-            </div>
-            <div id="ustensilsGo"></div>
-          </div>
-        </div>
-      </div>
-      <div class="titleSort w-3/6 text-right">1500 recettes</div>
-      <div class="numberRecipes"></div>
-    </div>
-    <!-- main wrapper -->
-    <div class="cards container flex flex-wrap mx-auto px-16 h-[100vh]"></div>
-    <!-- dynamic wrapper -->
-    <div class="cards-section"></div>
-    <script type="module" src="./src/scripts/page/index.js"></script>
-    <script type="module" src="./src/scripts/templates/cardList.js"></script>
-  </body>
 </html>
