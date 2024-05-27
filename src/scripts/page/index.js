@@ -237,6 +237,14 @@ export class App {
 
     function displayRecipes(filteredRecipes) {
       cardsSection.innerHTML = "";
+      console.log(filteredRecipes.length);
+      const recipeCount = document.querySelector(".recipeCount");
+      if (filteredRecipes.length < 2) {
+        recipeCount.innerHTML = `${filteredRecipes.length}` + " " + "recette";
+      } else {
+        recipeCount.innerHTML = `${filteredRecipes.length}` + " " + "recettes";
+      }
+
       if (filteredRecipes.length > 0) {
         filteredRecipes
           .map((card) => new Card(card))
