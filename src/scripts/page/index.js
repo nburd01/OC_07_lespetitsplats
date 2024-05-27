@@ -240,8 +240,8 @@ export class App {
     filterRecipes(fetchData);
 
     function displayRecipes(filteredRecipes) {
+      cardsSection.innerHTML = "";
       if (filteredRecipes.length > 0) {
-        console.log("sup");
         filteredRecipes
           .map((card) => new Card(card))
           .forEach((card) => {
@@ -249,7 +249,9 @@ export class App {
             cardsSection.appendChild(templateCards.createCard());
           });
       } else {
-        cardsSection.innerHTML = "Aucune recette ne correspond";
+        const titleElement = document.createElement("h2");
+        titleElement.innerHTML = "Aucune recette ne correspond";
+        cardsSection.appendChild(titleElement);
       }
     }
 
