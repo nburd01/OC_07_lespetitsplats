@@ -157,31 +157,6 @@ export class App {
         searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
       }
     }
-    document.querySelector(".fa-xmark").addEventListener("click", () => {
-      handleClearInput();
-      creatingCards();
-      uniq_Ingredient.forEach((element) => {
-        const link = document.createElement("a");
-        link.classList.add("sortIngredients");
-        link.href = `#${element}`;
-        link.textContent = element;
-        ingredientsGo.appendChild(link);
-      });
-      uniq_Ustensil.forEach((element) => {
-        const link = document.createElement("a");
-        link.classList.add("sortUstensils");
-        link.href = `#${element}`;
-        link.textContent = element;
-        ustensilsGo.appendChild(link);
-      });
-      uniq_Appliance.forEach((element) => {
-        const link = document.createElement("a");
-        link.classList.add("sortAppliances");
-        link.href = `#${element}`;
-        link.textContent = element;
-        appliancesGo.appendChild(link);
-      });
-    });
 
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", (event) => {
@@ -256,7 +231,6 @@ export class App {
         return results;
       })();
 
-      // Now you can call `filteredRecipes` elsewhere in your code
       console.log(filteredRecipes);
       console.log(filteredRecipes);
 
@@ -276,6 +250,11 @@ export class App {
           cardsSection.appendChild(templateCards.createCard());
         });
     }
+
+    document.querySelector(".fa-xmark").addEventListener("click", () => {
+      handleClearInput();
+      filterRecipes(fetchData);
+    });
 
     function displayFilterList(filteredRecipes) {
       const sortIngredients = document.getElementById("ingredientsGo");
