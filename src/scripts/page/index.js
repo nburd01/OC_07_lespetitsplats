@@ -240,15 +240,17 @@ export class App {
     filterRecipes(fetchData);
 
     function displayRecipes(filteredRecipes) {
-      const cardsSection = document.querySelector(".cards");
-      cardsSection.innerHTML = "";
-
-      filteredRecipes
-        .map((card) => new Card(card))
-        .forEach((card) => {
-          const templateCards = new CardTemplate(card);
-          cardsSection.appendChild(templateCards.createCard());
-        });
+      if (filteredRecipes.length > 0) {
+        console.log("sup");
+        filteredRecipes
+          .map((card) => new Card(card))
+          .forEach((card) => {
+            const templateCards = new CardTemplate(card);
+            cardsSection.appendChild(templateCards.createCard());
+          });
+      } else {
+        cardsSection.innerHTML = "Aucune recette ne correspond";
+      }
     }
 
     document.querySelector(".fa-xmark").addEventListener("click", () => {
