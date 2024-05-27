@@ -157,31 +157,6 @@ export class App {
         searchInput.placeholder = "Rechercher une recette, un ingrédient, ...";
       }
     }
-    document.querySelector(".fa-xmark").addEventListener("click", () => {
-      handleClearInput();
-      creatingCards();
-      uniq_Ingredient.forEach((element) => {
-        const link = document.createElement("a");
-        link.classList.add("sortIngredients");
-        link.href = `#${element}`;
-        link.textContent = element;
-        ingredientsGo.appendChild(link);
-      });
-      uniq_Ustensil.forEach((element) => {
-        const link = document.createElement("a");
-        link.classList.add("sortUstensils");
-        link.href = `#${element}`;
-        link.textContent = element;
-        ustensilsGo.appendChild(link);
-      });
-      uniq_Appliance.forEach((element) => {
-        const link = document.createElement("a");
-        link.classList.add("sortAppliances");
-        link.href = `#${element}`;
-        link.textContent = element;
-        appliancesGo.appendChild(link);
-      });
-    });
 
     //MAIN INPUT CHANGE
     this.searchInput.addEventListener("input", (event) => {
@@ -249,10 +224,16 @@ export class App {
           hasAllUstensils
         );
       });
+      console.log(1);
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
     filterRecipes(fetchData);
+
+    document.querySelector(".fa-xmark").addEventListener("click", () => {
+      handleClearInput();
+      filterRecipes(fetchData);
+    });
 
     function displayRecipes(filteredRecipes) {
       const cardsSection = document.querySelector(".cards");
