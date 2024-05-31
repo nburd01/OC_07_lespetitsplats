@@ -170,7 +170,8 @@ export class App {
     // MAIN FILTER FUNCTION
     // ------------------------
     function filterRecipes(fetchData) {
-      //Prends en compte la searchInput et les tags choisis
+      //Query Construction : création d'objets qui contiennent les valeurs search (input), ingredients (array), appliances (array) et ustensils (array)
+
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
         ingredients: Array.from(
@@ -183,7 +184,7 @@ export class App {
           document.querySelectorAll(".tag-anchor.ustensilsGo")
         ).map((e) => e.textContent),
       };
-
+      //Creation d'un array results dans lequel on inclue toutes les recettes qui matchent le querySearch
       const filteredRecipes = (() => {
         const results = [];
         for (const recipe of fetchData) {
