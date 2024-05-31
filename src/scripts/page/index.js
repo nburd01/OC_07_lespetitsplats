@@ -148,7 +148,9 @@ export class App {
     // ------------------------
     // Events
     // ------------------------
-
+    // ------------------------
+    // This is where the searchbar event listened to
+    // ------------------------
     function handleSearchBarInputChange() {
       if (document.querySelector(".mySearchInput").value !== "") {
         document.querySelector(".fa-xmark").style.display = "block";
@@ -170,7 +172,7 @@ export class App {
     // MAIN FILTER FUNCTION
     // ------------------------
     function filterRecipes(fetchData) {
-      //Prends en compte la searchInput et les tags choisis
+      //Query Construction : création d'objets qui contiennent les valeurs search (input), ingredients (array), appliances (array) et ustensils (array)
       const querySearch = {
         search: document.querySelector(".mySearchInput").value,
         ingredients: Array.from(
@@ -184,6 +186,7 @@ export class App {
         ).map((e) => e.textContent),
       };
 
+      //Filtre des recettes : on utilise la fonction filter pour créer un array de recettes qui matchent la querySearch
       const filteredRecipes = fetchData.filter((recipe) => {
         const hasInName = recipe.name.includes(querySearch.search);
         const hasInDescription = recipe.description.includes(
@@ -224,7 +227,7 @@ export class App {
           hasAllUstensils
         );
       });
-      console.log(1);
+      //Display : ensuite on ajuste les cartes et les filtres en fonction du résultat
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
