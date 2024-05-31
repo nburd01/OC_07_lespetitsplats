@@ -188,6 +188,7 @@ export class App {
 
       //Filtre des recettes : on utilise la fonction filter pour créer un array de recettes qui matchent la querySearch
       const filteredRecipes = fetchData.filter((recipe) => {
+        //On observe si le nom de la recette est inclu dans la recherche, idem pour la description et les ingrédients.
         const hasInName = recipe.name.includes(querySearch.search);
         const hasInDescription = recipe.description.includes(
           querySearch.search
@@ -196,11 +197,11 @@ export class App {
         const hasInIngredient = recipe.ingredients.some((ingredient) =>
           ingredient.ingredient.includes(querySearch.search)
         );
-
+        //On déclare des booleens qui permettront d'indiquer si l'ingrédient, l'appliance ou l'ustensil sont présent dans la recherche
         let hasAllIngredients = true;
         let hasAllAppliances = true;
         let hasAllUstensils = true;
-
+        //Si le résultat de la recherche est supérieure à zéro et que l'ingrédient, l'ustensil ou l'apploiance sont inclus dedans alors le booléen est true
         if (querySearch.ingredients.length > 0) {
           hasAllIngredients = querySearch.ingredients.every((i) =>
             recipe.ingredients.some((ingredient) =>
@@ -220,6 +221,7 @@ export class App {
             recipe.ustensils.includes(i)
           );
         }
+        //Enfin, si on trouve dans la recherche le nom, la description ou l'ingrédient et que ceux là sont inclus (existent) dans les données alors on les retourne
         return (
           (hasInName || hasInDescription || hasInIngredient) &&
           hasAllIngredients &&
