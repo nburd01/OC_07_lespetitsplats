@@ -187,7 +187,9 @@ export class App {
       //Creation d'un array results dans lequel on inclue toutes les recettes qui matchent le querySearch
       const filteredRecipes = (() => {
         const results = [];
+        //On parcours fetchData
         for (const recipe of fetchData) {
+          //on observe si le nom de la recette, la description ou l'ingrédient sont inclus dans la query search
           const hasInName = recipe.name.includes(querySearch.search);
           const hasInDescription = recipe.description.includes(
             querySearch.search
@@ -195,11 +197,11 @@ export class App {
           const hasInIngredient = recipe.ingredients.some((ingredient) =>
             ingredient.ingredient.includes(querySearch.search)
           );
-
+          //on déclare des bouléens
           let hasAllIngredients = true;
           let hasAllAppliances = true;
           let hasAllUstensils = true;
-
+          //condition : si dans querySearch les ingrédients ou les appliances ou les ustensils sont supérieurs à zéro, on observe pour chaque item de fetchData s'il est inclu après le filtre
           if (querySearch.ingredients.length > 0) {
             hasAllIngredients = querySearch.ingredients.every((i) =>
               recipe.ingredients.some((ingredient) =>
@@ -219,7 +221,7 @@ export class App {
               recipe.ustensils.includes(i)
             );
           }
-
+          //si l'item est inclu dans la recherche et s'il est inclu dans fetchData alors on le push dans results
           if (
             (hasInName || hasInDescription || hasInIngredient) &&
             hasAllIngredients &&
@@ -231,9 +233,7 @@ export class App {
         }
         return results;
       })();
-
-      console.log(filteredRecipes);
-
+      //Puis on le display dans les cards et on affiche les éléments pertinents dans les filtres
       displayRecipes(filteredRecipes, querySearch);
       displayFilterList(filteredRecipes);
     }
